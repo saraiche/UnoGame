@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c3734363946e4cff9fbb698132364c12" Name="Diagram1" >
+        <EntityTypeShape EntityType="unoDbModel.player" Width="1.5" PointX="6" PointY="3.125" />
+        <EntityTypeShape EntityType="unoDbModel.credentials" Width="1.5" PointX="2.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="unoDbModel.images" Width="1.5" PointX="9.5" PointY="2.75" />
+        <AssociationConnector Association="unoDbModel.friendsList" />
+        <AssociationConnector Association="unoDbModel.credentialsplayer" />
+        <AssociationConnector Association="unoDbModel.imagesplayer" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
