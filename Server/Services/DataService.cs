@@ -49,6 +49,35 @@ namespace Services
         {
             throw new NotImplementedException();
         }
+        
+
+        public DTOPlayer isUser(DTOCredentials credentials)
+        {
+            
+            Credentials entityCredential = this.DtoCredentialsToEntity(credentials);
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    //buscar credenciales
+                    Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username).FirstOrDefault();
+                    if (findCredentials != null)
+                    {
+                        DTOPlayer dTOPlayer = new DTOPlayer();
+                        dTOPlayer.Credentials.Username = findCredentials.Player.Credentials.username;
+                        dTOPlayer.Credentials.Password = findCredentials.Player.Credentials.password;
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
         //esta no esta en la interfaz por que el cliente no accedera a este metodo
         public Credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
         {
@@ -59,5 +88,7 @@ namespace Services
             result.password = dTOCredentials.Password;
             return result;
         }
+
+         
     }
 }
