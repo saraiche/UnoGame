@@ -25,8 +25,8 @@ namespace UnoEntitys
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<player> playerSet { get; set; }
-        public virtual DbSet<credentials> credentialsSet { get; set; }
-        public virtual DbSet<images> imagesSet { get; set; }
+        public virtual DbSet<Player> PlayerSet1 { get; set; }
+        public virtual DbSet<Credentials> CredentialsSet1 { get; set; }
+        public virtual DbSet<Images> ImagesSet1 { get; set; }
     }
 }

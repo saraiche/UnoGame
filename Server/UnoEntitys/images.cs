@@ -12,18 +12,18 @@ namespace UnoEntitys
     using System;
     using System.Collections.Generic;
     
-    public partial class images
+    public partial class Images
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public images()
+        public Images()
         {
-            this.player = new HashSet<player>();
+            this.Player = new HashSet<Player>();
         }
     
         public int Id { get; set; }
         public string path { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<player> player { get; set; }
+        public virtual ICollection<Player> Player { get; set; }
     }
 }

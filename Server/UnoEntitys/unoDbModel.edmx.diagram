@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c3734363946e4cff9fbb698132364c12" Name="Diagram1" >
-        <EntityTypeShape EntityType="unoDbModel.player" Width="1.5" PointX="6" PointY="3.125" />
-        <EntityTypeShape EntityType="unoDbModel.credentials" Width="1.5" PointX="2.625" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="unoDbModel.images" Width="1.5" PointX="9.5" PointY="2.75" />
+        <EntityTypeShape EntityType="unoDbModel.Player" Width="1.5" PointX="6" PointY="3.125" />
+        <EntityTypeShape EntityType="unoDbModel.Credentials" Width="1.5" PointX="2.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="unoDbModel.Images" Width="1.5" PointX="9.5" PointY="2.75" />
         <AssociationConnector Association="unoDbModel.friendsList" />
         <AssociationConnector Association="unoDbModel.credentialsplayer" />
         <AssociationConnector Association="unoDbModel.imagesplayer" />

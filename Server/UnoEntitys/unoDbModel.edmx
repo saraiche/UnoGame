@@ -6,37 +6,37 @@
     <edmx:StorageModels>
     <Schema Namespace="unoDbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="unoDbModelStoreContainer">
-    <EntitySet Name="playerSet" EntityType="unoDbModel.Store.playerSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="credentialsSet" EntityType="unoDbModel.Store.credentialsSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="imagesSet" EntityType="unoDbModel.Store.imagesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlayerSet1" EntityType="unoDbModel.Store.PlayerSet1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CredentialsSet1" EntityType="unoDbModel.Store.CredentialsSet1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ImagesSet1" EntityType="unoDbModel.Store.ImagesSet1" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="friendsList" EntityType="unoDbModel.Store.friendsList" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_friendsList_player" Association="unoDbModel.Store.FK_friendsList_player">
-      <End Role="player" EntitySet="playerSet" />
+      <End Role="player" EntitySet="PlayerSet1" />
       <End Role="friendsList" EntitySet="friendsList" />
     </AssociationSet>
     <AssociationSet Name="FK_friendsList_player1" Association="unoDbModel.Store.FK_friendsList_player1">
-      <End Role="player1" EntitySet="playerSet" />
+      <End Role="player1" EntitySet="PlayerSet1" />
       <End Role="friendsList" EntitySet="friendsList" />
     </AssociationSet>
     <AssociationSet Name="credentialsplayer" Association="unoDbModel.Store.credentialsplayer">
-      <End Role="credentials" EntitySet="credentialsSet" />
-      <End Role="player" EntitySet="playerSet" />
+      <End Role="credentials" EntitySet="CredentialsSet1" />
+      <End Role="player" EntitySet="PlayerSet1" />
     </AssociationSet>
     <AssociationSet Name="imagesplayer" Association="unoDbModel.Store.imagesplayer">
-      <End Role="images" EntitySet="imagesSet" />
-      <End Role="player" EntitySet="playerSet" />
+      <End Role="images" EntitySet="ImagesSet1" />
+      <End Role="player" EntitySet="PlayerSet1" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="playerSet">
+  <EntityType Name="PlayerSet1">
     <Key>
       <PropertyRef Name="IdPlayer" />
     </Key>
     <Property Name="IdPlayer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="wins" Type="int" Nullable="false" />
     <Property Name="losts" Type="bigint" Nullable="false" />
-    <Property Name="images_Id" Type="int" Nullable="false" />
+    <Property Name="Images_Id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="credentialsSet">
+  <EntityType Name="CredentialsSet1">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -44,9 +44,9 @@
     <Property Name="password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="username" Type="nvarchar(max)" Nullable="false" />
     <Property Name="email" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="player_IdPlayer" Type="int" Nullable="false" />
+    <Property Name="Player_IdPlayer" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="imagesSet">
+  <EntityType Name="ImagesSet1">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -55,51 +55,51 @@
   </EntityType>
   <EntityType Name="friendsList">
     <Key>
-      <PropertyRef Name="friends_IdPlayer" />
+      <PropertyRef Name="Friends_IdPlayer" />
       <PropertyRef Name="friendsList_player_IdPlayer" />
     </Key>
-    <Property Name="friends_IdPlayer" Type="int" Nullable="false" />
+    <Property Name="Friends_IdPlayer" Type="int" Nullable="false" />
     <Property Name="friendsList_player_IdPlayer" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="credentialsplayer">
-    <End Role="credentials" Type="unoDbModel.Store.credentialsSet" Multiplicity="*" />
-    <End Role="player" Type="unoDbModel.Store.playerSet" Multiplicity="1" />
+    <End Role="credentials" Type="unoDbModel.Store.CredentialsSet1" Multiplicity="*" />
+    <End Role="player" Type="unoDbModel.Store.PlayerSet1" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="player">
         <PropertyRef Name="IdPlayer" />
       </Principal>
       <Dependent Role="credentials">
-        <PropertyRef Name="player_IdPlayer" />
+        <PropertyRef Name="Player_IdPlayer" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="imagesplayer">
-    <End Role="images" Type="unoDbModel.Store.imagesSet" Multiplicity="1" />
-    <End Role="player" Type="unoDbModel.Store.playerSet" Multiplicity="*" />
+    <End Role="images" Type="unoDbModel.Store.ImagesSet1" Multiplicity="1" />
+    <End Role="player" Type="unoDbModel.Store.PlayerSet1" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="images">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="player">
-        <PropertyRef Name="images_Id" />
+        <PropertyRef Name="Images_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_friendsList_player">
-    <End Role="player" Type="unoDbModel.Store.playerSet" Multiplicity="1" />
+    <End Role="player" Type="unoDbModel.Store.PlayerSet1" Multiplicity="1" />
     <End Role="friendsList" Type="unoDbModel.Store.friendsList" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="player">
         <PropertyRef Name="IdPlayer" />
       </Principal>
       <Dependent Role="friendsList">
-        <PropertyRef Name="friends_IdPlayer" />
+        <PropertyRef Name="Friends_IdPlayer" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_friendsList_player1">
     <End Role="friendsList" Type="unoDbModel.Store.friendsList" Multiplicity="*" />
-    <End Role="player1" Type="unoDbModel.Store.playerSet" Multiplicity="1" />
+    <End Role="player1" Type="unoDbModel.Store.PlayerSet1" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="player1">
         <PropertyRef Name="IdPlayer" />
@@ -114,34 +114,34 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="unoDbModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="unoDbModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="playerSet" EntityType="unoDbModel.player" />
-          <EntitySet Name="credentialsSet" EntityType="unoDbModel.credentials" />
-          <EntitySet Name="imagesSet" EntityType="unoDbModel.images" />
+          <EntitySet Name="PlayerSet1" EntityType="unoDbModel.Player" />
+          <EntitySet Name="CredentialsSet1" EntityType="unoDbModel.Credentials" />
+          <EntitySet Name="ImagesSet1" EntityType="unoDbModel.Images" />
           <AssociationSet Name="friendsList" Association="unoDbModel.friendsList">
-            <End Role="player" EntitySet="playerSet" />
-            <End Role="player1" EntitySet="playerSet" />
+            <End Role="player" EntitySet="PlayerSet1" />
+            <End Role="player1" EntitySet="PlayerSet1" />
           </AssociationSet>
           <AssociationSet Name="credentialsplayer" Association="unoDbModel.credentialsplayer">
-            <End Role="credentials" EntitySet="credentialsSet" />
-            <End Role="player" EntitySet="playerSet" />
+            <End Role="credentials" EntitySet="CredentialsSet1" />
+            <End Role="player" EntitySet="PlayerSet1" />
           </AssociationSet>
           <AssociationSet Name="imagesplayer" Association="unoDbModel.imagesplayer">
-            <End Role="images" EntitySet="imagesSet" />
-            <End Role="player" EntitySet="playerSet" />
+            <End Role="images" EntitySet="ImagesSet1" />
+            <End Role="player" EntitySet="PlayerSet1" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="player">
+        <EntityType Name="Player">
           <Key>
             <PropertyRef Name="IdPlayer" />
           </Key>
           <Property Name="IdPlayer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="wins" Type="Int32" Nullable="false" />
           <Property Name="losts" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="friends" Relationship="unoDbModel.friendsList" FromRole="player1" ToRole="player" />
-          <NavigationProperty Name="credentials" Relationship="unoDbModel.credentialsplayer" FromRole="player" ToRole="credentials" />
-          <NavigationProperty Name="images" Relationship="unoDbModel.imagesplayer" FromRole="player" ToRole="images" />
+          <NavigationProperty Name="Friends" Relationship="unoDbModel.friendsList" FromRole="player1" ToRole="player" />
+          <NavigationProperty Name="Credentials" Relationship="unoDbModel.credentialsplayer" FromRole="player" ToRole="credentials" />
+          <NavigationProperty Name="Images" Relationship="unoDbModel.imagesplayer" FromRole="player" ToRole="images" />
         </EntityType>
-        <EntityType Name="credentials">
+        <EntityType Name="Credentials">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -149,27 +149,27 @@
           <Property Name="password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="username" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="player" Relationship="unoDbModel.credentialsplayer" FromRole="credentials" ToRole="player" />
+          <NavigationProperty Name="Player" Relationship="unoDbModel.credentialsplayer" FromRole="credentials" ToRole="player" />
         </EntityType>
-        <EntityType Name="images">
+        <EntityType Name="Images">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="path" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="player" Relationship="unoDbModel.imagesplayer" FromRole="images" ToRole="player" />
+          <NavigationProperty Name="Player" Relationship="unoDbModel.imagesplayer" FromRole="images" ToRole="player" />
         </EntityType>
         <Association Name="friendsList">
-          <End Type="unoDbModel.player" Role="player" Multiplicity="*" />
-          <End Type="unoDbModel.player" Role="player1" Multiplicity="*" />
+          <End Type="unoDbModel.Player" Role="player" Multiplicity="*" />
+          <End Type="unoDbModel.Player" Role="player1" Multiplicity="*" />
         </Association>
         <Association Name="credentialsplayer">
-          <End Type="unoDbModel.credentials" Role="credentials" Multiplicity="1" />
-          <End Type="unoDbModel.player" Role="player" Multiplicity="1" />
+          <End Type="unoDbModel.Credentials" Role="credentials" Multiplicity="1" />
+          <End Type="unoDbModel.Player" Role="player" Multiplicity="1" />
         </Association>
         <Association Name="imagesplayer">
-          <End Type="unoDbModel.images" Role="images" Multiplicity="1" />
-          <End Type="unoDbModel.player" Role="player" Multiplicity="*" />
+          <End Type="unoDbModel.Images" Role="images" Multiplicity="1" />
+          <End Type="unoDbModel.Player" Role="player" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -177,18 +177,18 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="unoDbModelStoreContainer" CdmEntityContainer="unoDbModelContainer">
-    <EntitySetMapping Name="playerSet">
-      <EntityTypeMapping TypeName="IsTypeOf(unoDbModel.player)">
-        <MappingFragment StoreEntitySet="playerSet">
+    <EntitySetMapping Name="PlayerSet1">
+      <EntityTypeMapping TypeName="IsTypeOf(unoDbModel.Player)">
+        <MappingFragment StoreEntitySet="PlayerSet1">
           <ScalarProperty Name="IdPlayer" ColumnName="IdPlayer" />
           <ScalarProperty Name="wins" ColumnName="wins" />
           <ScalarProperty Name="losts" ColumnName="losts" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="credentialsSet">
-      <EntityTypeMapping TypeName="IsTypeOf(unoDbModel.credentials)">
-        <MappingFragment StoreEntitySet="credentialsSet">
+    <EntitySetMapping Name="CredentialsSet1">
+      <EntityTypeMapping TypeName="IsTypeOf(unoDbModel.Credentials)">
+        <MappingFragment StoreEntitySet="CredentialsSet1">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="username" ColumnName="username" />
@@ -196,9 +196,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="imagesSet">
-      <EntityTypeMapping TypeName="IsTypeOf(unoDbModel.images)">
-        <MappingFragment StoreEntitySet="imagesSet">
+    <EntitySetMapping Name="ImagesSet1">
+      <EntityTypeMapping TypeName="IsTypeOf(unoDbModel.Images)">
+        <MappingFragment StoreEntitySet="ImagesSet1">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="path" ColumnName="path" />
         </MappingFragment>
@@ -206,23 +206,23 @@
     </EntitySetMapping>
     <AssociationSetMapping Name="friendsList" TypeName="unoDbModel.friendsList" StoreEntitySet="friendsList">
       <EndProperty Name="player">
-        <ScalarProperty Name="IdPlayer" ColumnName="friends_IdPlayer" />
+        <ScalarProperty Name="IdPlayer" ColumnName="Friends_IdPlayer" />
       </EndProperty>
       <EndProperty Name="player1">
         <ScalarProperty Name="IdPlayer" ColumnName="friendsList_player_IdPlayer" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="credentialsplayer" TypeName="unoDbModel.credentialsplayer" StoreEntitySet="credentialsSet">
+    <AssociationSetMapping Name="credentialsplayer" TypeName="unoDbModel.credentialsplayer" StoreEntitySet="CredentialsSet1">
       <EndProperty Name="player">
-        <ScalarProperty Name="IdPlayer" ColumnName="player_IdPlayer" />
+        <ScalarProperty Name="IdPlayer" ColumnName="Player_IdPlayer" />
       </EndProperty>
       <EndProperty Name="credentials">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="imagesplayer" TypeName="unoDbModel.imagesplayer" StoreEntitySet="playerSet">
+    <AssociationSetMapping Name="imagesplayer" TypeName="unoDbModel.imagesplayer" StoreEntitySet="PlayerSet1">
       <EndProperty Name="images">
-        <ScalarProperty Name="Id" ColumnName="images_Id" />
+        <ScalarProperty Name="Id" ColumnName="Images_Id" />
       </EndProperty>
       <EndProperty Name="player">
         <ScalarProperty Name="IdPlayer" ColumnName="IdPlayer" />

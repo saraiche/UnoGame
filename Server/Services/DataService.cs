@@ -13,21 +13,29 @@ namespace Services
         public bool AddCredentials(DTOCredentials credentials)
         {
             bool result = false;
-            credentials entityCredential = this.DtoCredentialsToEntity(credentials); 
+            Credentials entityCredential = this.DtoCredentialsToEntity(credentials); 
 
             try
             {
-                using (unoDbModelContainer _context = new unoDbModelContainer())
+                using (unoDbModelContainer context = new unoDbModelContainer())
                 {
-
-                    images _images = new images { Id = 1 };
-                    _context.imagesSet.Attach(_images);
-                    player _player = new player { wins = 0, losts = 0, images = _images };
-                    entityCredential.player = _player;
-                    _context.credentialsSet.Add(entityCredential);
-
-                    _context.SaveChanges();
-                    result = true;
+                    //buscar un jugador repetido
+                    Player findPlayer = context.PlayerSet1.Where(x => x.Credentials.username == credentials.Username).FirstOrDefault();
+                    if(findPlayer == null)
+                    {
+                        Images images = new Images { Id = 1 };
+                        context.ImagesSet1.Attach(images);
+                        Player player = new Player { wins = 0, losts = 0, Images = images };
+                        entityCredential.Player = player;
+                        context.CredentialsSet1.Add(entityCredential);
+                        context.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        throw new Exception("El nombre de usuario ya existe");
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -42,22 +50,13 @@ namespace Services
             throw new NotImplementedException();
         }
         //esta no esta en la interfaz por que el cliente no accedera a este metodo
-        public credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
+        public Credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
         {
-            credentials result = new credentials();
-            if (dTOCredentials.Id == null)
-            {
-                result.username = dTOCredentials.Username;
-                result.email = dTOCredentials.Email;
-                result.password = dTOCredentials.Password;
-            }
-            else
-            {
-                result.Id = dTOCredentials.Id;
-                result.username = dTOCredentials.Username;
-                result.email = dTOCredentials.Email;
-                result.password = dTOCredentials.Password;
-            }
+            Credentials result = new Credentials();
+            result.Id = 0;
+            result.username = dTOCredentials.Username;
+            result.email = dTOCredentials.Email;
+            result.password = dTOCredentials.Password;
             return result;
         }
     }

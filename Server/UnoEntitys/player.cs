@@ -12,12 +12,12 @@ namespace UnoEntitys
     using System;
     using System.Collections.Generic;
     
-    public partial class player
+    public partial class Player
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public player()
+        public Player()
         {
-            this.friends = new HashSet<player>();
+            this.Friends = new HashSet<Player>();
         }
     
         public int IdPlayer { get; set; }
@@ -25,8 +25,8 @@ namespace UnoEntitys
         public long losts { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<player> friends { get; set; }
-        public virtual credentials credentials { get; set; }
-        public virtual images images { get; set; }
+        public virtual ICollection<Player> Friends { get; set; }
+        public virtual Credentials Credentials { get; set; }
+        public virtual Images Images { get; set; }
     }
 }
