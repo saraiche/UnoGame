@@ -16,6 +16,10 @@ namespace Services
         [OperationContract]
         bool AddCredentials(DTOCredentials credentials);
 
+        [OperationContract]
+        DTOPlayer isUser(DTOCredentials credentials);
+        
+
     }
     [DataContract]
     public class DTOCredentials
@@ -32,8 +36,14 @@ namespace Services
 
         [DataMember]
         public string Email { get; set; }
+    }
+    [DataContract]
+    public class DTOPlayer
+    {
+        [DataMember]
+        public string Image { get; set; }
+        [DataMember]
+        public DTOCredentials Credentials { get; set; }
 
     }
-
-
 }
