@@ -23,7 +23,7 @@ namespace unoProyect
     /// </summary>
     public partial class SignUp : Page
     {
-        Logic.CallDataService logic = new Logic.CallDataService();
+        Logic.CallDataService Logic = new Logic.CallDataService();
         public SignUp()
         {
             InitializeComponent();
@@ -47,7 +47,7 @@ namespace unoProyect
                 {
                     password = Utilities.ComputeSHA256Hash(password);
                     
-                    logic.AddCredentials(username,password,email);
+                    Logic.AddCredentials(username,password,email);
                         //abrir ventana para ingresar código de email
                         MessageBox.Show("Registro okei", "");
                     
