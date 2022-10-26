@@ -12,13 +12,13 @@ namespace UnoEntitys
     using System;
     using System.Collections.Generic;
     
-    public partial class credentials
+    public partial class Credentials
     {
         public int Id { get; set; }
         public string password { get; set; }
         public string username { get; set; }
         public string email { get; set; }
     
-        public virtual player player { get; set; }
+        public virtual Player Player { get; set; }
     }
 }
