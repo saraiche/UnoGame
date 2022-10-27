@@ -64,6 +64,10 @@
       <Project>{31c6b324-f8c9-4878-b552-58e19d82863d}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{7c136178-9d26-4c1d-a529-acf1fe523ea3}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
