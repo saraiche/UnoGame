@@ -124,6 +124,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Friends list.
+        /// </summary>
+        public static string friendsList {
+            get {
+                return ResourceManager.GetString("friendsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a UNO.
         /// </summary>
         public static string game {

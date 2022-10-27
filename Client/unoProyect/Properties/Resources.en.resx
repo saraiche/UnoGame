@@ -138,6 +138,9 @@
   <data name="forgetMyPassword" xml:space="preserve">
     <value>Forget my password</value>
   </data>
+  <data name="friendsList" xml:space="preserve">
+    <value>Friends list</value>
+  </data>
   <data name="game" xml:space="preserve">
     <value>UNO</value>
   </data>
