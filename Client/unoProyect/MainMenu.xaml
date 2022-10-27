@@ -17,8 +17,8 @@
         </Image>
         <Label x:Name="LblUsername" Content="Username" HorizontalAlignment="Left" Margin="96,17,0,0" VerticalAlignment="Top" FontSize="18"/>
         <Button x:Name="BtnConfigureProfile" Content="{x:Static p:Resources.settingsProfile}" HorizontalAlignment="Left" Margin="547,17,0,0" VerticalAlignment="Top" FontSize="16" Height="40" Width="222"/>
-        <Button x:Name="BtnNewGame" Content="{x:Static p:Resources.newGame}" HorizontalAlignment="Left" Margin="120,176,0,0" VerticalAlignment="Top" Height="49" Width="182"/>
-        <Button x:Name="BtnFriends" Content="{x:Static p:Resources.friendsList}" HorizontalAlignment="Left" Margin="120,250,0,0" VerticalAlignment="Top" Height="49" Width="182" Click="BtnNewGame_Copy_Click"/>
+        <Button x:Name="BtnNewGame" Content="{x:Static p:Resources.newGame}" HorizontalAlignment="Left" Margin="120,176,0,0" VerticalAlignment="Top" Height="49" Width="182" Click="BtnNewGame_Click"/>
+        <Button x:Name="BtnFriends" Content="{x:Static p:Resources.friendsList}" HorizontalAlignment="Left" Margin="120,250,0,0" VerticalAlignment="Top" Height="49" Width="182" Click="BtnFriends_Click"/>
         <Label x:Name="LblInvitationCodeInstruction" Content="{x:Static p:Resources.instructionEnterInvitationCode}" HorizontalAlignment="Left" Margin="465,188,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TbInvitationCode" HorizontalAlignment="Left" Margin="631,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="BtnEnterWithCode" Content="{x:Static p:Resources.enter}" HorizontalAlignment="Left" Margin="528,226,0,0" VerticalAlignment="Top" Height="48" Width="182"/>

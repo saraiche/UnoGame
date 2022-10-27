@@ -29,7 +29,6 @@ namespace unoProyect
             InitializeComponent();
         }
 
-
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUser.Text;
@@ -44,6 +43,8 @@ namespace unoProyect
                 if (logic.isUser(username, password))
                 {
                     MessageBox.Show(Properties.Resources.welcome + " " + username,"");
+                    MainMenu mainMenu = new MainMenu(username);
+                    this.NavigationService.Navigate(mainMenu);
                 }
                 else
                 {
