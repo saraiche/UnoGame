@@ -29,7 +29,7 @@ namespace unoProyect
             InitializeComponent();
         }
 
-        private void btnSignUp_Click(object sender, RoutedEventArgs e)
+        private void BtnSignUp_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUser.Text;
             var password = pbPassword.Password.ToString();

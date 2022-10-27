@@ -22,7 +22,7 @@ namespace Logic
             dataServiceClient.AddCredentials(dTOcredentials);
         }
 
-        public bool isUser(string username, string password)
+        public bool IsUser(string username, string password)
         {
             bool result = false;
             DataServiceReference.DTOCredentials isUser = new DataServiceReference.DTOCredentials();

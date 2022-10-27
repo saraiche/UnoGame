@@ -77,7 +77,7 @@
             Grid.Row="2"
             HorizontalAlignment="Left"
             Margin="296,105,0,0"
-            x:Name="btnSignUp" Click="btnSignUp_Click" />
+            x:Name="BtnSignUp" Click="BtnSignUp_Click" />
         <RadioButton
             Content="RadioButton"
             HorizontalAlignment="Left"

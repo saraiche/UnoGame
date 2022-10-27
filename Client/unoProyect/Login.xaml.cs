@@ -30,7 +30,7 @@ namespace unoProyect
         }
 
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUser.Text;
             var password = pbPassword.Password.ToString();
@@ -41,7 +41,7 @@ namespace unoProyect
             }
             else
             {
-                if (logic.isUser(username, password))
+                if (logic.IsUser(username, password))
                 {
                     MessageBox.Show(Properties.Resources.welcome + " " + username,"");
                 }
@@ -55,7 +55,7 @@ namespace unoProyect
             }
         }
 
-        private void btnSignUp_Click(object sender, RoutedEventArgs e)
+        private void BtnSignUp_Click(object sender, RoutedEventArgs e)
         {
             SignUp signUp = new SignUp();
             this.NavigationService.Navigate(signUp);

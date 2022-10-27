@@ -54,7 +54,7 @@ namespace Services
         }
         
 
-        public bool isUser(DTOCredentials credentials)
+        public bool IsUser(DTOCredentials credentials)
         {
             bool flag = false;
             credentials.Password = Security.ComputeSHA256Hash(credentials.Password);

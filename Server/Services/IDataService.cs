@@ -17,7 +17,7 @@ namespace Services
         bool AddCredentials(DTOCredentials credentials);
 
         [OperationContract]
-        bool isUser(DTOCredentials credentials);
+        bool IsUser(DTOCredentials credentials);
         
 
     }
