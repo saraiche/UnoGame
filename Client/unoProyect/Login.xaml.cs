@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace unoProyect
     /// </summary>
     public partial class Login : Page
     {
+        Logic.CallDataService logic = new Logic.CallDataService();
         public Login()
         {
             InitializeComponent();
@@ -30,28 +32,27 @@ namespace unoProyect
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            //var username = tbUser.Text;
-            //var password = pbPassword.Password.ToString();
-            //if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            //{
-            //    MessageBox.Show(Properties.Resources.notEmptyFields,
-            //                Properties.Resources.error);
-            //}
-            //else
-            //{
-            //    password = Utilities.ComputeSHA256Hash(password);
-            //    var result = logic.ItsAUser(username, password);
-            //    if (!logic.ItsAUser(username, password))
-            //    {
-            //        MessageBox.Show(Properties.Resources.wrongCredentials, 
-            //            Properties.Resources.error);    
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show(Properties.Resources.welcome + " " + username,
-            //            "");
-            //    }
-            //}
+            var username = tbUser.Text;
+            var password = pbPassword.Password.ToString();
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show(Properties.Resources.notEmptyFields,
+                            Properties.Resources.error);
+            }
+            else
+            {
+                if (logic.isUser(username, password))
+                {
+                    MessageBox.Show(Properties.Resources.welcome + " " + username,"");
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.error);
+
+                }
+
+
+            }
         }
 
         private void btnSignUp_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.DataServiceReference;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,15 +11,31 @@ namespace Logic
 {
     public class CallDataService
     {
+        DataServiceReference.DataServiceClient dataServiceClient = new DataServiceReference.DataServiceClient();
         public void AddCredentials(string username, string password, string email)
         {
-            DataServiceReference.DataServiceClient dataServiceClient = new DataServiceReference.DataServiceClient();
-            DataServiceReference.DTOCredentials credentials = new DataServiceReference.DTOCredentials();
+            DataServiceReference.DTOCredentials dTOcredentials = new DataServiceReference.DTOCredentials();
   
-            credentials.Username = username;    
-            credentials.Password = password;
-            credentials.Email = email;
-            dataServiceClient.AddCredentials(credentials);
+            dTOcredentials.Username = username;    
+            dTOcredentials.Password = password;
+            dTOcredentials.Email = email;
+            dataServiceClient.AddCredentials(dTOcredentials);
+        }
+
+        public bool isUser(string username, string password)
+        {
+            bool result = false;
+            DataServiceReference.DTOCredentials isUser = new DataServiceReference.DTOCredentials();
+            isUser.Password = password;
+            isUser.Username = username;
+            try
+            {
+                result = dataServiceClient.isUser(isUser);
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return result;
         }
        
     }
