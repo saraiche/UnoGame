@@ -30,7 +30,7 @@ namespace unoProyect
         }
 
 
-        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUser.Text;
             var password = pbPassword.Password.ToString();

@@ -11,7 +11,7 @@ namespace Host
     {
         static void Main(string[] args)
         {
-            using (ServiceHost host = new ServiceHost(typeof(Services.DataService)))
+            using (ServiceHost host = new ServiceHost(typeof(Services.ServiceImplementation)))
             {
 
                 host.Open();
