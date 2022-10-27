@@ -20,13 +20,19 @@ namespace unoProyect
     /// </summary>
     public partial class MainMenu : Page
     {
+        public string Username { get; set; }
         public MainMenu()
         {
             InitializeComponent();
         }
+        public MainMenu(string username):this()
+        {
+            this.Username = username;
+        }
 
         private void BtnNewGame_Copy_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine(Username);
 
         }
     }
