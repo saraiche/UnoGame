@@ -17,21 +17,21 @@ public bool ValidateEmail(string EmailToValidate);
 public bool validateE(string e);
 ```
 ### Variables
-* Se usa UpperCammelCase
+* Se usa lowerCammelCase
 * Se usan frases nominales o palabras completas para describir explícitamente los datos que almacenarán
-* Acrónimos son usados como palabras para el UpperCamelCase (ej: DireccionUrl no DireccionURL)
+* Acrónimos son usados como palabras para el UpperCamelCase (ej: direccionUrl no direccionURL)
 * Todas las variables son inicializadas en sus puntos de declaración
 * Se hace una declaración de variable por línea
 #### Bien
 ```csharp
-string Name = "";
-string Username = "";
+string name = "";
+string username = "";
 ```
 #### Mal
 ```csharp
-string name;
+string Name;
 string u;
-string name, u;
+string Name, u;
 ```
 ### Propiedades
 Si las propiedades tienen modificadores de acceso públicos, serán escritos en notación UpperCammelCase.
@@ -81,7 +81,7 @@ private void clickBtnSignUp(object sender, RoutedEventArgs e)
 ```
 ### Nombrado de nombre de etiquetas (Prefijos)
 **labels**
-Para el nombrado de los componentes de interfaz gráfica se utiliza como prefijo la(s) inicial(es) del componente en mayúscula seguido del nombre de la variable con la inicial mayúscula (estilo upper camel case)
+Para el nombrado de los componentes de interfaz gráfica se utiliza como prefijo la(s) inicial(es) del componente en mayúscula (en caso de ser tener un nombre de dos o más palabras) y las consonantes de la palabra (si es un nombre de solo una palabra) seguido del nombre de la variable con la inicial mayúscula (estilo upper camel case)
 #### Bien
 ```xaml
 <Label x:Name="LblUno"/>
@@ -98,6 +98,7 @@ Para el nombrado de los componentes de interfaz gráfica se utiliza como prefijo
 #### Mal
 ```xaml
 <button x:Name="botonUno"/>
+<button x:Name="bUno"/>
 ```
 **TextBox**
 #### Bien
@@ -274,7 +275,7 @@ Los metodos deben de ser tipo publico y no internal
             }
         }
 ```
-#### mal
+#### Mal
 ```csharp
         internal static string chat {
             get {
