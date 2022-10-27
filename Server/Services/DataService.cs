@@ -54,8 +54,9 @@ namespace Services
         }
         
 
-        public DTOPlayer isUser(DTOCredentials credentials)
+        public bool isUser(DTOCredentials credentials)
         {
+            bool flag = false;
             credentials.Password = Security.ComputeSHA256Hash(credentials.Password);
             Credentials entityCredential = this.DtoCredentialsToEntity(credentials);
             try
@@ -67,17 +68,9 @@ namespace Services
                     Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username && x.password == credentials.Password).FirstOrDefault();
                     if (findCredentials != null)
                     {
-                        
-                        dTOPlayer.Credentials.Username = findCredentials.Player.Credentials.username;
-                        dTOPlayer.Credentials.Password = findCredentials.Player.Credentials.password;
-                        dTOPlayer.Image = findCredentials.Player.Images.path;
+                        flag = true;
                     }
-                    else
-                    {
-                        throw new Exception("No se encuentra el usuario registrado en la base de datos");
-                    }
-                    return dTOPlayer;
-
+                    return flag;
                 }
             }
             catch (Exception ex)

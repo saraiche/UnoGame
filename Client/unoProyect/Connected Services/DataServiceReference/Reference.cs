@@ -26,6 +26,12 @@ namespace unoProyect.DataServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddCredentials", ReplyAction="http://tempuri.org/IDataService/AddCredentialsResponse")]
         System.Threading.Tasks.Task<bool> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/isUser", ReplyAction="http://tempuri.org/IDataService/isUserResponse")]
+        bool isUser(Logic.DataServiceReference.DTOCredentials credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/isUser", ReplyAction="http://tempuri.org/IDataService/isUserResponse")]
+        System.Threading.Tasks.Task<bool> isUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +75,14 @@ namespace unoProyect.DataServiceReference {
         
         public System.Threading.Tasks.Task<bool> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials) {
             return base.Channel.AddCredentialsAsync(credentials);
+        }
+        
+        public bool isUser(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.isUser(credentials);
+        }
+        
+        public System.Threading.Tasks.Task<bool> isUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.isUserAsync(credentials);
         }
     }
 }

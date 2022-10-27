@@ -17,7 +17,7 @@ namespace Services
         bool AddCredentials(DTOCredentials credentials);
 
         [OperationContract]
-        DTOPlayer isUser(DTOCredentials credentials);
+        bool isUser(DTOCredentials credentials);
         
 
     }
