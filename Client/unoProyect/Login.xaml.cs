@@ -44,6 +44,8 @@ namespace unoProyect
                 if (logic.IsUser(username, password))
                 {
                     MessageBox.Show(Properties.Resources.welcome + " " + username,"");
+                    MainMenu mainMenu = new MainMenu(username);
+                    this.NavigationService.Navigate(mainMenu);
                 }
                 else
                 {
