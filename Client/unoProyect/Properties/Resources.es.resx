@@ -144,6 +144,15 @@
   <data name="game" xml:space="preserve">
     <value>UNO</value>
   </data>
+  <data name="informationSuccesfullSignUp" xml:space="preserve">
+    <value>Registro exitoso :)</value>
+  </data>
+  <data name="informationUsernameDuplicate" xml:space="preserve">
+    <value>Nombre de usuario ocupado, intenta con otro</value>
+  </data>
+  <data name="informationWrongSignUp" xml:space="preserve">
+    <value>Ocurrió un error al momento de registrar tu cuenta, intenta de nuevo más tarde</value>
+  </data>
   <data name="instructionChangePasswordCode" xml:space="preserve">
     <value>Te enviaremos un código a tu correo electrónico para cambiar tu contraseña</value>
   </data>

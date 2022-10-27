@@ -40,7 +40,7 @@ namespace unoProyect
             }
             else
             {
-                if (logic.isUser(username, password))
+                if (logic.IsUser(username, password))
                 {
                     MessageBox.Show(Properties.Resources.welcome + " " + username,"");
                     MainMenu mainMenu = new MainMenu(username);
@@ -56,7 +56,7 @@ namespace unoProyect
             }
         }
 
-        private void btnSignUp_Click(object sender, RoutedEventArgs e)
+        private void BtnSignUp_Click(object sender, RoutedEventArgs e)
         {
             SignUp signUp = new SignUp();
             this.NavigationService.Navigate(signUp);

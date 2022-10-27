@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -11,11 +12,18 @@ namespace Services
 {
     public class DataService : IDataService
     {
-        public bool AddCredentials(DTOCredentials credentials)
+        /// <summary>
+        /// Agrega las credenciales de un jugador a la base de datos
+        /// </summary>
+        /// <param name="credentials"></param>
+        /// <returns> 1 si se guardaron correctamente los cambios, 
+        /// 2 si ya existía el username registrado, 
+        /// 0 si ocurrió un error al guardar en la base de datos
+        /// </returns>
+        /// <exception cref="DbUpdateException"></exception>
+        public int AddCredentials(DTOCredentials credentials)
         {
-            //ciframos la contraseña
-            bool result = false;
-            credentials.Password = Security.ComputeSHA256Hash(credentials.Password);
+            int result = 0;
             Credentials entityCredential = this.DtoCredentialsToEntity(credentials); 
 
             try
@@ -32,18 +40,18 @@ namespace Services
                         entityCredential.Player = player;
                         context.CredentialsSet1.Add(entityCredential);
                         context.SaveChanges();
-                        result = true;
+                        result = 1;
                     }
                     else
                     {
-                        throw new Exception("El nombre de usuario ya existe");
+                        result = 2;
                     }
                     
                 }
             }
-            catch (Exception ex)
+            catch (DbUpdateException exception)
             {
-                throw new Exception(ex.Message);
+                throw new DbUpdateException(exception.Message);
             }
             return result;
         }
@@ -54,7 +62,7 @@ namespace Services
         }
         
 
-        public bool isUser(DTOCredentials credentials)
+        public bool IsUser(DTOCredentials credentials)
         {
             bool flag = false;
             credentials.Password = Security.ComputeSHA256Hash(credentials.Password);

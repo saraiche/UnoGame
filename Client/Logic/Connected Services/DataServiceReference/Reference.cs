@@ -117,16 +117,16 @@ namespace Logic.DataServiceReference {
         System.Threading.Tasks.Task<bool> AddImagesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddCredentials", ReplyAction="http://tempuri.org/IDataService/AddCredentialsResponse")]
-        bool AddCredentials(Logic.DataServiceReference.DTOCredentials credentials);
+        int AddCredentials(Logic.DataServiceReference.DTOCredentials credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddCredentials", ReplyAction="http://tempuri.org/IDataService/AddCredentialsResponse")]
-        System.Threading.Tasks.Task<bool> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/isUser", ReplyAction="http://tempuri.org/IDataService/isUserResponse")]
-        bool isUser(Logic.DataServiceReference.DTOCredentials credentials);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/IsUser", ReplyAction="http://tempuri.org/IDataService/IsUserResponse")]
+        bool IsUser(Logic.DataServiceReference.DTOCredentials credentials);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/isUser", ReplyAction="http://tempuri.org/IDataService/isUserResponse")]
-        System.Threading.Tasks.Task<bool> isUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/IsUser", ReplyAction="http://tempuri.org/IDataService/IsUserResponse")]
+        System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -164,20 +164,20 @@ namespace Logic.DataServiceReference {
             return base.Channel.AddImagesAsync();
         }
         
-        public bool AddCredentials(Logic.DataServiceReference.DTOCredentials credentials) {
+        public int AddCredentials(Logic.DataServiceReference.DTOCredentials credentials) {
             return base.Channel.AddCredentials(credentials);
         }
         
-        public System.Threading.Tasks.Task<bool> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+        public System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials) {
             return base.Channel.AddCredentialsAsync(credentials);
         }
         
-        public bool isUser(Logic.DataServiceReference.DTOCredentials credentials) {
-            return base.Channel.isUser(credentials);
+        public bool IsUser(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.IsUser(credentials);
         }
         
-        public System.Threading.Tasks.Task<bool> isUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
-            return base.Channel.isUserAsync(credentials);
+        public System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.IsUserAsync(credentials);
         }
     }
 }
