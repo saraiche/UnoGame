@@ -3,7 +3,6 @@
 Este proyecto se desarrollará en C# Netframework. Para la comunicación en red se utilizará Windows Communication Foundation (WCF) y para la capa de presentación se utilizará Windows Presentation Foundation (WPF).
 ## Propósito
 El presente documento sirve como guía para los códigos fuentes del videojuego a realizar para la asignatura de Tecnologías para la construcción de software de la Facultad de Estadística e Informática. Tiene como propósito que la comunicación del equipo por medio del código sea efectiva. Busca unificar el código a escribir, así como dar una guía de la forma en que serán representados los distintos componentes del código.
-Nombrado
 ## Nombrado
 ### Reglas generales
 Todo el código fuente será escrito en el idioma inglés, incluyendo el nombre de métodos, atributos, propiedades.
