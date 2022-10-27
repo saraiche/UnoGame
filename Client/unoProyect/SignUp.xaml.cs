@@ -29,7 +29,7 @@ namespace unoProyect
             InitializeComponent();
         }
 
-        private void btnSignUp_Click(object sender, RoutedEventArgs e)
+        private void BtnSignUp_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUser.Text;
             var password = pbPassword.Password.ToString();
@@ -46,9 +46,20 @@ namespace unoProyect
                 if(Utilities.ValidatePassword(password) && Utilities.ValidateEmail(email))
                 {
                     
-                    logic.AddCredentials(username,password,email);
-                        //abrir ventana para ingresar código de email
-                        MessageBox.Show("Registro okei", "");
+                    int result = logic.AddCredentials(username,password,email);
+                    switch (result)
+                    {
+                        case 0:
+                            MessageBox.Show(Properties.Resources.informationWrongSignUp, "");
+                            break;
+                        case 1:
+                            MessageBox.Show(Properties.Resources.informationSuccesfullSignUp, "");
+                            break;
+                        case 2:
+                            MessageBox.Show(Properties.Resources.informationUsernameDuplicate, "");
+                            break;
+                    }
+                        //TODO: abrir ventana para ingresar código de email
                     
                 }
                 else

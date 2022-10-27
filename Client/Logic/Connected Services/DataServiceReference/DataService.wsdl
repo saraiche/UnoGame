@@ -48,11 +48,11 @@
   <wsdl:message name="IDataService_AddCredentials_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddCredentialsResponse" />
   </wsdl:message>
-  <wsdl:message name="IDataService_isUser_InputMessage">
-    <wsdl:part name="parameters" element="tns:isUser" />
+  <wsdl:message name="IDataService_IsUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUser" />
   </wsdl:message>
-  <wsdl:message name="IDataService_isUser_OutputMessage">
-    <wsdl:part name="parameters" element="tns:isUserResponse" />
+  <wsdl:message name="IDataService_IsUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUserResponse" />
   </wsdl:message>
   <wsdl:portType name="IDataService">
     <wsdl:operation name="AddImages">
@@ -63,9 +63,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/AddCredentials" message="tns:IDataService_AddCredentials_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/AddCredentialsResponse" message="tns:IDataService_AddCredentials_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="isUser">
-      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/isUser" message="tns:IDataService_isUser_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/isUserResponse" message="tns:IDataService_isUser_OutputMessage" />
+    <wsdl:operation name="IsUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/IsUser" message="tns:IDataService_IsUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/IsUserResponse" message="tns:IDataService_IsUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IDataService" type="tns:IDataService">
@@ -89,8 +89,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="isUser">
-      <soap12:operation soapAction="http://tempuri.org/IDataService/isUser" style="document" />
+    <wsdl:operation name="IsUser">
+      <soap12:operation soapAction="http://tempuri.org/IDataService/IsUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -105,7 +105,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/DataService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LOLOPOL-PC\paulo</Upn>
+          <Upn>DESKTOP-1P44FJC\cashd</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

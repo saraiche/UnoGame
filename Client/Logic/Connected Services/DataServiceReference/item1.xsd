@@ -23,21 +23,21 @@
   <xs:element name="AddCredentialsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="AddCredentialsResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="AddCredentialsResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="isUser">
+  <xs:element name="IsUser">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services" minOccurs="0" name="credentials" nillable="true" type="q2:DTOCredentials" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="isUserResponse">
+  <xs:element name="IsUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="isUserResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsUserResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

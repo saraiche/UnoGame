@@ -6,23 +6,26 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Contexts;
 using System.ServiceModel.Configuration;
+using Utilities;
 
 namespace Logic
 {
     public class CallDataService
     {
         DataServiceReference.DataServiceClient dataServiceClient = new DataServiceReference.DataServiceClient();
-        public void AddCredentials(string username, string password, string email)
+        public int AddCredentials(string username, string password, string email)
         {
+            int result = 0;
             DataServiceReference.DTOCredentials dTOcredentials = new DataServiceReference.DTOCredentials();
   
-            dTOcredentials.Username = username;    
-            dTOcredentials.Password = password;
+            dTOcredentials.Username = username;
+            dTOcredentials.Password = Security.ComputeSHA256Hash(password);
             dTOcredentials.Email = email;
-            dataServiceClient.AddCredentials(dTOcredentials);
+            result = dataServiceClient.AddCredentials(dTOcredentials);
+            return result;
         }
 
-        public bool isUser(string username, string password)
+        public bool IsUser(string username, string password)
         {
             bool result = false;
             DataServiceReference.DTOCredentials isUser = new DataServiceReference.DTOCredentials();
@@ -30,7 +33,7 @@ namespace Logic
             isUser.Username = username;
             try
             {
-                result = dataServiceClient.isUser(isUser);
+                result = dataServiceClient.IsUser(isUser);
             }catch(Exception ex)
             {
                 throw new Exception(ex.Message);
