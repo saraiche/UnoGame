@@ -67,8 +67,15 @@ public async sendMessage(string user, string message)
 ### Nombrado de acciones
 **acción clic**
 Es el nombre del controlador seguido de _Click
+### Bien
 ```csharp
 private void BtnSignUp_Click(object sender, RoutedEventArgs e)
+{
+}
+```
+### Mal
+```csharp
+private void clickBtnSignUp(object sender, RoutedEventArgs e)
 {
 }
 ```
@@ -134,7 +141,18 @@ public class Security
 public class security {
 }
 ```
-
+### Instancias de clases
+* Se usa la notación lowerCammelCase
+### Bien
+```csharp
+ServiceHost host = new ServiceHost(typeof(Services.DataService))
+Images images = new Images { Id = 1 };
+```
+### Mal
+```csharp
+ServiceHost Host = new ServiceHost(typeof(Services.DataService))
+Images Images = new Images { Id = 1 };
+```
 ### Interfaces
 Las interfaces tienen el prefijo "I"
 ### Bien
@@ -148,7 +166,6 @@ public interface IUserManagment
 public interface userManagment {
 }
 ```
-
 ## Estilo
 ### Identación
 * Todo el código desarrollado tendrá identación de un tab.
