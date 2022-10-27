@@ -216,6 +216,9 @@
   <data name="requestNewCode" xml:space="preserve">
     <value>Solicitar nuevo código</value>
   </data>
+  <data name="send" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
   <data name="sendCode" xml:space="preserve">
     <value>Enviar código de invitación</value>
   </data>

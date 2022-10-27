@@ -16,28 +16,26 @@ using System.Windows.Shapes;
 namespace unoProyect
 {
     /// <summary>
-    /// Lógica de interacción para MainMenu.xaml
+    /// Lógica de interacción para Lobby.xaml
     /// </summary>
-    public partial class MainMenu : Page
+    public partial class Lobby : Page
     {
         public string Username { get; set; }
-        public MainMenu()
+        public Lobby()
         {
             InitializeComponent();
         }
-        public MainMenu(string username):this()
+        public Lobby(string username):this()
         {
             this.Username = username;
         }
 
-
-        private void BtnNewGame_Click(object sender, RoutedEventArgs e)
+        private void BtnSend_Click(object sender, RoutedEventArgs e)
         {
-            Lobby lobby = new Lobby(this.Username);
-            this.NavigationService.Navigate(lobby);
+
         }
 
-        private void BtnFriends_Click(object sender, RoutedEventArgs e)
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
 
         }
