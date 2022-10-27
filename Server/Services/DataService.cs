@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using UnoEntitys;
+using Utilities;
 
 namespace Services
 {
@@ -12,7 +13,9 @@ namespace Services
     {
         public bool AddCredentials(DTOCredentials credentials)
         {
+            //ciframos la contraseña
             bool result = false;
+            credentials.Password = Security.ComputeSHA256Hash(credentials.Password);
             Credentials entityCredential = this.DtoCredentialsToEntity(credentials); 
 
             try
@@ -53,21 +56,27 @@ namespace Services
 
         public DTOPlayer isUser(DTOCredentials credentials)
         {
-            
+            credentials.Password = Security.ComputeSHA256Hash(credentials.Password);
             Credentials entityCredential = this.DtoCredentialsToEntity(credentials);
             try
             {
                 using (unoDbModelContainer dataBase = new unoDbModelContainer())
                 {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
                     //buscar credenciales
-                    Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username).FirstOrDefault();
+                    Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username && x.password == credentials.Password).FirstOrDefault();
                     if (findCredentials != null)
                     {
-                        DTOPlayer dTOPlayer = new DTOPlayer();
+                        
                         dTOPlayer.Credentials.Username = findCredentials.Player.Credentials.username;
                         dTOPlayer.Credentials.Password = findCredentials.Player.Credentials.password;
-
+                        dTOPlayer.Image = findCredentials.Player.Images.path;
                     }
+                    else
+                    {
+                        throw new Exception("No se encuentra el usuario registrado en la base de datos");
+                    }
+                    return dTOPlayer;
 
                 }
             }
@@ -78,7 +87,7 @@ namespace Services
 
         }
 
-        //esta no esta en la interfaz por que el cliente no accedera a este metodo
+        //Esta no esta en la interfaz por que el cliente no accedera a este metodo
         public Credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
         {
             Credentials result = new Credentials();
