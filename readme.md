@@ -231,15 +231,13 @@ counter=counter+1;
 ```
 ## Comentarios
 ### Formato
-Se utilizan '///' para comentarios de una línea y '/** ' para dos líneas o más.
+Se utilizan '///' para comentarios y documentación. Si son dos o más líneas, de igual manera comienza con '///'
 #### Bien
 ```
 /// this line explains something
 
-/**
-these lines explains
-something more
-**/
+///these lines explains
+///something more
 ```
 #### Mal
 ```csharp
