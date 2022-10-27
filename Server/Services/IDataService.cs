@@ -14,7 +14,7 @@ namespace Services
         bool AddImages();
 
         [OperationContract]
-        bool AddCredentials(DTOCredentials credentials);
+        int AddCredentials(DTOCredentials credentials);
 
         [OperationContract]
         bool IsUser(DTOCredentials credentials);

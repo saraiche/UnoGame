@@ -46,9 +46,20 @@ namespace unoProyect
                 if(Utilities.ValidatePassword(password) && Utilities.ValidateEmail(email))
                 {
                     
-                    logic.AddCredentials(username,password,email);
-                        //abrir ventana para ingresar código de email
-                        MessageBox.Show("Registro okei", "");
+                    int result = logic.AddCredentials(username,password,email);
+                    switch (result)
+                    {
+                        case 0:
+                            MessageBox.Show("Registro no okei", "");
+                            break;
+                        case 1:
+                            MessageBox.Show("Registro okei", "");
+                            break;
+                        case 2:
+                            MessageBox.Show("Nombre de usuario duplicado, intente de nuevo", "");
+                            break;
+                    }
+                        //TODO: abrir ventana para ingresar código de email
                     
                 }
                 else
