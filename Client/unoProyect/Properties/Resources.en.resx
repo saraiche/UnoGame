@@ -144,6 +144,15 @@
   <data name="game" xml:space="preserve">
     <value>UNO</value>
   </data>
+  <data name="informationSuccesfullSignUp" xml:space="preserve">
+    <value>Successfull sign up :)</value>
+  </data>
+  <data name="informationUsernameDuplicate" xml:space="preserve">
+    <value>Username already registered, try with another</value>
+  </data>
+  <data name="informationWrongSignUp" xml:space="preserve">
+    <value>Something went wrong, try again later</value>
+  </data>
   <data name="instructionChangePasswordCode" xml:space="preserve">
     <value>We'll send you a code by email to change your password</value>
   </data>

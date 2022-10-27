@@ -50,13 +50,13 @@ namespace unoProyect
                     switch (result)
                     {
                         case 0:
-                            MessageBox.Show("Registro no okei", "");
+                            MessageBox.Show(Properties.Resources.informationWrongSignUp, "");
                             break;
                         case 1:
-                            MessageBox.Show("Registro okei", "");
+                            MessageBox.Show(Properties.Resources.informationSuccesfullSignUp, "");
                             break;
                         case 2:
-                            MessageBox.Show("Nombre de usuario duplicado, intente de nuevo", "");
+                            MessageBox.Show(Properties.Resources.informationUsernameDuplicate, "");
                             break;
                     }
                         //TODO: abrir ventana para ingresar código de email

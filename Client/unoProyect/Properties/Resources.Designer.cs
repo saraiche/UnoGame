@@ -142,6 +142,33 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Successfull sign up :).
+        /// </summary>
+        public static string informationSuccesfullSignUp {
+            get {
+                return ResourceManager.GetString("informationSuccesfullSignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Username already registered, try with another.
+        /// </summary>
+        public static string informationUsernameDuplicate {
+            get {
+                return ResourceManager.GetString("informationUsernameDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Something went wrong, try again later.
+        /// </summary>
+        public static string informationWrongSignUp {
+            get {
+                return ResourceManager.GetString("informationWrongSignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a We&apos;ll send you a code by email to change your password.
         /// </summary>
         public static string instructionChangePasswordCode {
