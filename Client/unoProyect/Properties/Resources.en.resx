@@ -207,6 +207,9 @@
   <data name="requestNewCode" xml:space="preserve">
     <value>Request new code</value>
   </data>
+  <data name="send" xml:space="preserve">
+    <value>Send</value>
+  </data>
   <data name="sendCode" xml:space="preserve">
     <value>Send code</value>
   </data>
