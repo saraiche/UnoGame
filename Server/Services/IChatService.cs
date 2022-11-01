@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -8,34 +9,21 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    [ServiceContract(SessionMode = SessionMode.Allowed)]
-    internal interface IChatService
+    [ServiceContract]
+    public interface IChatClient
     {
-        
-        [OperationContract]
-        ChatUser ClientConnect(string username);
-        [OperationContract]
-        List<ChatUser> GetChatUsers();
-        [OperationContract]
-        void SendNewMessage(ChatMessage chatMessage);
-        [OperationContract]
-        void RemoveUser(ChatUser user);
-
+        [OperationContract(IsOneWay = true)]
+        void RecieveMessage(String user, string message);
     }
-    [DataContract]
-    public class ChatUser{
-        [DataMember]
-        public string UserName { get; set; }
-        [DataMember]
-        public string IpAddress { get; set; }
-        [DataMember]
-        public string Hostname { get; set; }
-    }
-    [DataContract]
-    public class ChatMessage
+    [ServiceContract(CallbackContract = typeof(IChatClient))]
+    public interface IChatService
     {
-        public string Message { get; set; }
-        public ChatUser User { get; set; }
+        [OperationContract]
+        int Join(string username, int code);
+        [OperationContract(IsOneWay = true)]
+        void SendMessage(string message);
+        [OperationContract]
+        int GetInvitationCode();
     }
 
 }
