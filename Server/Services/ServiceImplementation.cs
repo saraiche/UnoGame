@@ -10,41 +10,51 @@ using Utilities;
 
 namespace Services
 {
-        /// <summary>
-        /// El contexto es Single lo que quiere decir que todos los usuarios conectados al chat van a acceder a
-        /// las mismas variables de la clase ChatEngine
-        /// </summary>
-        [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-        public partial class ServiceImplementation : IChatService
+
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.Single)]
+    public partial class ServiceImplementation : IChatService
         {
-            private ChatEngine chatEngine = new ChatEngine();
+        Dictionary<IChatClient, string> _users = new Dictionary<IChatClient, string>();
+        public int InvitationCode { get; set; }
 
-            /// <summary>
-            /// Funcion que conecta un usuario al chat
-            /// </summary>
-            /// <param name="Username"></param>
-            /// <returns>ChatUser</returns>
-            /// <exception cref="NotImplementedException"></exception>
-            public ChatUser ClientConnect(string username)
+        public ServiceImplementation()
+        {
+            InvitationCode = new Random().Next(100000, 999999);
+        }
+
+        public int Join(string username, int code)
+        {
+            int result = -1;
+            if (code == InvitationCode)
             {
-                return chatEngine.AddNewChatUser(new ChatUser() { UserName = username });
+                var connection = OperationContext.Current.GetCallbackChannel<IChatClient>();
+                _users[connection] = username;
+                result = 1;
             }
+            return result;
 
-            public List<ChatUser> GetChatUsers()
-            {
-                return chatEngine.ConnecteUsers;
-            }
+        }
 
-            public void RemoveUser(ChatUser user)
+        public void SendMessage(string message)
+        {
+            var connection = OperationContext.Current.GetCallbackChannel<IChatClient>();
+            string user;
+            if (!_users.TryGetValue(connection, out user))
+                return;
+            foreach (var other in _users.Keys)
             {
-                throw new NotImplementedException();
-            }
-
-            public void SendNewMessage(ChatMessage chatMessage)
-            {
-                 chatEngine.AddNewMessage(chatMessage);
+                if (other == connection)
+                    continue;
+                other.RecieveMessage(user, message);
             }
         }
+
+        public int GetInvitationCode()
+        {
+            return InvitationCode;
+        }
+
+    }
         public partial class ServiceImplementation : IDataService
         {
             /// <summary>
@@ -137,7 +147,6 @@ namespace Services
                 return result;
             }
 
-
         
-        }
+    }
 }
