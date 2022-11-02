@@ -439,6 +439,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The email is invalid.
+        /// </summary>
+        public static string wrongEmail {
+            get {
+                return ResourceManager.GetString("wrongEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Yes.
         /// </summary>
         public static string yes {

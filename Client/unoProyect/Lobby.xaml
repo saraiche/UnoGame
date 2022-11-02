@@ -40,7 +40,7 @@
             <TextBox x:Name="TbSendByEmail" TextWrapping="Wrap" Text="{x:Static p:Resources.instructionSendCodeByEmail}" Width="190" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" />
             <Label x:Name="LblEmail" Content="{x:Static p:Resources.email}" Width="110" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
             <TextBox x:Name="TbEmail" TextWrapping="Wrap" Width="100" Background="#FFD6E3E3" Margin="7" BorderBrush="#FFD1E5E5"/>
-            <Button x:Name="BtnSendByEmail" Content="{x:Static p:Resources.instructionSendCodeByEmail}" Width="200"/>
+            <Button x:Name="BtnSendByEmail" Content="{x:Static p:Resources.instructionSendCodeByEmail}" Width="200" Click="BtnSendByEmail_Click"/>
 
         </WrapPanel>
 

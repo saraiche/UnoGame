@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using unoProyect.Security;
 
 namespace unoProyect
 {
@@ -65,6 +66,28 @@ namespace unoProyect
                     MessageBox.Show("El username no existe");
                 }
                 
+            }
+        }
+
+        private void BtnSendByEmail_Click(object sender, RoutedEventArgs e)
+        {
+            var email = TbEmail.Text;
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(email))
+            {
+                MessageBox.Show(Properties.Resources.notEmptyFields,
+                            Properties.Resources.error);
+            }
+            else
+            {
+                if (Utilities.ValidateEmail(email))
+                {
+                    ///TODO: enviar invitación por correo
+                    MessageBox.Show("Email okei");
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.wrongEmail, Properties.Resources.error);
+                }
             }
         }
     }

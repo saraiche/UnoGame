@@ -243,6 +243,9 @@
   <data name="wrongCredentials" xml:space="preserve">
     <value>Wrong credentials</value>
   </data>
+  <data name="wrongEmail" xml:space="preserve">
+    <value>The email is invalid</value>
+  </data>
   <data name="yes" xml:space="preserve">
     <value>Yes</value>
   </data>
