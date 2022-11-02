@@ -106,112 +106,6 @@ namespace Logic.DataServiceReference {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ChatUser", Namespace="http://schemas.datacontract.org/2004/07/Services")]
-    [System.SerializableAttribute()]
-    public partial class ChatUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HostnameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IpAddressField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UserNameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Hostname {
-            get {
-                return this.HostnameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HostnameField, value) != true)) {
-                    this.HostnameField = value;
-                    this.RaisePropertyChanged("Hostname");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IpAddress {
-            get {
-                return this.IpAddressField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IpAddressField, value) != true)) {
-                    this.IpAddressField = value;
-                    this.RaisePropertyChanged("IpAddress");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
-            get {
-                return this.UserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
-                    this.UserNameField = value;
-                    this.RaisePropertyChanged("UserName");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ChatMessage", Namespace="http://schemas.datacontract.org/2004/07/Services")]
-    [System.SerializableAttribute()]
-    public partial class ChatMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DataServiceReference.IDataService")]
     public interface IDataService {
@@ -233,6 +127,12 @@ namespace Logic.DataServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/IsUser", ReplyAction="http://tempuri.org/IDataService/IsUserResponse")]
         System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/SearchUser", ReplyAction="http://tempuri.org/IDataService/SearchUserResponse")]
+        bool SearchUser(Logic.DataServiceReference.DTOCredentials credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/SearchUser", ReplyAction="http://tempuri.org/IDataService/SearchUserResponse")]
+        System.Threading.Tasks.Task<bool> SearchUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -285,35 +185,44 @@ namespace Logic.DataServiceReference {
         public System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
             return base.Channel.IsUserAsync(credentials);
         }
+        
+        public bool SearchUser(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.SearchUser(credentials);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SearchUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.SearchUserAsync(credentials);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DataServiceReference.IChatService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DataServiceReference.IChatService", CallbackContract=typeof(Logic.DataServiceReference.IChatServiceCallback))]
     public interface IChatService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/ClientConnect", ReplyAction="http://tempuri.org/IChatService/ClientConnectResponse")]
-        Logic.DataServiceReference.ChatUser ClientConnect(string username);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
+        int Join(string username, int code);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/ClientConnect", ReplyAction="http://tempuri.org/IChatService/ClientConnectResponse")]
-        System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser> ClientConnectAsync(string username);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
+        System.Threading.Tasks.Task<int> JoinAsync(string username, int code);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetChatUsers", ReplyAction="http://tempuri.org/IChatService/GetChatUsersResponse")]
-        Logic.DataServiceReference.ChatUser[] GetChatUsers();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
+        void SendMessage(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetChatUsers", ReplyAction="http://tempuri.org/IChatService/GetChatUsersResponse")]
-        System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser[]> GetChatUsersAsync();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
+        System.Threading.Tasks.Task SendMessageAsync(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendNewMessage", ReplyAction="http://tempuri.org/IChatService/SendNewMessageResponse")]
-        void SendNewMessage(Logic.DataServiceReference.ChatMessage chatMessage);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetInvitationCode", ReplyAction="http://tempuri.org/IChatService/GetInvitationCodeResponse")]
+        int GetInvitationCode();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendNewMessage", ReplyAction="http://tempuri.org/IChatService/SendNewMessageResponse")]
-        System.Threading.Tasks.Task SendNewMessageAsync(Logic.DataServiceReference.ChatMessage chatMessage);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetInvitationCode", ReplyAction="http://tempuri.org/IChatService/GetInvitationCodeResponse")]
+        System.Threading.Tasks.Task<int> GetInvitationCodeAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IChatServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/RemoveUser", ReplyAction="http://tempuri.org/IChatService/RemoveUserResponse")]
-        void RemoveUser(Logic.DataServiceReference.ChatUser user);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/RemoveUser", ReplyAction="http://tempuri.org/IChatService/RemoveUserResponse")]
-        System.Threading.Tasks.Task RemoveUserAsync(Logic.DataServiceReference.ChatUser user);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/RecieveMessage")]
+        void RecieveMessage(string user, string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -322,57 +231,50 @@ namespace Logic.DataServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ChatServiceClient : System.ServiceModel.ClientBase<Logic.DataServiceReference.IChatService>, Logic.DataServiceReference.IChatService {
+    public partial class ChatServiceClient : System.ServiceModel.DuplexClientBase<Logic.DataServiceReference.IChatService>, Logic.DataServiceReference.IChatService {
         
-        public ChatServiceClient() {
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public ChatServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public ChatServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public ChatServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public ChatServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
-        public Logic.DataServiceReference.ChatUser ClientConnect(string username) {
-            return base.Channel.ClientConnect(username);
+        public int Join(string username, int code) {
+            return base.Channel.Join(username, code);
         }
         
-        public System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser> ClientConnectAsync(string username) {
-            return base.Channel.ClientConnectAsync(username);
+        public System.Threading.Tasks.Task<int> JoinAsync(string username, int code) {
+            return base.Channel.JoinAsync(username, code);
         }
         
-        public Logic.DataServiceReference.ChatUser[] GetChatUsers() {
-            return base.Channel.GetChatUsers();
+        public void SendMessage(string message) {
+            base.Channel.SendMessage(message);
         }
         
-        public System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser[]> GetChatUsersAsync() {
-            return base.Channel.GetChatUsersAsync();
+        public System.Threading.Tasks.Task SendMessageAsync(string message) {
+            return base.Channel.SendMessageAsync(message);
         }
         
-        public void SendNewMessage(Logic.DataServiceReference.ChatMessage chatMessage) {
-            base.Channel.SendNewMessage(chatMessage);
+        public int GetInvitationCode() {
+            return base.Channel.GetInvitationCode();
         }
         
-        public System.Threading.Tasks.Task SendNewMessageAsync(Logic.DataServiceReference.ChatMessage chatMessage) {
-            return base.Channel.SendNewMessageAsync(chatMessage);
-        }
-        
-        public void RemoveUser(Logic.DataServiceReference.ChatUser user) {
-            base.Channel.RemoveUser(user);
-        }
-        
-        public System.Threading.Tasks.Task RemoveUserAsync(Logic.DataServiceReference.ChatUser user) {
-            return base.Channel.RemoveUserAsync(user);
+        public System.Threading.Tasks.Task<int> GetInvitationCodeAsync() {
+            return base.Channel.GetInvitationCodeAsync();
         }
     }
 }

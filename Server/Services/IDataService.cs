@@ -18,6 +18,9 @@ namespace Services
 
         [OperationContract]
         bool IsUser(DTOCredentials credentials);
+
+        [OperationContract]
+        bool SearchUser(DTOCredentials credentials);
         
 
     }

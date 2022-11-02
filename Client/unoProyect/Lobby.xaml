@@ -33,13 +33,13 @@
         <TextBlock x:Name="TbCodeGame" HorizontalAlignment="Left" Height="39" Margin="425,14,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="131"/>
 
         <WrapPanel Background="White" Margin="32,78,544,126" Orientation="Vertical">
-            <Label x:Name="lblInvitateFriends" Content="{x:Static p:Resources.playWithFriends}" Width="228" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
-            <Label x:Name="lblInstructionEnterUsername" Content="{x:Static p:Resources.instructionEnterUsername}" Width="228" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="25" />
-            <TextBox x:Name="tbUsername" TextWrapping="Wrap" Width="100" Background="#FFD6E3E3" Margin="7" BorderBrush="#FFD1E5E5"/>
-            <Button x:Name="BtnSendByUsername" Content="{x:Static p:Resources.sendCode}" Width="150" Margin="7"/>
-            <TextBox x:Name="tbSendByEmail" TextWrapping="Wrap" Text="{x:Static p:Resources.instructionSendCodeByEmail}" Width="190" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" />
-            <Label x:Name="lblEmail" Content="{x:Static p:Resources.email}" Width="110" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
-            <TextBox x:Name="tbEmail" TextWrapping="Wrap" Width="100" Background="#FFD6E3E3" Margin="7" BorderBrush="#FFD1E5E5"/>
+            <Label x:Name="LblInvitateFriends" Content="{x:Static p:Resources.playWithFriends}" Width="228" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
+            <Label x:Name="LblInstructionEnterUsername" Content="{x:Static p:Resources.instructionEnterUsername}" Width="228" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="25" />
+            <TextBox x:Name="TbUsername" TextWrapping="Wrap" Width="100" Background="#FFD6E3E3" Margin="7" BorderBrush="#FFD1E5E5"/>
+            <Button x:Name="BtnSendByUsername" Content="{x:Static p:Resources.sendCode}" Width="150" Margin="7" Click="BtnSendByUsername_Click"/>
+            <TextBox x:Name="TbSendByEmail" TextWrapping="Wrap" Text="{x:Static p:Resources.instructionSendCodeByEmail}" Width="190" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" />
+            <Label x:Name="LblEmail" Content="{x:Static p:Resources.email}" Width="110" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+            <TextBox x:Name="TbEmail" TextWrapping="Wrap" Width="100" Background="#FFD6E3E3" Margin="7" BorderBrush="#FFD1E5E5"/>
             <Button x:Name="BtnSendByEmail" Content="{x:Static p:Resources.instructionSendCodeByEmail}" Width="200"/>
 
         </WrapPanel>

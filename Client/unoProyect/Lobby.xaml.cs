@@ -20,6 +20,7 @@ namespace unoProyect
     /// </summary>
     public partial class Lobby : Page
     {
+        private Logic.CallDataService logic = new Logic.CallDataService();
         public string Username { get; set; }
         public Lobby()
         {
@@ -43,6 +44,28 @@ namespace unoProyect
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void BtnSendByUsername_Click(object sender, RoutedEventArgs e)
+        {
+            var username = TbUsername.Text; 
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(username)){
+                MessageBox.Show(Properties.Resources.notEmptyFields,
+                            Properties.Resources.error);
+            }
+            else
+            {
+                if (logic.SearchUser(username))
+                {
+                    MessageBox.Show("El username está okei");
+                    ///TODO: enviar invitación por correo
+                }
+                else
+                {
+                    MessageBox.Show("El username no existe");
+                }
+                
+            }
         }
     }
 }

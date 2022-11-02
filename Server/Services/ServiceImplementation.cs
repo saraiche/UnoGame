@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.ServiceModel;
@@ -147,6 +148,27 @@ namespace Services
                 return result;
             }
 
-        
+        public bool SearchUser(DTOCredentials credentials)
+        {
+            bool flag = false;
+            Credentials entityCredential = this.DtoCredentialsToEntity(credentials);
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username).FirstOrDefault();
+                    if (findCredentials != null)
+                    {
+                        flag = true;
+                    }
+                    return flag;
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+        }
     }
 }

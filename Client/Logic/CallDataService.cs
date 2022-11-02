@@ -1,6 +1,7 @@
 ﻿using Logic.DataServiceReference;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -39,6 +40,22 @@ namespace Logic
             }catch(Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+            return result;
+        }
+
+        public bool SearchUser(string username)
+        {
+            bool result = false;
+            DataServiceReference.DTOCredentials searchUser = new DataServiceReference.DTOCredentials();
+            searchUser.Username = username;
+            try
+            {
+                result = dataServiceClient.SearchUser(searchUser);
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
             }
             return result;
         }

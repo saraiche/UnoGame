@@ -83,29 +83,29 @@
   <wsdl:message name="IDataService_IsUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IChatService_ClientConnect_InputMessage">
-    <wsdl:part name="parameters" element="tns:ClientConnect" />
+  <wsdl:message name="IDataService_SearchUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchUser" />
   </wsdl:message>
-  <wsdl:message name="IChatService_ClientConnect_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ClientConnectResponse" />
+  <wsdl:message name="IDataService_SearchUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IChatService_GetChatUsers_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetChatUsers" />
+  <wsdl:message name="IChatService_Join_InputMessage">
+    <wsdl:part name="parameters" element="tns:Join" />
   </wsdl:message>
-  <wsdl:message name="IChatService_GetChatUsers_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetChatUsersResponse" />
+  <wsdl:message name="IChatService_Join_OutputMessage">
+    <wsdl:part name="parameters" element="tns:JoinResponse" />
   </wsdl:message>
-  <wsdl:message name="IChatService_SendNewMessage_InputMessage">
-    <wsdl:part name="parameters" element="tns:SendNewMessage" />
+  <wsdl:message name="IChatService_SendMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessage" />
   </wsdl:message>
-  <wsdl:message name="IChatService_SendNewMessage_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SendNewMessageResponse" />
+  <wsdl:message name="IChatService_GetInvitationCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvitationCode" />
   </wsdl:message>
-  <wsdl:message name="IChatService_RemoveUser_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveUser" />
+  <wsdl:message name="IChatService_GetInvitationCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvitationCodeResponse" />
   </wsdl:message>
-  <wsdl:message name="IChatService_RemoveUser_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveUserResponse" />
+  <wsdl:message name="IChatService_RecieveMessage_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecieveMessage" />
   </wsdl:message>
   <wsdl:portType name="IDataService">
     <wsdl:operation name="AddImages">
@@ -120,23 +120,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/IsUser" message="tns:IDataService_IsUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/IsUserResponse" message="tns:IDataService_IsUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SearchUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/SearchUser" message="tns:IDataService_SearchUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/SearchUserResponse" message="tns:IDataService_SearchUser_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IChatService">
-    <wsdl:operation name="ClientConnect">
-      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/ClientConnect" message="tns:IChatService_ClientConnect_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/ClientConnectResponse" message="tns:IChatService_ClientConnect_OutputMessage" />
+    <wsdl:operation name="Join">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/Join" message="tns:IChatService_Join_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/JoinResponse" message="tns:IChatService_Join_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetChatUsers">
-      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/GetChatUsers" message="tns:IChatService_GetChatUsers_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/GetChatUsersResponse" message="tns:IChatService_GetChatUsers_OutputMessage" />
+    <wsdl:operation name="SendMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/SendMessage" message="tns:IChatService_SendMessage_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendNewMessage">
-      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/SendNewMessage" message="tns:IChatService_SendNewMessage_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/SendNewMessageResponse" message="tns:IChatService_SendNewMessage_OutputMessage" />
+    <wsdl:operation name="GetInvitationCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/GetInvitationCode" message="tns:IChatService_GetInvitationCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/GetInvitationCodeResponse" message="tns:IChatService_GetInvitationCode_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RemoveUser">
-      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/RemoveUser" message="tns:IChatService_RemoveUser_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/RemoveUserResponse" message="tns:IChatService_RemoveUser_OutputMessage" />
+    <wsdl:operation name="RecieveMessage">
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/RecieveMessage" message="tns:IChatService_RecieveMessage_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IDataService" type="tns:IDataService">
@@ -169,12 +171,21 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SearchUser">
+      <soap12:operation soapAction="http://tempuri.org/IDataService/SearchUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IChatService" type="tns:IChatService">
     <wsp:PolicyReference URI="#NetTcpBinding_IChatService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="ClientConnect">
-      <soap12:operation soapAction="http://tempuri.org/IChatService/ClientConnect" style="document" />
+    <wsdl:operation name="Join">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/Join" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -182,8 +193,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetChatUsers">
-      <soap12:operation soapAction="http://tempuri.org/IChatService/GetChatUsers" style="document" />
+    <wsdl:operation name="SendMessage">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/SendMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvitationCode">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/GetInvitationCode" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -191,20 +208,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SendNewMessage">
-      <soap12:operation soapAction="http://tempuri.org/IChatService/SendNewMessage" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RemoveUser">
-      <soap12:operation soapAction="http://tempuri.org/IChatService/RemoveUser" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
+    <wsdl:operation name="RecieveMessage">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/RecieveMessage" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
