@@ -13,10 +13,12 @@ namespace Logic
     public class CallDataService
     {
         DataServiceReference.DataServiceClient dataServiceClient = new DataServiceReference.DataServiceClient();
+        
         public int AddCredentials(string username, string password, string email)
         {
             int result = 0;
             DataServiceReference.DTOCredentials dTOcredentials = new DataServiceReference.DTOCredentials();
+            
   
             dTOcredentials.Username = username;
             dTOcredentials.Password = Security.ComputeSHA256Hash(password);

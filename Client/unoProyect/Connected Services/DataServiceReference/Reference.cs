@@ -22,16 +22,16 @@ namespace unoProyect.DataServiceReference {
         System.Threading.Tasks.Task<bool> AddImagesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddCredentials", ReplyAction="http://tempuri.org/IDataService/AddCredentialsResponse")]
-        bool AddCredentials(Logic.DataServiceReference.DTOCredentials credentials);
+        int AddCredentials(Logic.DataServiceReference.DTOCredentials credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddCredentials", ReplyAction="http://tempuri.org/IDataService/AddCredentialsResponse")]
-        System.Threading.Tasks.Task<bool> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/isUser", ReplyAction="http://tempuri.org/IDataService/isUserResponse")]
-        bool isUser(Logic.DataServiceReference.DTOCredentials credentials);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/IsUser", ReplyAction="http://tempuri.org/IDataService/IsUserResponse")]
+        bool IsUser(Logic.DataServiceReference.DTOCredentials credentials);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/isUser", ReplyAction="http://tempuri.org/IDataService/isUserResponse")]
-        System.Threading.Tasks.Task<bool> isUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/IsUser", ReplyAction="http://tempuri.org/IDataService/IsUserResponse")]
+        System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,20 +69,109 @@ namespace unoProyect.DataServiceReference {
             return base.Channel.AddImagesAsync();
         }
         
-        public bool AddCredentials(Logic.DataServiceReference.DTOCredentials credentials) {
+        public int AddCredentials(Logic.DataServiceReference.DTOCredentials credentials) {
             return base.Channel.AddCredentials(credentials);
         }
         
-        public System.Threading.Tasks.Task<bool> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+        public System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials) {
             return base.Channel.AddCredentialsAsync(credentials);
         }
         
-        public bool isUser(Logic.DataServiceReference.DTOCredentials credentials) {
-            return base.Channel.isUser(credentials);
+        public bool IsUser(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.IsUser(credentials);
         }
         
-        public System.Threading.Tasks.Task<bool> isUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
-            return base.Channel.isUserAsync(credentials);
+        public System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+            return base.Channel.IsUserAsync(credentials);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DataServiceReference.IChatService")]
+    public interface IChatService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/ClientConnect", ReplyAction="http://tempuri.org/IChatService/ClientConnectResponse")]
+        Logic.DataServiceReference.ChatUser ClientConnect(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/ClientConnect", ReplyAction="http://tempuri.org/IChatService/ClientConnectResponse")]
+        System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser> ClientConnectAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetChatUsers", ReplyAction="http://tempuri.org/IChatService/GetChatUsersResponse")]
+        Logic.DataServiceReference.ChatUser[] GetChatUsers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetChatUsers", ReplyAction="http://tempuri.org/IChatService/GetChatUsersResponse")]
+        System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser[]> GetChatUsersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendNewMessage", ReplyAction="http://tempuri.org/IChatService/SendNewMessageResponse")]
+        void SendNewMessage(Logic.DataServiceReference.ChatMessage chatMessage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendNewMessage", ReplyAction="http://tempuri.org/IChatService/SendNewMessageResponse")]
+        System.Threading.Tasks.Task SendNewMessageAsync(Logic.DataServiceReference.ChatMessage chatMessage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/RemoveUser", ReplyAction="http://tempuri.org/IChatService/RemoveUserResponse")]
+        void RemoveUser(Logic.DataServiceReference.ChatUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/RemoveUser", ReplyAction="http://tempuri.org/IChatService/RemoveUserResponse")]
+        System.Threading.Tasks.Task RemoveUserAsync(Logic.DataServiceReference.ChatUser user);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IChatServiceChannel : unoProyect.DataServiceReference.IChatService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ChatServiceClient : System.ServiceModel.ClientBase<unoProyect.DataServiceReference.IChatService>, unoProyect.DataServiceReference.IChatService {
+        
+        public ChatServiceClient() {
+        }
+        
+        public ChatServiceClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public ChatServiceClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ChatServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public Logic.DataServiceReference.ChatUser ClientConnect(string username) {
+            return base.Channel.ClientConnect(username);
+        }
+        
+        public System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser> ClientConnectAsync(string username) {
+            return base.Channel.ClientConnectAsync(username);
+        }
+        
+        public Logic.DataServiceReference.ChatUser[] GetChatUsers() {
+            return base.Channel.GetChatUsers();
+        }
+        
+        public System.Threading.Tasks.Task<Logic.DataServiceReference.ChatUser[]> GetChatUsersAsync() {
+            return base.Channel.GetChatUsersAsync();
+        }
+        
+        public void SendNewMessage(Logic.DataServiceReference.ChatMessage chatMessage) {
+            base.Channel.SendNewMessage(chatMessage);
+        }
+        
+        public System.Threading.Tasks.Task SendNewMessageAsync(Logic.DataServiceReference.ChatMessage chatMessage) {
+            return base.Channel.SendNewMessageAsync(chatMessage);
+        }
+        
+        public void RemoveUser(Logic.DataServiceReference.ChatUser user) {
+            base.Channel.RemoveUser(user);
+        }
+        
+        public System.Threading.Tasks.Task RemoveUserAsync(Logic.DataServiceReference.ChatUser user) {
+            return base.Channel.RemoveUserAsync(user);
         }
     }
 }

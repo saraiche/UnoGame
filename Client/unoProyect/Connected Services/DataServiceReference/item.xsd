@@ -9,4 +9,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DTOCredentials" nillable="true" type="tns:DTOCredentials" />
+  <xs:complexType name="ChatUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Hostname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IpAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChatUser" nillable="true" type="tns:ChatUser" />
+  <xs:complexType name="ArrayOfChatUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ChatUser" nillable="true" type="tns:ChatUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChatUser" nillable="true" type="tns:ArrayOfChatUser" />
+  <xs:complexType name="ChatMessage">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="ChatMessage" nillable="true" type="tns:ChatMessage" />
 </xs:schema>

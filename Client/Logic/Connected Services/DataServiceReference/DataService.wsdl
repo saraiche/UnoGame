@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="DataService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ServiceImplementation" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="NetTcpBinding_IDataService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IChatService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -54,6 +83,30 @@
   <wsdl:message name="IDataService_IsUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IChatService_ClientConnect_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClientConnect" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_ClientConnect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClientConnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_GetChatUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetChatUsers" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_GetChatUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetChatUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_SendNewMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendNewMessage" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_SendNewMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendNewMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_RemoveUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUser" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_RemoveUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserResponse" />
+  </wsdl:message>
   <wsdl:portType name="IDataService">
     <wsdl:operation name="AddImages">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/AddImages" message="tns:IDataService_AddImages_InputMessage" />
@@ -66,6 +119,24 @@
     <wsdl:operation name="IsUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/IsUser" message="tns:IDataService_IsUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/IsUserResponse" message="tns:IDataService_IsUser_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IChatService">
+    <wsdl:operation name="ClientConnect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/ClientConnect" message="tns:IChatService_ClientConnect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/ClientConnectResponse" message="tns:IChatService_ClientConnect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChatUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/GetChatUsers" message="tns:IChatService_GetChatUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/GetChatUsersResponse" message="tns:IChatService_GetChatUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendNewMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/SendNewMessage" message="tns:IChatService_SendNewMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/SendNewMessageResponse" message="tns:IChatService_SendNewMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/RemoveUser" message="tns:IChatService_RemoveUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/RemoveUserResponse" message="tns:IChatService_RemoveUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IDataService" type="tns:IDataService">
@@ -99,11 +170,60 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="DataService">
+  <wsdl:binding name="NetTcpBinding_IChatService" type="tns:IChatService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IChatService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ClientConnect">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/ClientConnect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChatUsers">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/GetChatUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendNewMessage">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/SendNewMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/RemoveUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceImplementation">
     <wsdl:port name="NetTcpBinding_IDataService" binding="tns:NetTcpBinding_IDataService">
-      <soap12:address location="net.tcp://localhost:8081/DataService" />
+      <soap12:address location="net.tcp://localhost:8081/Services" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:8081/DataService</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:8081/Services</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DESKTOP-1P44FJC\cashd</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IChatService" binding="tns:NetTcpBinding_IChatService">
+      <soap12:address location="net.tcp://localhost:8081/Services" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:8081/Services</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>DESKTOP-1P44FJC\cashd</Upn>
         </Identity>
