@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\DataServiceReference\Reference.cs">
+    <Compile Include="CallChatService.cs" />
+    <Compile Include="Connected Services\Proxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -56,43 +57,40 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\DataServiceReference\DataService.wsdl" />
-    <None Include="Connected Services\DataServiceReference\item.xsd">
+    <None Include="Connected Services\Proxy\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\DataServiceReference\item1.xsd">
+    <None Include="Connected Services\Proxy\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\DataServiceReference\item2.xsd">
+    <None Include="Connected Services\Proxy\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\Proxy\ServiceImplementation.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\DataServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Server\Utilities\Utilities.csproj">
       <Project>{7c136178-9d26-4c1d-a529-acf1fe523ea3}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\Proxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Proxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Proxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Proxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
