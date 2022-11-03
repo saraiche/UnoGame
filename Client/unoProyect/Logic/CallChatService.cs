@@ -1,18 +1,18 @@
-﻿using System;
+﻿using unoProyect.Proxy;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using Logic.Proxy;
 
-namespace Logic
+namespace unoProyect.Logic
 {
-    public class CallChatService: IChatServiceCallback
+    public class CallChatService : IChatServiceCallback
     {
         public InstanceContext InstanceContext { get; set; }
-        public ChatServiceClient ChatServiceClient { get; set; }   
+        public ChatServiceClient ChatServiceClient { get; set; }
         public List<string> Messages { get; set; }
         public string Message { get; set; }
 
@@ -27,12 +27,12 @@ namespace Logic
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-            ChatServiceClient.SendMessage(username,message, invitationCode);
+            ChatServiceClient.SendMessage(username, message, invitationCode);
 
         }
         public bool Join(string username, string code)
         {
-             return ChatServiceClient.Join(username, code);
+            return ChatServiceClient.Join(username, code);
         }
 
         public void GetUsersChat(string code)
@@ -41,19 +41,18 @@ namespace Logic
         }
         public string NewRoom(string username)
         {
-           return ChatServiceClient.NewRoom(username);
+            return ChatServiceClient.NewRoom(username);
         }
 
         public void RecieveMessage(string user, string message)
         {
-            Message = user + ": "+message;
+            Message = user + ": " + message;
             Console.WriteLine(Message);
         }
 
         public void GetUsers(string user)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(user);
         }
     }
-    
 }

@@ -1,5 +1,5 @@
-﻿using Logic;
-using Logic.Proxy;
+﻿using unoProyect.Logic;
+using unoProyect.Proxy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
