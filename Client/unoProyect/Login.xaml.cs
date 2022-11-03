@@ -63,5 +63,18 @@ namespace unoProyect
             this.NavigationService.Navigate(signUp);
 
         }
+
+        private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string code = logic.SendMail("cashdezsarai@gmail.com", "Código");
+            if (string.IsNullOrEmpty(code))
+            {
+                MessageBox.Show("Upsi, error");
+            }
+            else
+            {
+                MessageBox.Show("Se envió el código: " + code);
+            }
+        }
     }
 }

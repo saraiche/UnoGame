@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -169,6 +171,35 @@ namespace Services
             {
                 throw new EntityException(ex.Message);
             }
+        }
+
+        public bool SendMail(string to, string emailSubject, string message)
+        {
+            bool status = false;
+            string from = "uno.game@hotmail.com";
+            string displayName = "Uno Game";
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, displayName);
+                mailMessage.To.Add(to);
+
+                mailMessage.Subject = emailSubject;
+                mailMessage.Body = message;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
+                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
+                client.EnableSsl = true;
+
+                client.Send(mailMessage);
+                status = true;
+            }
+            catch (SmtpException ex)
+            {
+                throw new SmtpException(ex.Message);
+            }
+            return status;
         }
     }
 }

@@ -89,6 +89,12 @@
   <wsdl:message name="IDataService_SearchUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:SearchUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IDataService_SendMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMail" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_SendMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMailResponse" />
+  </wsdl:message>
   <wsdl:message name="IChatService_Join_InputMessage">
     <wsdl:part name="parameters" element="tns:Join" />
   </wsdl:message>
@@ -123,6 +129,10 @@
     <wsdl:operation name="SearchUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/SearchUser" message="tns:IDataService_SearchUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/SearchUserResponse" message="tns:IDataService_SearchUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/SendMail" message="tns:IDataService_SendMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/SendMailResponse" message="tns:IDataService_SendMail_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IChatService">
@@ -173,6 +183,15 @@
     </wsdl:operation>
     <wsdl:operation name="SearchUser">
       <soap12:operation soapAction="http://tempuri.org/IDataService/SearchUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <soap12:operation soapAction="http://tempuri.org/IDataService/SendMail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

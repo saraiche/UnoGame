@@ -133,6 +133,12 @@ namespace Logic.DataServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/SearchUser", ReplyAction="http://tempuri.org/IDataService/SearchUserResponse")]
         System.Threading.Tasks.Task<bool> SearchUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/SendMail", ReplyAction="http://tempuri.org/IDataService/SendMailResponse")]
+        bool SendMail(string to, string emailSubject, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/SendMail", ReplyAction="http://tempuri.org/IDataService/SendMailResponse")]
+        System.Threading.Tasks.Task<bool> SendMailAsync(string to, string emailSubject, string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -192,6 +198,14 @@ namespace Logic.DataServiceReference {
         
         public System.Threading.Tasks.Task<bool> SearchUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
             return base.Channel.SearchUserAsync(credentials);
+        }
+        
+        public bool SendMail(string to, string emailSubject, string message) {
+            return base.Channel.SendMail(to, emailSubject, message);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SendMailAsync(string to, string emailSubject, string message) {
+            return base.Channel.SendMailAsync(to, emailSubject, message);
         }
     }
     

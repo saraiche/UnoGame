@@ -59,6 +59,18 @@ namespace Logic
             }
             return result;
         }
+
+        public string SendMail(string email, string emailSubject)
+        {
+            string code = "";
+            code = (new Random().Next(100000, 999999)).ToString();
+            bool result = dataServiceClient.SendMail(email, emailSubject, "El código es: " + code);
+            if (!result)
+            {
+                code = "";
+            }
+            return code;
+        }
        
     }
 }
