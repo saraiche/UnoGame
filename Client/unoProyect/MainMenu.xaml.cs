@@ -20,6 +20,8 @@ namespace unoProyect
     /// </summary>
     public partial class MainMenu : Page
     {
+        public Logic.CallChatService CallChatService { get; set; }
+
         public string Username { get; set; }
         public MainMenu()
         {
@@ -28,18 +30,37 @@ namespace unoProyect
         public MainMenu(string username):this()
         {
             this.Username = username;
+            CallChatService = new Logic.CallChatService();
+
         }
 
 
         private void BtnNewGame_Click(object sender, RoutedEventArgs e)
         {
-            Lobby lobby = new Lobby(this.Username);
+            
+            string invitationCode = CallChatService.NewRoom(this.Username);
+            Lobby lobby = new Lobby(this.Username, invitationCode);
+            
             this.NavigationService.Navigate(lobby);
         }
 
         private void BtnFriends_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void BtnEnterWithCode_Click(object sender, RoutedEventArgs e)
+        {
+            if(CallChatService.Join(Username, TbInvitationCode.Text))
+            {
+                Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text);
+                this.NavigationService.Navigate(lobby);
+
+            }
+            else
+            {
+                MessageBox.Show(Properties.Resources.error);
+            }
         }
     }
 }

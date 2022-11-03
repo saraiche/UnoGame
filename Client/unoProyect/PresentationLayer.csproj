@@ -65,7 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Connected Services\DataServiceReference\Reference.cs">
+    <Compile Include="Connected Services\Proxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -143,16 +143,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Connected Services\DataServiceReference\DataService.wsdl" />
-    <None Include="Connected Services\DataServiceReference\item.xsd">
+    <None Include="Connected Services\Proxy\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\DataServiceReference\item1.xsd">
+    <None Include="Connected Services\Proxy\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\DataServiceReference\item2.xsd">
+    <None Include="Connected Services\Proxy\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\Proxy\ServiceImplementation.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Logic.DataServiceReference.ChatUser.datasource" />
     <None Include="Properties\Settings.settings">
@@ -190,19 +190,16 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\DataServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\Proxy\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\item.disco" />
+    <None Include="Connected Services\Proxy\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\Proxy\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\DataServiceReference\Reference.svcmap">
+    <None Include="Connected Services\Proxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

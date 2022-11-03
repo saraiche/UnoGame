@@ -14,16 +14,22 @@ namespace Services
     {
         [OperationContract(IsOneWay = true)]
         void RecieveMessage(String user, string message);
+        [OperationContract(IsOneWay = true)]
+        void GetUsers(string user);
+
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
     {
         [OperationContract]
-        int Join(string username, int code);
+        bool Join(string username, string code);
         [OperationContract(IsOneWay = true)]
-        void SendMessage(string message);
+        void SendMessage(string username,string message, string invitationCode);
         [OperationContract]
-        int GetInvitationCode();
+        void GetUsersChat(string code);
+
+        [OperationContract]
+        string NewRoom(string username);
     }
     [DataContract]
     public class DTOUserChat
@@ -33,4 +39,6 @@ namespace Services
         [DataMember]
         public IChatClient Connection { get; set; }
     }
+
+
 }

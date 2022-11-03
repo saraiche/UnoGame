@@ -1,4 +1,4 @@
-﻿using Logic.DataServiceReference;
+﻿using Logic.Proxy;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -13,14 +13,11 @@ namespace Logic
 {
     public class CallDataService
     {
-        DataServiceReference.DataServiceClient dataServiceClient = new DataServiceReference.DataServiceClient();
-        
+        Proxy.DataServiceClient dataServiceClient = new Proxy.DataServiceClient();
         public int AddCredentials(string username, string password, string email)
         {
             int result = 0;
-            DataServiceReference.DTOCredentials dTOcredentials = new DataServiceReference.DTOCredentials();
-            
-  
+            Proxy.DTOCredentials dTOcredentials = new Proxy.DTOCredentials();
             dTOcredentials.Username = username;
             dTOcredentials.Password = Security.ComputeSHA256Hash(password);
             dTOcredentials.Email = email;
@@ -31,7 +28,7 @@ namespace Logic
         public bool IsUser(string username, string password)
         {
             bool result = false;
-            DataServiceReference.DTOCredentials isUser = new DataServiceReference.DTOCredentials();
+            Proxy.DTOCredentials isUser = new Proxy.DTOCredentials();
             isUser.Password = password;
             isUser.Username = username;
             try
@@ -43,8 +40,7 @@ namespace Logic
             }
             return result;
         }
-
-        public bool SearchUser(string username)
+       public bool SearchUser(string username)
         {
             bool result = false;
             DataServiceReference.DTOCredentials searchUser = new DataServiceReference.DTOCredentials();
@@ -71,6 +67,5 @@ namespace Logic
             }
             return code;
         }
-       
     }
 }

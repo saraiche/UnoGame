@@ -21,20 +21,33 @@ namespace unoProyect
     /// </summary>
     public partial class Lobby : Page
     {
+<<<<<<< HEAD
         private Logic.CallDataService logic = new Logic.CallDataService();
+=======
+        public Logic.CallChatService CallChatService { get; set; }
+>>>>>>> 686a88bdba32d126740f403df59d1810a05fdb9f
         public string Username { get; set; }
+        public string InvitationCode { get; set; }
         public Lobby()
         {
             InitializeComponent();
+
         }
-        public Lobby(string username):this()
+        public Lobby(string username, string invitationCode):this()
         {
             this.Username = username;
+            this.InvitationCode = invitationCode;
+            CallChatService = new Logic.CallChatService();
+            TbCodeGame.Text = this.InvitationCode.ToString();
+            LvFriendList.Items.Add(CallChatService.Users);
+
         }
 
         private void BtnSend_Click(object sender, RoutedEventArgs e)
         {
-
+            Console.WriteLine("Hola desde send button");
+            //CallChatService.SendMessage(TbMessage.Text);
+            //Console.WriteLine(CallChatService.Messages.ToString());
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
@@ -49,7 +62,7 @@ namespace unoProyect
 
         private void BtnSendByUsername_Click(object sender, RoutedEventArgs e)
         {
-            var username = TbUsername.Text; 
+            var username = TbUsername.Text;
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(username)){
                 MessageBox.Show(Properties.Resources.notEmptyFields,
                             Properties.Resources.error);
@@ -65,7 +78,7 @@ namespace unoProyect
                 {
                     MessageBox.Show("El username no existe");
                 }
-                
+
             }
         }
 
