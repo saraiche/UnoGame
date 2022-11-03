@@ -33,9 +33,9 @@ namespace Logic
             ChatServiceClient.SendMessage(username,message, invitationCode);
 
         }
-        public void Join(string username, string code)
+        public bool Join(string username, string code)
         {
-             ChatServiceClient.Join(username, code);
+             return ChatServiceClient.Join(username, code);
         }
 
         public void GetUsers(string user)

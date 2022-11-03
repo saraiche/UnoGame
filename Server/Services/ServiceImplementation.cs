@@ -18,8 +18,9 @@ namespace Services
         Dictionary<string, List<DTOUserChat>> Rooms { get; set; }
         
 
-        public void Join(string username, string code)
+        public bool Join(string username, string code)
         {
+            bool flag = false;
             DTOUserChat newUser = new DTOUserChat();
             List<DTOUserChat> users = new List<DTOUserChat>();
 
@@ -39,14 +40,15 @@ namespace Services
                 //modificar el diccionario
                 Rooms[code] = users;
                 //enviar a los usuario el mensaje de que llego alguien nuevo
-                IChatClient con;
-                foreach (var user in Rooms[code])
-                {
-                    con = user.Connection;
-                    con.GetUsers(username);
-                    Console.WriteLine(username);
-                }
+                //IChatClient con;
+                //foreach (var user in Rooms[code])
+                //{
+                //    con = user.Connection;
+                //    con.GetUsers(username);
+                //}
+                flag = true;
             }
+            return flag;
 
         }
 
@@ -60,10 +62,7 @@ namespace Services
                     con = other.Connection;
                     con.RecieveMessage(username, message);
                 }
-            }
-            
-
-            
+            }       
         }
        
         public string NewRoom(string username)

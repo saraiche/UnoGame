@@ -90,11 +90,11 @@ namespace unoProyect.Proxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Proxy.IChatService", CallbackContract=typeof(unoProyect.Proxy.IChatServiceCallback))]
     public interface IChatService {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/Join")]
-        void Join(string username, string code);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
+        bool Join(string username, string code);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/Join")]
-        System.Threading.Tasks.Task JoinAsync(string username, string code);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
+        System.Threading.Tasks.Task<bool> JoinAsync(string username, string code);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
         void SendMessage(string username, string message, string invitationCode);
@@ -147,11 +147,11 @@ namespace unoProyect.Proxy {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void Join(string username, string code) {
-            base.Channel.Join(username, code);
+        public bool Join(string username, string code) {
+            return base.Channel.Join(username, code);
         }
         
-        public System.Threading.Tasks.Task JoinAsync(string username, string code) {
+        public System.Threading.Tasks.Task<bool> JoinAsync(string username, string code) {
             return base.Channel.JoinAsync(username, code);
         }
         

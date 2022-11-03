@@ -51,8 +51,16 @@ namespace unoProyect
 
         private void BtnEnterWithCode_Click(object sender, RoutedEventArgs e)
         {
-            CallChatService.Join(Username, TbInvitationCode.Text);
-            Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text);
+            if(CallChatService.Join(Username, TbInvitationCode.Text))
+            {
+                Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text);
+                this.NavigationService.Navigate(lobby);
+
+            }
+            else
+            {
+                MessageBox.Show(Properties.Resources.error);
+            }
         }
     }
 }

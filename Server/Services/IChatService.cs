@@ -21,8 +21,8 @@ namespace Services
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
     {
-        [OperationContract(IsOneWay = true)]
-        void Join(string username, string code);
+        [OperationContract]
+        bool Join(string username, string code);
         [OperationContract(IsOneWay = true)]
         void SendMessage(string username,string message, string invitationCode);
        

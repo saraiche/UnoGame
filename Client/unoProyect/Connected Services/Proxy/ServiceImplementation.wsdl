@@ -86,6 +86,9 @@
   <wsdl:message name="IChatService_Join_InputMessage">
     <wsdl:part name="parameters" element="tns:Join" />
   </wsdl:message>
+  <wsdl:message name="IChatService_Join_OutputMessage">
+    <wsdl:part name="parameters" element="tns:JoinResponse" />
+  </wsdl:message>
   <wsdl:message name="IChatService_SendMessage_InputMessage">
     <wsdl:part name="parameters" element="tns:SendMessage" />
   </wsdl:message>
@@ -118,6 +121,7 @@
   <wsdl:portType name="IChatService">
     <wsdl:operation name="Join">
       <wsdl:input wsaw:Action="http://tempuri.org/IChatService/Join" message="tns:IChatService_Join_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/JoinResponse" message="tns:IChatService_Join_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IChatService/SendMessage" message="tns:IChatService_SendMessage_InputMessage" />
@@ -172,6 +176,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendMessage">
       <soap12:operation soapAction="http://tempuri.org/IChatService/SendMessage" style="document" />
