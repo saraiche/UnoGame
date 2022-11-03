@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -8,24 +9,20 @@ using Logic.Proxy;
 
 namespace Logic
 {
-    public class CallChatService : IChatServiceCallback
+    public class CallChatService: IChatServiceCallback
     {
         public InstanceContext InstanceContext { get; set; }
         public ChatServiceClient ChatServiceClient { get; set; }   
         public List<string> Messages { get; set; }
+        public string Message { get; set; }
 
-        public List<string> Users { get; set; }
+        public ObservableCollection<string> Users { get; set; }
         public CallChatService()
         {
             InstanceContext = new InstanceContext(this);
             ChatServiceClient = new ChatServiceClient(InstanceContext);
             Messages = new List<string>();
-            Users = new List<string>();
-        }
-
-        public void RecieveMessage(string user, string message)
-        {
-            Messages.Add(user+ ": " + message);
+            Users = new ObservableCollection<string>();
         }
 
         public void SendMessage(string username, string message, string invitationCode)
@@ -38,14 +35,25 @@ namespace Logic
              return ChatServiceClient.Join(username, code);
         }
 
-        public void GetUsers(string user)
+        public void GetUsersChat(string code)
         {
-            Users.Add(user);
+            ChatServiceClient.GetUsersChat(code);
         }
-
         public string NewRoom(string username)
         {
            return ChatServiceClient.NewRoom(username);
         }
+
+        public void RecieveMessage(string user, string message)
+        {
+            Message = user + ": "+message;
+            Console.WriteLine(Message);
+        }
+
+        public void GetUsers(string user)
+        {
+            throw new NotImplementedException();
+        }
     }
+    
 }
