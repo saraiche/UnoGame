@@ -1,17 +1,16 @@
-﻿using Logic.Proxy;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Contexts;
-using System.ServiceModel.Configuration;
-using Utilities;
+using System.Text;
+using System.Threading.Tasks;
+using unoProyect.Proxy;
+using unoProyect.Security;
 
-namespace Logic
+
+namespace unoProyect.Logic
 {
-    public class CallDataService
+     public class CallDataService
     {
         Proxy.DataServiceClient dataServiceClient = new Proxy.DataServiceClient();
         public int AddCredentials(string username, string password, string email)
@@ -19,7 +18,7 @@ namespace Logic
             int result = 0;
             Proxy.DTOCredentials dTOcredentials = new Proxy.DTOCredentials();
             dTOcredentials.Username = username;
-            dTOcredentials.Password = Security.ComputeSHA256Hash(password);
+            dTOcredentials.Password = Utilities.ComputeSHA256Hash(password);
             dTOcredentials.Email = email;
             result = dataServiceClient.AddCredentials(dTOcredentials);
             return result;

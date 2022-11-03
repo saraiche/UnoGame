@@ -17,7 +17,7 @@ namespace Services
 
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
     public partial class ServiceImplementation : IChatService
-        {
+    {
         Dictionary<string, List<DTOUserChat>> Rooms { get; set; }
 
 
