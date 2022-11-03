@@ -30,6 +30,9 @@ namespace Services
 
         [OperationContract]
         string NewRoom(string username);
+
+        [OperationContract]
+        List<string> GetPlayersByInvitationCode(string invitationCode);
     }
     [DataContract]
     public class DTOUserChat

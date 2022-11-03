@@ -10,29 +10,29 @@
       Title="{x:Static p:Resources.login}" MinWidth="800" MinHeight="450">
 
     <Grid Background="#FFF9F9F9">
-        <Label Content="{x:Static p:Resources.chat}" HorizontalAlignment="Left" Height="25" Margin="89,84,0,0" VerticalAlignment="Top" Width="135"/>
-        <Label Content="{x:Static p:Resources.friendsList}" HorizontalAlignment="Left" Height="50" Margin="380,86,0,0" VerticalAlignment="Top" Width="186"/>
-        <ListView x:Name="LvFriendList" HorizontalAlignment="Left" Height="167" Margin="375,123,0,0" VerticalAlignment="Top" Width="208" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <Label Content="{x:Static p:Resources.chat}" HorizontalAlignment="Left" Height="25" Margin="289,78,0,0" VerticalAlignment="Top" Width="135"/>
+        <Label Content="{x:Static p:Resources.friendsList}" HorizontalAlignment="Left" Height="50" Margin="580,80,0,0" VerticalAlignment="Top" Width="186"/>
+        <ListView x:Name="LvFriendList" HorizontalAlignment="Left" Height="167" Margin="575,117,0,0" VerticalAlignment="Top" Width="208" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="LvChat" HorizontalAlignment="Left" Height="166" Margin="89,125,0,0" VerticalAlignment="Top" Width="181" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="LvChat" HorizontalAlignment="Left" Height="166" Margin="289,119,0,0" VerticalAlignment="Top" Width="181" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="BtnStart" Content="{x:Static p:Resources.start}" HorizontalAlignment="Left" Height="43" Margin="686,333,0,0" VerticalAlignment="Top" Width="83" Click="BtnStart_Click"/>
-        <TextBox x:Name="TbMessage" HorizontalAlignment="Left" Height="39" Margin="273,282,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="200"/>
-        <Button x:Name="BtnSend" Content="{x:Static p:Resources.send}" HorizontalAlignment="Left" Height="44" Margin="477,280,0,0" VerticalAlignment="Top" Width="98" Click="BtnSend_Click"/>
+        <Button x:Name="BtnStart" Content="{x:Static p:Resources.start}" HorizontalAlignment="Left" Height="43" Margin="676,324,0,0" VerticalAlignment="Top" Width="83" Click="BtnStart_Click"/>
+        <TextBox x:Name="TbMessage" HorizontalAlignment="Left" Height="39" Margin="282,321,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="200"/>
+        <Button x:Name="BtnSend" Content="{x:Static p:Resources.send}" HorizontalAlignment="Left" Height="44" Margin="501,319,0,0" VerticalAlignment="Top" Width="98" Click="BtnSend_Click"/>
         <Label Content="{x:Static p:Resources.theGameCodeIs}" HorizontalAlignment="Left" Height="44" Margin="272,12,0,0" VerticalAlignment="Top" Width="148"/>
         <TextBlock x:Name="TbCodeGame" HorizontalAlignment="Left" Height="39" Margin="425,14,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="131"/>
 
-        <WrapPanel Background="White" Margin="32,78,544,126" Orientation="Vertical">
+        <WrapPanel x:Name="WpPlayWithFriends" Background="White" Margin="31,100,545,104" Orientation="Vertical">
             <Label x:Name="LblInvitateFriends" Content="{x:Static p:Resources.playWithFriends}" Width="228" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
             <Label x:Name="LblInstructionEnterUsername" Content="{x:Static p:Resources.instructionEnterUsername}" Width="228" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="25" />
             <TextBox x:Name="TbUsername" TextWrapping="Wrap" Width="100" Background="#FFD6E3E3" Margin="7" BorderBrush="#FFD1E5E5"/>

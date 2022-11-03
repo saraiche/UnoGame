@@ -21,11 +21,11 @@ namespace unoProyect
     /// </summary>
     public partial class Lobby : Page
     {
-<<<<<<< HEAD
+
         private Logic.CallDataService logic = new Logic.CallDataService();
-=======
         public Logic.CallChatService CallChatService { get; set; }
->>>>>>> 686a88bdba32d126740f403df59d1810a05fdb9f
+        public bool IsHost { get; set; }
+
         public string Username { get; set; }
         public string InvitationCode { get; set; }
         public Lobby()
@@ -33,14 +33,24 @@ namespace unoProyect
             InitializeComponent();
 
         }
-        public Lobby(string username, string invitationCode):this()
+        public Lobby(string username, string invitationCode, bool isHost):this()
         {
             this.Username = username;
             this.InvitationCode = invitationCode;
             CallChatService = new Logic.CallChatService();
             TbCodeGame.Text = this.InvitationCode.ToString();
             LvFriendList.Items.Add(CallChatService.Users);
+            IsHost = isHost;
+            IsPlayer();
+        }
 
+        private void IsPlayer()
+        {
+            if (!IsHost)
+            {
+                WpPlayWithFriends.Visibility = Visibility.Collapsed;
+                BtnStart.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void BtnSend_Click(object sender, RoutedEventArgs e)
@@ -52,7 +62,7 @@ namespace unoProyect
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

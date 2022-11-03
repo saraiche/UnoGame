@@ -43,7 +43,7 @@ namespace Logic
        public bool SearchUser(string username)
         {
             bool result = false;
-            DataServiceReference.DTOCredentials searchUser = new DataServiceReference.DTOCredentials();
+            Proxy.DTOCredentials searchUser = new Proxy.DTOCredentials();
             searchUser.Username = username;
             try
             {

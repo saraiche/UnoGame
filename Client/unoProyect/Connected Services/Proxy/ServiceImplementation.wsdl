@@ -83,6 +83,18 @@
   <wsdl:message name="IDataService_IsUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IDataService_SearchUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchUser" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_SearchUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_SendMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMail" />
+  </wsdl:message>
+  <wsdl:message name="IDataService_SendMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMailResponse" />
+  </wsdl:message>
   <wsdl:message name="IChatService_Join_InputMessage">
     <wsdl:part name="parameters" element="tns:Join" />
   </wsdl:message>
@@ -122,6 +134,14 @@
     <wsdl:operation name="IsUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/IsUser" message="tns:IDataService_IsUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/IsUserResponse" message="tns:IDataService_IsUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/SearchUser" message="tns:IDataService_SearchUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/SearchUserResponse" message="tns:IDataService_SearchUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/SendMail" message="tns:IDataService_SendMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/SendMailResponse" message="tns:IDataService_SendMail_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IChatService">
@@ -170,6 +190,24 @@
     </wsdl:operation>
     <wsdl:operation name="IsUser">
       <soap12:operation soapAction="http://tempuri.org/IDataService/IsUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchUser">
+      <soap12:operation soapAction="http://tempuri.org/IDataService/SearchUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <soap12:operation soapAction="http://tempuri.org/IDataService/SendMail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -233,7 +271,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/Services</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LOLOPOL-PC\paulo</Upn>
+          <Upn>DESKTOP-1P44FJC\cashd</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -242,7 +280,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:8081/Services</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LOLOPOL-PC\paulo</Upn>
+          <Upn>DESKTOP-1P44FJC\cashd</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

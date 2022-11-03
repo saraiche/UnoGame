@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -41,6 +44,7 @@ namespace Services
                 Rooms[code] = users;
 
                 flag = true;
+                Console.WriteLine(username + " se unió a la sala " + code);
             }
             return flag;
 
@@ -77,7 +81,7 @@ namespace Services
 
             dTOUserChats.Add(dTOUser);
             Rooms.Add(invitationCode, dTOUserChats);
-
+            Console.WriteLine(username + " creó la sala "+ invitationCode);
             return invitationCode;
         }
 
@@ -89,6 +93,16 @@ namespace Services
                 con = user.Connection;
                 con.GetUsers(user.UserName);
             }
+        }
+
+        public List<string> GetPlayersByInvitationCode(string invitationCode)
+        {
+            List<string> users = new List<string>();
+            foreach (var user in Rooms[invitationCode])
+            {
+                users.Add(user.UserName);
+            }
+            return users;
         }
 
         public ServiceImplementation()
