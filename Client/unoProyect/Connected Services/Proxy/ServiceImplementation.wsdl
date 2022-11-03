@@ -92,6 +92,12 @@
   <wsdl:message name="IChatService_SendMessage_InputMessage">
     <wsdl:part name="parameters" element="tns:SendMessage" />
   </wsdl:message>
+  <wsdl:message name="IChatService_GetUsersChat_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersChat" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_GetUsersChat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersChatResponse" />
+  </wsdl:message>
   <wsdl:message name="IChatService_NewRoom_InputMessage">
     <wsdl:part name="parameters" element="tns:NewRoom" />
   </wsdl:message>
@@ -125,6 +131,10 @@
     </wsdl:operation>
     <wsdl:operation name="SendMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IChatService/SendMessage" message="tns:IChatService_SendMessage_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersChat">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/GetUsersChat" message="tns:IChatService_GetUsersChat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/GetUsersChatResponse" message="tns:IChatService_GetUsersChat_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="NewRoom">
       <wsdl:input wsaw:Action="http://tempuri.org/IChatService/NewRoom" message="tns:IChatService_NewRoom_InputMessage" />
@@ -185,6 +195,15 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersChat">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/GetUsersChat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NewRoom">
       <soap12:operation soapAction="http://tempuri.org/IChatService/NewRoom" style="document" />

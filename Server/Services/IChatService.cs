@@ -25,7 +25,8 @@ namespace Services
         bool Join(string username, string code);
         [OperationContract(IsOneWay = true)]
         void SendMessage(string username,string message, string invitationCode);
-       
+        [OperationContract]
+        void GetUsersChat(string code);
 
         [OperationContract]
         string NewRoom(string username);

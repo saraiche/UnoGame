@@ -12,14 +12,14 @@
     <Grid Background="#FFF9F9F9">
         <Label Content="{x:Static p:Resources.chat}" HorizontalAlignment="Left" Height="25" Margin="89,84,0,0" VerticalAlignment="Top" Width="135"/>
         <Label Content="{x:Static p:Resources.friendsList}" HorizontalAlignment="Left" Height="50" Margin="380,86,0,0" VerticalAlignment="Top" Width="186"/>
-        <ListView HorizontalAlignment="Left" Height="167" Margin="375,123,0,0" VerticalAlignment="Top" Width="208" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="LvFriendList" HorizontalAlignment="Left" Height="167" Margin="375,123,0,0" VerticalAlignment="Top" Width="208" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView HorizontalAlignment="Left" Height="166" Margin="89,125,0,0" VerticalAlignment="Top" Width="181" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="LvChat" HorizontalAlignment="Left" Height="166" Margin="89,125,0,0" VerticalAlignment="Top" Width="181" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

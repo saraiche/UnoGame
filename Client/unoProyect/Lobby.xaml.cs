@@ -34,7 +34,8 @@ namespace unoProyect
             this.InvitationCode = invitationCode;
             CallChatService = new Logic.CallChatService();
             TbCodeGame.Text = this.InvitationCode.ToString();
-            //CallChatService.Join(Username, InvitationCode);
+            LvFriendList.Items.Add(CallChatService.Users);
+            
         }
 
         private void BtnSend_Click(object sender, RoutedEventArgs e)

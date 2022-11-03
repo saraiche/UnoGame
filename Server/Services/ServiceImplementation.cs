@@ -39,13 +39,7 @@ namespace Services
 
                 //modificar el diccionario
                 Rooms[code] = users;
-                //enviar a los usuario el mensaje de que llego alguien nuevo
-                //IChatClient con;
-                //foreach (var user in Rooms[code])
-                //{
-                //    con = user.Connection;
-                //    con.GetUsers(username);
-                //}
+                
                 flag = true;
             }
             return flag;
@@ -85,6 +79,16 @@ namespace Services
             Rooms.Add(invitationCode, dTOUserChats);
                      
             return invitationCode;
+        }
+
+        public void GetUsersChat(string code)
+        {
+            IChatClient con;
+            foreach (var user in Rooms[code])
+            {
+                con = user.Connection;
+                con.GetUsers(user.UserName);
+            }
         }
 
         public ServiceImplementation()

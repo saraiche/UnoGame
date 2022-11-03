@@ -102,6 +102,12 @@ namespace unoProyect.Proxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
         System.Threading.Tasks.Task SendMessageAsync(string username, string message, string invitationCode);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetUsersChat", ReplyAction="http://tempuri.org/IChatService/GetUsersChatResponse")]
+        void GetUsersChat(string code);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetUsersChat", ReplyAction="http://tempuri.org/IChatService/GetUsersChatResponse")]
+        System.Threading.Tasks.Task GetUsersChatAsync(string code);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/NewRoom", ReplyAction="http://tempuri.org/IChatService/NewRoomResponse")]
         string NewRoom(string username);
         
@@ -161,6 +167,14 @@ namespace unoProyect.Proxy {
         
         public System.Threading.Tasks.Task SendMessageAsync(string username, string message, string invitationCode) {
             return base.Channel.SendMessageAsync(username, message, invitationCode);
+        }
+        
+        public void GetUsersChat(string code) {
+            base.Channel.GetUsersChat(code);
+        }
+        
+        public System.Threading.Tasks.Task GetUsersChatAsync(string code) {
+            return base.Channel.GetUsersChatAsync(code);
         }
         
         public string NewRoom(string username) {
