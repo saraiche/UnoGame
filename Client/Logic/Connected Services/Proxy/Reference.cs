@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Logic.DataServiceReference {
+namespace Logic.Proxy {
     using System.Runtime.Serialization;
     using System;
     
@@ -107,7 +107,7 @@ namespace Logic.DataServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DataServiceReference.IDataService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Proxy.IDataService")]
     public interface IDataService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddImages", ReplyAction="http://tempuri.org/IDataService/AddImagesResponse")]
@@ -117,25 +117,25 @@ namespace Logic.DataServiceReference {
         System.Threading.Tasks.Task<bool> AddImagesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddCredentials", ReplyAction="http://tempuri.org/IDataService/AddCredentialsResponse")]
-        int AddCredentials(Logic.DataServiceReference.DTOCredentials credentials);
+        int AddCredentials(Logic.Proxy.DTOCredentials credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/AddCredentials", ReplyAction="http://tempuri.org/IDataService/AddCredentialsResponse")]
-        System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.Proxy.DTOCredentials credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/IsUser", ReplyAction="http://tempuri.org/IDataService/IsUserResponse")]
-        bool IsUser(Logic.DataServiceReference.DTOCredentials credentials);
+        bool IsUser(Logic.Proxy.DTOCredentials credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDataService/IsUser", ReplyAction="http://tempuri.org/IDataService/IsUserResponse")]
-        System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials);
+        System.Threading.Tasks.Task<bool> IsUserAsync(Logic.Proxy.DTOCredentials credentials);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IDataServiceChannel : Logic.DataServiceReference.IDataService, System.ServiceModel.IClientChannel {
+    public interface IDataServiceChannel : Logic.Proxy.IDataService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class DataServiceClient : System.ServiceModel.ClientBase<Logic.DataServiceReference.IDataService>, Logic.DataServiceReference.IDataService {
+    public partial class DataServiceClient : System.ServiceModel.ClientBase<Logic.Proxy.IDataService>, Logic.Proxy.IDataService {
         
         public DataServiceClient() {
         }
@@ -164,20 +164,120 @@ namespace Logic.DataServiceReference {
             return base.Channel.AddImagesAsync();
         }
         
-        public int AddCredentials(Logic.DataServiceReference.DTOCredentials credentials) {
+        public int AddCredentials(Logic.Proxy.DTOCredentials credentials) {
             return base.Channel.AddCredentials(credentials);
         }
         
-        public System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+        public System.Threading.Tasks.Task<int> AddCredentialsAsync(Logic.Proxy.DTOCredentials credentials) {
             return base.Channel.AddCredentialsAsync(credentials);
         }
         
-        public bool IsUser(Logic.DataServiceReference.DTOCredentials credentials) {
+        public bool IsUser(Logic.Proxy.DTOCredentials credentials) {
             return base.Channel.IsUser(credentials);
         }
         
-        public System.Threading.Tasks.Task<bool> IsUserAsync(Logic.DataServiceReference.DTOCredentials credentials) {
+        public System.Threading.Tasks.Task<bool> IsUserAsync(Logic.Proxy.DTOCredentials credentials) {
             return base.Channel.IsUserAsync(credentials);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Proxy.IChatService", CallbackContract=typeof(Logic.Proxy.IChatServiceCallback))]
+    public interface IChatService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
+        bool Join(string username, string code);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
+        System.Threading.Tasks.Task<bool> JoinAsync(string username, string code);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
+        void SendMessage(string username, string message, string invitationCode);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
+        System.Threading.Tasks.Task SendMessageAsync(string username, string message, string invitationCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetUsersChat", ReplyAction="http://tempuri.org/IChatService/GetUsersChatResponse")]
+        void GetUsersChat(string code);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetUsersChat", ReplyAction="http://tempuri.org/IChatService/GetUsersChatResponse")]
+        System.Threading.Tasks.Task GetUsersChatAsync(string code);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/NewRoom", ReplyAction="http://tempuri.org/IChatService/NewRoomResponse")]
+        string NewRoom(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/NewRoom", ReplyAction="http://tempuri.org/IChatService/NewRoomResponse")]
+        System.Threading.Tasks.Task<string> NewRoomAsync(string username);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IChatServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/RecieveMessage")]
+        void RecieveMessage(string user, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/GetUsers")]
+        void GetUsers(string user);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IChatServiceChannel : Logic.Proxy.IChatService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ChatServiceClient : System.ServiceModel.DuplexClientBase<Logic.Proxy.IChatService>, Logic.Proxy.IChatService {
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public bool Join(string username, string code) {
+            return base.Channel.Join(username, code);
+        }
+        
+        public System.Threading.Tasks.Task<bool> JoinAsync(string username, string code) {
+            return base.Channel.JoinAsync(username, code);
+        }
+        
+        public void SendMessage(string username, string message, string invitationCode) {
+            base.Channel.SendMessage(username, message, invitationCode);
+        }
+        
+        public System.Threading.Tasks.Task SendMessageAsync(string username, string message, string invitationCode) {
+            return base.Channel.SendMessageAsync(username, message, invitationCode);
+        }
+        
+        public void GetUsersChat(string code) {
+            base.Channel.GetUsersChat(code);
+        }
+        
+        public System.Threading.Tasks.Task GetUsersChatAsync(string code) {
+            return base.Channel.GetUsersChatAsync(code);
+        }
+        
+        public string NewRoom(string username) {
+            return base.Channel.NewRoom(username);
+        }
+        
+        public System.Threading.Tasks.Task<string> NewRoomAsync(string username) {
+            return base.Channel.NewRoomAsync(username);
         }
     }
 }
