@@ -31,6 +31,7 @@ namespace unoProyect
         {
             this.Username = username;
             CallChatService = new Logic.CallChatService();
+            LblUsername.Content = username;
 
         }
 
@@ -39,8 +40,8 @@ namespace unoProyect
         {
             
             string invitationCode = CallChatService.NewRoom(this.Username);
-            Lobby lobby = new Lobby(this.Username, invitationCode);
-            
+            Lobby lobby = new Lobby(this.Username, invitationCode, true);
+            lobby.IsHost = true;
             this.NavigationService.Navigate(lobby);
         }
 
@@ -53,7 +54,7 @@ namespace unoProyect
         {
             if(CallChatService.Join(Username, TbInvitationCode.Text))
             {
-                Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text);
+                Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text, false);
                 this.NavigationService.Navigate(lobby);
 
             }

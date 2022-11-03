@@ -29,6 +29,7 @@ namespace unoProyect
             InitializeComponent();
         }
 
+
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUser.Text;
@@ -61,6 +62,19 @@ namespace unoProyect
             SignUp signUp = new SignUp();
             this.NavigationService.Navigate(signUp);
 
+        }
+
+        private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string code = logic.SendMail("cashdezsarai@gmail.com", "Código");
+            if (string.IsNullOrEmpty(code))
+            {
+                MessageBox.Show("Upsi, error");
+            }
+            else
+            {
+                MessageBox.Show("Se envió el código: " + code);
+            }
         }
     }
 }

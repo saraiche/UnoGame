@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -16,7 +19,7 @@ namespace Services
     public partial class ServiceImplementation : IChatService
     {
         Dictionary<string, List<DTOUserChat>> Rooms { get; set; }
-        
+
 
         public bool Join(string username, string code)
         {
@@ -39,8 +42,9 @@ namespace Services
 
                 //modificar el diccionario
                 Rooms[code] = users;
-                
+
                 flag = true;
+                Console.WriteLine(username + " se unió a la sala " + code);
             }
             return flag;
 
@@ -56,11 +60,11 @@ namespace Services
                     con = other.Connection;
                     con.RecieveMessage(username, message);
                 }
-            }       
+            }
         }
-       
+
         public string NewRoom(string username)
-        {          
+        {
             string invitationCode = new Random().Next(100000, 999999).ToString();
             if (Rooms.Keys.Contains(invitationCode))
             {
@@ -77,7 +81,7 @@ namespace Services
 
             dTOUserChats.Add(dTOUser);
             Rooms.Add(invitationCode, dTOUserChats);
-                     
+            Console.WriteLine(username + " creó la sala "+ invitationCode);
             return invitationCode;
         }
 
@@ -91,21 +95,31 @@ namespace Services
             }
         }
 
+        public List<string> GetPlayersByInvitationCode(string invitationCode)
+        {
+            List<string> users = new List<string>();
+            foreach (var user in Rooms[invitationCode])
+            {
+                users.Add(user.UserName);
+            }
+            return users;
+        }
+
         public ServiceImplementation()
         {
             Rooms = new Dictionary<string, List<DTOUserChat>>();
         }
     }
 
-    
+
     public partial class ServiceImplementation : IDataService
     {
         /// <summary>
         /// Agrega las credenciales de un jugador a la base de datos
         /// </summary>
         /// <param name="credentials"></param>
-        /// <returns> 1 si se guardaron correctamente los cambios, 
-        /// 2 si ya existía el username registrado, 
+        /// <returns> 1 si se guardaron correctamente los cambios,
+        /// 2 si ya existía el username registrado,
         /// 0 si ocurrió un error al guardar en la base de datos
         /// </returns>
         /// <exception cref="DbUpdateException"></exception>
@@ -190,6 +204,57 @@ namespace Services
             return result;
         }
 
-        
+        public bool SearchUser(DTOCredentials credentials)
+        {
+            bool flag = false;
+            Credentials entityCredential = this.DtoCredentialsToEntity(credentials);
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username).FirstOrDefault();
+                    if (findCredentials != null)
+                    {
+                        flag = true;
+                    }
+                    return flag;
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+        }
+
+        public bool SendMail(string to, string emailSubject, string message)
+        {
+            bool status = false;
+            string from = "uno.game@hotmail.com";
+            string displayName = "Uno Game";
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, displayName);
+                mailMessage.To.Add(to);
+
+                mailMessage.Subject = emailSubject;
+                mailMessage.Body = message;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
+                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
+                client.EnableSsl = true;
+
+                client.Send(mailMessage);
+                status = true;
+            }
+            catch (SmtpException ex)
+            {
+                throw new SmtpException(ex.Message);
+            }
+            return status;
+        }
+
     }
 }

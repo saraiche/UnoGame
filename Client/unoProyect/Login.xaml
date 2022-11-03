@@ -15,7 +15,7 @@
         <Label x:Name="lblPassword" Grid.Column="1" Grid.Row="4" Content="{x:Static p:Resources.password}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="176,0,0,0" Height="26" Width="79"/>
         <PasswordBox x:Name="pbPassword" Grid.Column="1"  Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="171" Margin="336,0,0,0" Height="28"/>
         <Button Grid.Column="1" Grid.Row="6"  x:Name="BtnLogin" Content="{x:Static p:Resources.login}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="92" Click="BtnLogin_Click" Height="35"/>
-        <Button Grid.Column="1" Grid.Row="7" x:Name="btnForgotMyPassword" Content="{x:Static p:Resources.forgetMyPassword}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,16,0,0"/>
+        <Button Grid.Column="1" Grid.Row="7" x:Name="btnForgotMyPassword" Content="{x:Static p:Resources.forgetMyPassword}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,16,0,0" Click="btnForgotMyPassword_Click"/>
         <Button Grid.Column="1" Grid.Row="7" x:Name="BtnSignUp" Content="{x:Static p:Resources.signUp}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnSignUp_Click" Margin="397,16,0,0" Height="20" Width="75"/>
         <Button Grid.Column="1" Grid.Row="8" x:Name="btnAsGuest" Content="{x:Static p:Resources.playAsGuest}" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="0,15,0,0"/>
 
