@@ -15,7 +15,9 @@ namespace unoProyect.Logic
         public ChatServiceClient ChatServiceClient { get; set; }
         public List<string> Messages { get; set; }
         public string Message { get; set; }
-
+        public Lobby LobbyView { get; set; }
+        public Login LoginView { get; set; }
+        public Game GameView { get; set; }
         public ObservableCollection<string> Users { get; set; }
         public CallChatService()
         {
@@ -54,5 +56,38 @@ namespace unoProyect.Logic
         {
             Console.WriteLine(user);
         }
+
+        public void ReceiveCenter(string center)
+        {
+            GameView.lbCenter.Content = center;
+            Console.WriteLine("Hola, recibí este centro: " + center);
+        }
+
+        public void OpenGame(string username)
+        {
+            GameView = new Game(username);
+            if (this.LobbyView != null)
+            {
+                LobbyView.NavigationService.Navigate(GameView);
+            }
+        }
+
+        public void RequestOpenGame(string invitationCode)
+        {
+            ChatServiceClient.RequestOpenGame(invitationCode);
+        }
+        
+        public string[] GetPlayersByInvitationCode(string invitationCode)
+        {
+            string[] players = new string[10];
+            players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
+            return players;
+        }
+
+        public void PutCardInCenter(string invitationCode, string card)
+        {
+            ChatServiceClient.PutCardInCenter(invitationCode, card);
+        }
+
     }
 }

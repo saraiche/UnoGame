@@ -25,6 +25,7 @@ namespace Services
         [OperationContract]
         bool SendMail(string to, string emailSubject, string message);
 
+
     }
     [DataContract]
     public class DTOCredentials

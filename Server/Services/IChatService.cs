@@ -16,6 +16,11 @@ namespace Services
         void RecieveMessage(String user, string message);
         [OperationContract(IsOneWay = true)]
         void GetUsers(string user);
+        [OperationContract(IsOneWay = true)]
+        void ReceiveCenter(string center);
+        [OperationContract(IsOneWay = true)]
+        void OpenGame(string username);
+        
 
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
@@ -33,6 +38,13 @@ namespace Services
 
         [OperationContract]
         List<string> GetPlayersByInvitationCode(string invitationCode);
+
+        [OperationContract]
+        void RequestOpenGame(string invitationCode);
+
+        [OperationContract]
+        void PutCardInCenter(string invitationCode, string card);
+
     }
     [DataContract]
     public class DTOUserChat

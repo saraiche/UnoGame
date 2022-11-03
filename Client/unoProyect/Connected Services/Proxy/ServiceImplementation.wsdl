@@ -63,6 +63,7 @@
       <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services" />
+      <xsd:import schemaLocation="http://localhost:8082/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IDataService_AddImages_InputMessage">
@@ -116,11 +117,35 @@
   <wsdl:message name="IChatService_NewRoom_OutputMessage">
     <wsdl:part name="parameters" element="tns:NewRoomResponse" />
   </wsdl:message>
+  <wsdl:message name="IChatService_GetPlayersByInvitationCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayersByInvitationCode" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_GetPlayersByInvitationCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPlayersByInvitationCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_RequestOpenGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestOpenGame" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_RequestOpenGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestOpenGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_PutCardInCenter_InputMessage">
+    <wsdl:part name="parameters" element="tns:PutCardInCenter" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_PutCardInCenter_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PutCardInCenterResponse" />
+  </wsdl:message>
   <wsdl:message name="IChatService_RecieveMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecieveMessage" />
   </wsdl:message>
   <wsdl:message name="IChatService_GetUsers_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GetUsers" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_ReceiveCenter_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveCenter" />
+  </wsdl:message>
+  <wsdl:message name="IChatService_OpenGame_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OpenGame" />
   </wsdl:message>
   <wsdl:portType name="IDataService">
     <wsdl:operation name="AddImages">
@@ -160,11 +185,29 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IChatService/NewRoom" message="tns:IChatService_NewRoom_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IChatService/NewRoomResponse" message="tns:IChatService_NewRoom_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetPlayersByInvitationCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/GetPlayersByInvitationCode" message="tns:IChatService_GetPlayersByInvitationCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/GetPlayersByInvitationCodeResponse" message="tns:IChatService_GetPlayersByInvitationCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestOpenGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/RequestOpenGame" message="tns:IChatService_RequestOpenGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/RequestOpenGameResponse" message="tns:IChatService_RequestOpenGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PutCardInCenter">
+      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/PutCardInCenter" message="tns:IChatService_PutCardInCenter_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/PutCardInCenterResponse" message="tns:IChatService_PutCardInCenter_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="RecieveMessage">
       <wsdl:output wsaw:Action="http://tempuri.org/IChatService/RecieveMessage" message="tns:IChatService_RecieveMessage_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetUsers">
       <wsdl:output wsaw:Action="http://tempuri.org/IChatService/GetUsers" message="tns:IChatService_GetUsers_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveCenter">
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/ReceiveCenter" message="tns:IChatService_ReceiveCenter_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpenGame">
+      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/OpenGame" message="tns:IChatService_OpenGame_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IDataService" type="tns:IDataService">
@@ -252,6 +295,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetPlayersByInvitationCode">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/GetPlayersByInvitationCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestOpenGame">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/RequestOpenGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PutCardInCenter">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/PutCardInCenter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="RecieveMessage">
       <soap12:operation soapAction="http://tempuri.org/IChatService/RecieveMessage" style="document" />
       <wsdl:output>
@@ -260,6 +330,18 @@
     </wsdl:operation>
     <wsdl:operation name="GetUsers">
       <soap12:operation soapAction="http://tempuri.org/IChatService/GetUsers" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveCenter">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/ReceiveCenter" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpenGame">
+      <soap12:operation soapAction="http://tempuri.org/IChatService/OpenGame" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

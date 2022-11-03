@@ -16,13 +16,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Security;
+using System.ServiceModel.Channels;
 
 namespace unoProyect
 {
     /// <summary>
     /// Lógica de interacción para Lobby.xaml
     /// </summary>
-    public partial class Lobby : Page, IChatServiceCallback
+    public partial class Lobby : Page
     {
 
         private Logic.CallDataService logic = new Logic.CallDataService();
@@ -66,9 +67,29 @@ namespace unoProyect
             LvChat.Items.Add(mensaje);
         }
 
+        private void mostrarMensaje()
+        {
+            MessageBox.Show("Hola");
+        }
+
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-
+            string[] players = CallChatService.GetPlayersByInvitationCode(InvitationCode);
+            if (players.Length < 2)
+            {
+                MessageBox.Show("No se puede iniciar una partida con menos de dos jugadores", Properties.Resources.error);
+            }
+            else
+            {
+                //abrir interfaz de los demás
+                CallChatService.LobbyView = this;
+                CallChatService.RequestOpenGame(InvitationCode);
+                CallChatService.PutCardInCenter(InvitationCode, "4 verde");
+                Game game = new Game(Username);
+                game.lbCenter.Content = "4 verde";
+                this.NavigationService.Navigate(game);
+                
+            }
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

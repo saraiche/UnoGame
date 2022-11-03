@@ -66,6 +66,7 @@ namespace unoProyect
 
         private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
         {
+            
             string code = logic.SendMail("cashdezsarai@gmail.com", "Código");
             if (string.IsNullOrEmpty(code))
             {
@@ -75,6 +76,8 @@ namespace unoProyect
             {
                 MessageBox.Show("Se envió el código: " + code);
             }
+            
+            
         }
     }
 }

@@ -55,6 +55,7 @@ namespace unoProyect
             if(CallChatService.Join(Username, TbInvitationCode.Text))
             {
                 Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text, false);
+                CallChatService.LobbyView = lobby;
                 this.NavigationService.Navigate(lobby);
 
             }

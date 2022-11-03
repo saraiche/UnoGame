@@ -20,9 +20,10 @@ namespace unoProyect
     /// </summary>
     public partial class Game : Page
     {
-        public Game()
+        public Game(string username)
         {
             InitializeComponent();
+            lblPlayer1.Content = username;
         }
     }
 }
