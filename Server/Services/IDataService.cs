@@ -18,7 +18,12 @@ namespace Services
 
         [OperationContract]
         bool IsUser(DTOCredentials credentials);
+
+        [OperationContract]
+        bool SearchUser(DTOCredentials credentials);
         
+        [OperationContract]
+        bool SendMail(string to, string emailSubject, string message);
 
     }
     [DataContract]

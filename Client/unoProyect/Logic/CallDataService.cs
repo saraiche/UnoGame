@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,32 @@ namespace unoProyect.Logic
             }
             return result;
         }
-       
+       public bool SearchUser(string username)
+        {
+            bool result = false;
+            Proxy.DTOCredentials searchUser = new Proxy.DTOCredentials();
+            searchUser.Username = username;
+            try
+            {
+                result = dataServiceClient.SearchUser(searchUser);
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+            return result;
+        }
+
+        public string SendMail(string email, string emailSubject)
+        {
+            string code = "";
+            code = (new Random().Next(100000, 999999)).ToString();
+            bool result = dataServiceClient.SendMail(email, emailSubject, "El código es: " + code);
+            if (!result)
+            {
+                code = "";
+            }
+            return code;
+        }
     }
 }

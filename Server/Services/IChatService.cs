@@ -16,7 +16,7 @@ namespace Services
         void RecieveMessage(String user, string message);
         [OperationContract(IsOneWay = true)]
         void GetUsers(string user);
-        
+
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
@@ -30,6 +30,9 @@ namespace Services
 
         [OperationContract]
         string NewRoom(string username);
+
+        [OperationContract]
+        List<string> GetPlayersByInvitationCode(string invitationCode);
     }
     [DataContract]
     public class DTOUserChat
@@ -37,8 +40,8 @@ namespace Services
         [DataMember]
         public string UserName { get; set; }
         [DataMember]
-        public IChatClient Connection { get; set; } 
+        public IChatClient Connection { get; set; }
     }
-    
+
 
 }
