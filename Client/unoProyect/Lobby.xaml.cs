@@ -1,5 +1,8 @@
-﻿using System;
+﻿using unoProyect.Logic;
+using unoProyect.Proxy;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +21,14 @@ namespace unoProyect
     /// <summary>
     /// Lógica de interacción para Lobby.xaml
     /// </summary>
-    public partial class Lobby : Page
+    public partial class Lobby : Page, IChatServiceCallback
     {
         public Logic.CallChatService CallChatService { get; set; }
         public string Username { get; set; }
         public string InvitationCode { get; set; }
+        
+
+        public ObservableCollection<string> Messages { get; set; }
         public Lobby()
         {
             InitializeComponent();
@@ -34,20 +40,31 @@ namespace unoProyect
             this.InvitationCode = invitationCode;
             CallChatService = new Logic.CallChatService();
             TbCodeGame.Text = this.InvitationCode.ToString();
-            LvFriendList.Items.Add(CallChatService.Users);
             
         }
 
         private void BtnSend_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Hola desde send button");
-            //CallChatService.SendMessage(TbMessage.Text);
+            CallChatService.SendMessage(this.Username,TbMessage.Text,this.InvitationCode);
             //Console.WriteLine(CallChatService.Messages.ToString());
+            string mensaje = CallChatService.Message;
+            Console.WriteLine(mensaje+"DEsde click button");
+            LvChat.Items.Add(mensaje);
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void RecieveMessage(string user, string message)
+        {
+            Console.WriteLine("Desde presntacion" + user,message);
+        }
+
+        public void GetUsers(string user)
+        {
+            LvFriendList.Items.Add(user);
         }
     }
 }
