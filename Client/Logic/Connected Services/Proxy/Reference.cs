@@ -185,23 +185,23 @@ namespace Logic.Proxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Proxy.IChatService", CallbackContract=typeof(Logic.Proxy.IChatServiceCallback))]
     public interface IChatService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
-        int Join(string username, int code);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/Join")]
+        void Join(string username, string code);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/Join", ReplyAction="http://tempuri.org/IChatService/JoinResponse")]
-        System.Threading.Tasks.Task<int> JoinAsync(string username, int code);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
-        void SendMessage(string message);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/Join")]
+        System.Threading.Tasks.Task JoinAsync(string username, string code);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
-        System.Threading.Tasks.Task SendMessageAsync(string message);
+        void SendMessage(string username, string message, string invitationCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetInvitationCode", ReplyAction="http://tempuri.org/IChatService/GetInvitationCodeResponse")]
-        int GetInvitationCode();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/SendMessage")]
+        System.Threading.Tasks.Task SendMessageAsync(string username, string message, string invitationCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/GetInvitationCode", ReplyAction="http://tempuri.org/IChatService/GetInvitationCodeResponse")]
-        System.Threading.Tasks.Task<int> GetInvitationCodeAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/NewRoom", ReplyAction="http://tempuri.org/IChatService/NewRoomResponse")]
+        string NewRoom(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/NewRoom", ReplyAction="http://tempuri.org/IChatService/NewRoomResponse")]
+        System.Threading.Tasks.Task<string> NewRoomAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -209,6 +209,9 @@ namespace Logic.Proxy {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/RecieveMessage")]
         void RecieveMessage(string user, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/GetUsers")]
+        void GetUsers(string user);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -239,28 +242,28 @@ namespace Logic.Proxy {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public int Join(string username, int code) {
-            return base.Channel.Join(username, code);
+        public void Join(string username, string code) {
+            base.Channel.Join(username, code);
         }
         
-        public System.Threading.Tasks.Task<int> JoinAsync(string username, int code) {
+        public System.Threading.Tasks.Task JoinAsync(string username, string code) {
             return base.Channel.JoinAsync(username, code);
         }
         
-        public void SendMessage(string message) {
-            base.Channel.SendMessage(message);
+        public void SendMessage(string username, string message, string invitationCode) {
+            base.Channel.SendMessage(username, message, invitationCode);
         }
         
-        public System.Threading.Tasks.Task SendMessageAsync(string message) {
-            return base.Channel.SendMessageAsync(message);
+        public System.Threading.Tasks.Task SendMessageAsync(string username, string message, string invitationCode) {
+            return base.Channel.SendMessageAsync(username, message, invitationCode);
         }
         
-        public int GetInvitationCode() {
-            return base.Channel.GetInvitationCode();
+        public string NewRoom(string username) {
+            return base.Channel.NewRoom(username);
         }
         
-        public System.Threading.Tasks.Task<int> GetInvitationCodeAsync() {
-            return base.Channel.GetInvitationCodeAsync();
+        public System.Threading.Tasks.Task<string> NewRoomAsync(string username) {
+            return base.Channel.NewRoomAsync(username);
         }
     }
 }

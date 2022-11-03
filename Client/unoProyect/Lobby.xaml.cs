@@ -20,28 +20,28 @@ namespace unoProyect
     /// </summary>
     public partial class Lobby : Page
     {
-        Logic.CallChatService CallChatService { get; set; }
+        public Logic.CallChatService CallChatService { get; set; }
         public string Username { get; set; }
-        public int InvitationCode { get; set; }
+        public string InvitationCode { get; set; }
         public Lobby()
         {
             InitializeComponent();
             
         }
-        public Lobby(string username):this()
+        public Lobby(string username, string invitationCode):this()
         {
             this.Username = username;
+            this.InvitationCode = invitationCode;
             CallChatService = new Logic.CallChatService();
-            this.InvitationCode = CallChatService.GetInvitationCode();
             TbCodeGame.Text = this.InvitationCode.ToString();
-            CallChatService.Join(Username, InvitationCode);
+            //CallChatService.Join(Username, InvitationCode);
         }
 
         private void BtnSend_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Hola desde send button");
-            CallChatService.SendMessage(TbMessage.Text);
-            Console.WriteLine(CallChatService.Messages.ToString());
+            //CallChatService.SendMessage(TbMessage.Text);
+            //Console.WriteLine(CallChatService.Messages.ToString());
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using UnoEntitys;
@@ -11,65 +12,86 @@ using Utilities;
 namespace Services
 {
 
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
     public partial class ServiceImplementation : IChatService
         {
-        Dictionary<IChatClient, string> users = new Dictionary<IChatClient, string>();
+        Dictionary<string, List<DTOUserChat>> Rooms { get; set; }
+        
 
-        public List<string> InvitationCodes { get; set; }
-
-        public bool Join(string username, string code)
+        public void Join(string username, string code)
         {
-            bool result = false;
-            if (InvitationCodes.Contains(code))
+            DTOUserChat newUser = new DTOUserChat();
+            List<DTOUserChat> users = new List<DTOUserChat>();
+
+            if (Rooms.Keys.Contains(code))
             {
+                //recuperar la lista de los juagadores conectados
+                if (Rooms.TryGetValue(code, out List<DTOUserChat> usersConnect))
+                {
+                    users = usersConnect;
+                }
+                //crear el nuevo usuario
                 var connection = OperationContext.Current.GetCallbackChannel<IChatClient>();
-                connection.InvitationCode = code;
-                users[connection] = username;
-                result = true;
+                newUser.UserName = username;
+                newUser.Connection = connection;
+                users.Add(newUser);
+
+                //modificar el diccionario
+                Rooms[code] = users;
+                //enviar a los usuario el mensaje de que llego alguien nuevo
+                IChatClient con;
+                foreach (var user in Rooms[code])
+                {
+                    con = user.Connection;
+                    con.GetUsers(username);
+                    Console.WriteLine(username);
+                }
             }
-            return result;
 
         }
 
-        public void SendMessage(string message, string invitationCode)
+        public void SendMessage(string username, string message, string invitationCode)
         {
-            var connection = OperationContext.Current.GetCallbackChannel<IChatClient>();
-            string user; 
-            if (!users.TryGetValue(connection, out user))
-                return;
-
-            foreach (var other in users.Keys)
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
             {
-
-                if (other == connection && other.InvitationCode.Contains(invitationCode))
-                    continue;
-                other.RecieveMessage(user, message);
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.RecieveMessage(username, message);
+                }
             }
+            
+
+            
         }
        
         public string NewRoom(string username)
-        {
+        {          
             string invitationCode = new Random().Next(100000, 999999).ToString();
-            if (InvitationCodes.Contains(invitationCode))
+            if (Rooms.Keys.Contains(invitationCode))
             {
                 do
                     invitationCode = new Random().Next(100000, 999999).ToString();
-                while (!InvitationCodes.Contains(invitationCode));
+                while (!Rooms.Keys.Contains(invitationCode));
             }
-            
-            InvitationCodes.Add(invitationCode);
 
             var connection = OperationContext.Current.GetCallbackChannel<IChatClient>();
-            connection.InvitationCode = invitationCode;
-            users[connection] = username; 
-            
+            List<DTOUserChat> dTOUserChats = new List<DTOUserChat>();
+            DTOUserChat dTOUser = new DTOUserChat();
+            dTOUser.Connection = connection;
+            dTOUser.UserName = username;
+
+            dTOUserChats.Add(dTOUser);
+            Rooms.Add(invitationCode, dTOUserChats);
+                     
             return invitationCode;
-
         }
-        
 
-        
+        public ServiceImplementation()
+        {
+            Rooms = new Dictionary<string, List<DTOUserChat>>();
+        }
     }
  
 
