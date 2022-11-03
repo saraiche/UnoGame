@@ -154,6 +154,9 @@
     <None Include="Connected Services\Proxy\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\Proxy\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\Proxy\ServiceImplementation.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Logic.DataServiceReference.ChatUser.datasource" />

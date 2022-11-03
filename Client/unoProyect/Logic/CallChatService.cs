@@ -6,6 +6,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace unoProyect.Logic
 {
@@ -13,21 +14,20 @@ namespace unoProyect.Logic
     {
         public InstanceContext InstanceContext { get; set; }
         public ChatServiceClient ChatServiceClient { get; set; }
-        public List<string> Messages { get; set; }
-        public string Message { get; set; }
-
+        public Lobby Lobby { get; set; }
+    
         public ObservableCollection<string> Users { get; set; }
         public CallChatService()
         {
             InstanceContext = new InstanceContext(this);
             ChatServiceClient = new ChatServiceClient(InstanceContext);
-            Messages = new List<string>();
             Users = new ObservableCollection<string>();
+            Lobby = new Lobby();
         }
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-            ChatServiceClient.SendMessage(username, message, invitationCode);
+             ChatServiceClient.SendMessage(username, message, invitationCode);
 
         }
         public bool Join(string username, string code)
@@ -46,13 +46,12 @@ namespace unoProyect.Logic
 
         public void RecieveMessage(string user, string message)
         {
-            Message = user + ": " + message;
-            Console.WriteLine(Message);
+            Lobby.LvChat.Items.Add(user + " : " + message);
         }
 
         public void GetUsers(string user)
         {
-            Console.WriteLine(user);
+            Lobby.LvFriendList.Items.Add(user);
         }
     }
 }
