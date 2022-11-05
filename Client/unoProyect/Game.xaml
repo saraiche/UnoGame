@@ -21,7 +21,7 @@
         <Image x:Name="imgBaraja" HorizontalAlignment="Left" Height="100" Margin="281,170,0,0" VerticalAlignment="Top" Width="100" OpacityMask="#FFA74747"/>
         <Image x:Name="imgActualCard" HorizontalAlignment="Left" Height="100" Margin="418,170,0,0" VerticalAlignment="Top" Width="100" OpacityMask="#FFA74747"/>
         <Label x:Name="lblPlayer1" Content="Username1" HorizontalAlignment="Left" Margin="363,328,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbCenter" Content="" HorizontalAlignment="Left" Margin="335,205,0,0" VerticalAlignment="Top" Foreground="#FFDF0000" FontSize="20" Width="114"/>
+        <Label x:Name="lbCenter" Content="" HorizontalAlignment="Left" Margin="278,205,0,0" VerticalAlignment="Top" Foreground="#FFDF0000" FontSize="20" Width="249"/>
 
     </Grid>
 </Page>

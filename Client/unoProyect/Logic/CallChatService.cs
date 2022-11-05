@@ -15,7 +15,7 @@ namespace unoProyect.Logic
         public InstanceContext InstanceContext { get; set; }
         public ChatServiceClient ChatServiceClient { get; set; }
         public Lobby Lobby { get; set; }
-        public Lobby LobbyView { get; set; }
+        //public Lobby LobbyView { get; set; }
         public Login LoginView { get; set; }
         public Game GameView { get; set; }
         public ObservableCollection<string> Users { get; set; }
@@ -64,9 +64,9 @@ namespace unoProyect.Logic
         public void OpenGame(string username)
         {
             GameView = new Game(username);
-            if (this.LobbyView != null)
+            if (this.Lobby != null)
             {
-                LobbyView.NavigationService.Navigate(GameView);
+                Lobby.NavigationService.Navigate(GameView);
             }
         }
 

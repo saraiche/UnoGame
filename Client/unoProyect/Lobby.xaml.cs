@@ -59,10 +59,6 @@ namespace unoProyect
         private void BtnSend_Click(object sender, RoutedEventArgs e)
         {
             CallChatService.SendMessage(this.Username,TbMessage.Text,this.InvitationCode);
-            //Console.WriteLine(CallChatService.Messages.ToString());
-            string mensaje = CallChatService.Message;
-            Console.WriteLine(mensaje+"DEsde click button");
-            LvChat.Items.Add(mensaje);
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
@@ -75,11 +71,12 @@ namespace unoProyect
             else
             {
                 //abrir interfaz de los demás
-                CallChatService.LobbyView = this;
+                CallChatService.Lobby = this;
                 CallChatService.RequestOpenGame(InvitationCode);
-                CallChatService.PutCardInCenter(InvitationCode, "4 verde");
+                string center = Utilities.GetRandomCard();
+                CallChatService.PutCardInCenter(InvitationCode, center);
                 Game game = new Game(Username);
-                game.lbCenter.Content = "4 verde";
+                game.lbCenter.Content = center;
                 this.NavigationService.Navigate(game);
 
             }
