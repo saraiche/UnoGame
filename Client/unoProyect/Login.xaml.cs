@@ -79,5 +79,11 @@ namespace unoProyect
             
             
         }
+
+        private void btnAsGuest_Click(object sender, RoutedEventArgs e)
+        {
+            
+            
+        }
     }
 }

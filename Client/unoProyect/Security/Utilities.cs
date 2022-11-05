@@ -10,6 +10,32 @@ namespace unoProyect.Security
 {
     public class Utilities
     {
+        
+        public static List<string> GetCards()
+        {
+            List<string> cards = new List<string>();
+            List<string> colors = new List<string>();
+            colors.Add("green");
+            colors.Add("blue");
+            colors.Add("red");
+            colors.Add("yellow");
+            foreach (string color in colors)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    cards.Add("color_" + color + "_" + i.ToString());
+                }
+                cards.Add("color_" + color + "_draw2");
+                cards.Add("color_" + color + "_reverse");
+                cards.Add("color_" + color + "_skip");
+            }
+            cards.Add("color_wildcard");
+            cards.Add("color_draw4");
+
+            return cards;
+        }
+        
+
         public static string ComputeSHA256Hash(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
