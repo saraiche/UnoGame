@@ -20,7 +20,7 @@ namespace Services
         void ReceiveCenter(string center);
         [OperationContract(IsOneWay = true)]
         void OpenGame(string username);
-        
+
 
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]

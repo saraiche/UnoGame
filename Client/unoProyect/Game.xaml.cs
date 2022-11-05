@@ -23,11 +23,11 @@ namespace unoProyect
         public string Username { get; set; }
         public Game(string username)
         {
-            
-            
+
+
             InitializeComponent();
             lblPlayer1.Content = username;
-            
+
         }
     }
 }

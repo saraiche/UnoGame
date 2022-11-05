@@ -38,10 +38,11 @@ namespace unoProyect
 
         private void BtnNewGame_Click(object sender, RoutedEventArgs e)
         {
-            
+
             string invitationCode = CallChatService.NewRoom(this.Username);
             Lobby lobby = new Lobby(this.Username, invitationCode, true);
             lobby.IsHost = true;
+            CallChatService.Lobby = lobby;
             this.NavigationService.Navigate(lobby);
         }
 
@@ -55,7 +56,7 @@ namespace unoProyect
             if(CallChatService.Join(Username, TbInvitationCode.Text))
             {
                 Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text, false);
-                CallChatService.LobbyView = lobby;
+                CallChatService.Lobby = lobby;
                 this.NavigationService.Navigate(lobby);
 
             }

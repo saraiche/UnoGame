@@ -66,7 +66,7 @@ namespace unoProyect
 
         private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
         {
-            
+
             string code = logic.SendMail("cashdezsarai@gmail.com", "Código");
             if (string.IsNullOrEmpty(code))
             {
@@ -76,14 +76,27 @@ namespace unoProyect
             {
                 MessageBox.Show("Se envió el código: " + code);
             }
-            
-            
+
+
         }
 
         private void btnAsGuest_Click(object sender, RoutedEventArgs e)
         {
-            
-            
+
+
+        }
+
+        private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string code = logic.SendMail("cashdezsarai@gmail.com", "Código");
+            if (string.IsNullOrEmpty(code))
+            {
+                MessageBox.Show("Upsi, error");
+            }
+            else
+            {
+                MessageBox.Show("Se envió el código: " + code);
+            }
         }
     }
 }

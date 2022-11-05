@@ -16,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Security;
-using System.ServiceModel.Channels;
 
 namespace unoProyect
 {
@@ -32,7 +31,6 @@ namespace unoProyect
 
         public string Username { get; set; }
         public string InvitationCode { get; set; }
-        public ObservableCollection<string> Messages { get; set; }
         public Lobby()
         {
             InitializeComponent();
@@ -67,11 +65,6 @@ namespace unoProyect
             LvChat.Items.Add(mensaje);
         }
 
-        private void mostrarMensaje()
-        {
-            MessageBox.Show("Hola");
-        }
-
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             string[] players = CallChatService.GetPlayersByInvitationCode(InvitationCode);
@@ -88,7 +81,7 @@ namespace unoProyect
                 Game game = new Game(Username);
                 game.lbCenter.Content = "4 verde";
                 this.NavigationService.Navigate(game);
-                
+
             }
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace unoProyect.Logic
 {
@@ -13,8 +14,7 @@ namespace unoProyect.Logic
     {
         public InstanceContext InstanceContext { get; set; }
         public ChatServiceClient ChatServiceClient { get; set; }
-        public List<string> Messages { get; set; }
-        public string Message { get; set; }
+        public Lobby Lobby { get; set; }
         public Lobby LobbyView { get; set; }
         public Login LoginView { get; set; }
         public Game GameView { get; set; }
@@ -23,13 +23,13 @@ namespace unoProyect.Logic
         {
             InstanceContext = new InstanceContext(this);
             ChatServiceClient = new ChatServiceClient(InstanceContext);
-            Messages = new List<string>();
             Users = new ObservableCollection<string>();
+            Lobby = new Lobby();
         }
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-            ChatServiceClient.SendMessage(username, message, invitationCode);
+             ChatServiceClient.SendMessage(username, message, invitationCode);
 
         }
         public bool Join(string username, string code)
@@ -48,15 +48,13 @@ namespace unoProyect.Logic
 
         public void RecieveMessage(string user, string message)
         {
-            Message = user + ": " + message;
-            Console.WriteLine(Message);
+            Lobby.LvChat.Items.Add(user + " : " + message);
         }
 
         public void GetUsers(string user)
         {
             Console.WriteLine(user);
         }
-
         public void ReceiveCenter(string center)
         {
             GameView.lbCenter.Content = center;
@@ -76,7 +74,7 @@ namespace unoProyect.Logic
         {
             ChatServiceClient.RequestOpenGame(invitationCode);
         }
-        
+
         public string[] GetPlayersByInvitationCode(string invitationCode)
         {
             string[] players = new string[10];
@@ -88,6 +86,5 @@ namespace unoProyect.Logic
         {
             ChatServiceClient.PutCardInCenter(invitationCode, card);
         }
-
     }
 }
