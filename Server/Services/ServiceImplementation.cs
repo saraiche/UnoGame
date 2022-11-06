@@ -109,6 +109,32 @@ namespace Services
         {
             Rooms = new Dictionary<string, List<DTOUserChat>>();
         }
+
+        public void PutCardInCenter(string invitationCode, string card)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ReceiveCenter(card);
+                }
+            }
+        }
+
+        public void RequestOpenGame(string invitationCode)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.OpenGame(other.UserName);
+                }
+            }
+        }
     }
 
 

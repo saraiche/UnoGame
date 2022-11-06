@@ -12,6 +12,9 @@ namespace unoProyect.Logic
 {
      public class CallDataService
     {
+        public Lobby LobbyView { get; set; }
+        public Login LoginView { get; set; }
+
         Proxy.DataServiceClient dataServiceClient = new Proxy.DataServiceClient();
         public int AddCredentials(string username, string password, string email)
         {
