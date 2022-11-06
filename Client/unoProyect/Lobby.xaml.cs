@@ -63,7 +63,23 @@ namespace unoProyect
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
+            string[] players = CallChatService.GetPlayersByInvitationCode(InvitationCode);
+            if (players.Length < 2)
+            {
+                MessageBox.Show("No se puede iniciar una partida con menos de dos jugadores", Properties.Resources.error);
+            }
+            else
+            {
+                //abrir interfaz de los demás
+                CallChatService.Lobby = this;
+                CallChatService.RequestOpenGame(InvitationCode);
+                string center = Utilities.GetRandomCard();
+                CallChatService.PutCardInCenter(InvitationCode, center);
+                Game game = new Game(Username);
+                game.lbCenter.Content = center;
+                this.NavigationService.Navigate(game);
 
+            }
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

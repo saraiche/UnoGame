@@ -38,7 +38,7 @@ namespace unoProyect
 
         private void BtnNewGame_Click(object sender, RoutedEventArgs e)
         {
-            
+
             string invitationCode = CallChatService.NewRoom(this.Username);
             Lobby lobby = new Lobby(this.Username, invitationCode, true);
             lobby.IsHost = true;

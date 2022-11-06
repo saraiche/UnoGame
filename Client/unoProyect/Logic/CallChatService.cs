@@ -6,7 +6,6 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using System.Globalization;
 
 namespace unoProyect.Logic
 {
@@ -14,20 +13,21 @@ namespace unoProyect.Logic
     {
         public InstanceContext InstanceContext { get; set; }
         public ChatServiceClient ChatServiceClient { get; set; }
-        public Lobby Lobby { get; set; }
-    
+        public Lobby LobbyView { get; set; }
+        public Login LoginView { get; set; }
+        public Game GameView { get; set; }
         public ObservableCollection<string> Users { get; set; }
         public CallChatService()
         {
             InstanceContext = new InstanceContext(this);
             ChatServiceClient = new ChatServiceClient(InstanceContext);
             Users = new ObservableCollection<string>();
-            Lobby = new Lobby();
+            LobbyView = new Lobby();
         }
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-             ChatServiceClient.SendMessage(username, message, invitationCode);
+            ChatServiceClient.SendMessage(username, message, invitationCode);
 
         }
         public bool Join(string username, string code)
@@ -46,12 +46,43 @@ namespace unoProyect.Logic
 
         public void RecieveMessage(string user, string message)
         {
-            Lobby.LvChat.Items.Add(user + " : " + message);
+            LobbyView.LvChat.Items.Add(user + " : " + message);
         }
 
         public void GetUsers(string user)
         {
-            Lobby.LvFriendList.Items.Add(user);
+            Console.WriteLine(user);
+        }
+        public void ReceiveCenter(string center)
+        {
+            GameView.lbCenter.Content = center;
+            Console.WriteLine("Hola, recibí este centro: " + center);
+        }
+
+        public void OpenGame(string username)
+        {
+            GameView = new Game(username);
+            if (this.Lobby != null)
+            {
+                Lobby.NavigationService.Navigate(GameView);
+            }
+        }
+
+        public void RequestOpenGame(string invitationCode)
+        {
+            ChatServiceClient.RequestOpenGame(invitationCode);
+        }
+
+        public string[] GetPlayersByInvitationCode(string invitationCode)
+        {
+            string[] players = new string[10];
+            players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
+            return players;
+        }
+
+        public void PutCardInCenter(string invitationCode, string card)
+        {
+            ChatServiceClient.PutCardInCenter(invitationCode, card);
         }
     }
 }
