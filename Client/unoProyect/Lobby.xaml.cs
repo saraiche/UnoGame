@@ -70,14 +70,9 @@ namespace unoProyect
             }
             else
             {
-                //abrir interfaz de los demás
-                CallChatService.Lobby = this;
                 CallChatService.RequestOpenGame(InvitationCode);
-                string center = Utilities.GetRandomCard();
+                string center = Utilities.GetRandomCenter();
                 CallChatService.PutCardInCenter(InvitationCode, center);
-                Game game = new Game(Username);
-                game.lbCenter.Content = center;
-                this.NavigationService.Navigate(game);
 
             }
         }

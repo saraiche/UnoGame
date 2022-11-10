@@ -128,10 +128,34 @@ namespace Services
             IChatClient con;
             if (Rooms.Keys.Contains(invitationCode))
             {
+                List<string> users = GetUserListFromDtoList(Rooms[invitationCode]);
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.OpenGame(other.UserName);
+                    con.OpenGame(other.UserName, users);
+                }
+            }
+        }
+
+        private List<string> GetUserListFromDtoList(List<DTOUserChat> dtoUserChats)
+        {
+            List<string> users = new List<string>();
+            foreach (var user in dtoUserChats)
+            {
+                users.Add(user.UserName);
+            }
+            return users;
+        }
+
+        public void DealCard(string username, string card, string invitationCode)
+        {
+            IChatClient con;
+            foreach(var user in Rooms[invitationCode])
+            {
+                if (user.UserName == username)
+                {
+                    con = user.Connection;
+                    con.ReceiveCard(card);
                 }
             }
         }

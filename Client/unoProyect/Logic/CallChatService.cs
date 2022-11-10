@@ -14,17 +14,17 @@ namespace unoProyect.Logic
     {
         public InstanceContext InstanceContext { get; set; }
         public ChatServiceClient ChatServiceClient { get; set; }
-        public Lobby Lobby { get; set; }
-        //public Lobby LobbyView { get; set; }
+        public Lobby LobbyView { get; set; }
         public Login LoginView { get; set; }
         public Game GameView { get; set; }
         public ObservableCollection<string> Users { get; set; }
+        public string[] players = new string[10];
         public CallChatService()
         {
             InstanceContext = new InstanceContext(this);
             ChatServiceClient = new ChatServiceClient(InstanceContext);
             Users = new ObservableCollection<string>();
-            Lobby = new Lobby();
+            LobbyView = new Lobby();
         }
 
         public void SendMessage(string username, string message, string invitationCode)
@@ -48,7 +48,7 @@ namespace unoProyect.Logic
 
         public void RecieveMessage(string user, string message)
         {
-            Lobby.LvChat.Items.Add(user + " : " + message);
+            LobbyView.LvChat.Items.Add(user + " : " + message);
         }
 
         public void GetUsers(string user)
@@ -57,16 +57,20 @@ namespace unoProyect.Logic
         }
         public void ReceiveCenter(string center)
         {
-            GameView.lbCenter.Content = center;
-            Console.WriteLine("Hola, recibí este centro: " + center);
+            GameView.PutCardOnCenter(center);
         }
 
-        public void OpenGame(string username)
+        public void OpenGame(string username, string[] players)
         {
-            GameView = new Game(username);
-            if (this.Lobby != null)
+            if (this.LobbyView != null)
             {
-                Lobby.NavigationService.Navigate(GameView);
+                GameView = new Game(username, LobbyView.InvitationCode);
+                GameView.PutUsernames(players);
+                if (username == players.First())
+                {
+                    GameView.DealFirstCards();
+                }
+                LobbyView.NavigationService.Navigate(GameView);
             }
         }
 
@@ -77,14 +81,24 @@ namespace unoProyect.Logic
 
         public string[] GetPlayersByInvitationCode(string invitationCode)
         {
-            string[] players = new string[10];
-            players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
+            string[] players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
             return players;
         }
 
         public void PutCardInCenter(string invitationCode, string card)
         {
             ChatServiceClient.PutCardInCenter(invitationCode, card);
+        }
+
+
+        public void ReceiveCard(string card)
+        {
+            GameView.LvCards.Items.Add(card);
+        }
+
+        public void DealCard(string username, string card, string invitationCode)
+        {
+            ChatServiceClient.DealCard(username, card, invitationCode);
         }
     }
 }

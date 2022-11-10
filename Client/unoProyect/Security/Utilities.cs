@@ -10,7 +10,7 @@ namespace unoProyect.Security
 {
     public class Utilities
     {
-        
+
         public static List<string> GetCards()
         {
             List<string> cards = new List<string>();
@@ -31,10 +31,6 @@ namespace unoProyect.Security
             }
             cards.Add("color_wildcard");
             cards.Add("color_draw4");
-            foreach(string card in cards)
-            {
-                Console.WriteLine(card);
-            }
             return cards;
         }
 
@@ -46,6 +42,7 @@ namespace unoProyect.Security
             return card;
         }
 
+
         public static string GetRandomCenter()
         {
             string card = "";
@@ -53,7 +50,7 @@ namespace unoProyect.Security
             {
               card = GetRandomCard();
             } while (card.Contains("draw") || card.Contains("reverse") || card.Contains("skip") || card.Contains("wildcard"));
-            
+
             return card;
         }
 
