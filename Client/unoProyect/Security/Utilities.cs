@@ -31,10 +31,6 @@ namespace unoProyect.Security
             }
             cards.Add("color_wildcard");
             cards.Add("color_draw4");
-            foreach(string card in cards)
-            {
-                Console.WriteLine(card);
-            }
             return cards;
         }
 
@@ -45,6 +41,7 @@ namespace unoProyect.Security
             string card = cards.ElementAt(random.Next(cards.Count)).ToString();
             return card;
         }
+
 
         public static string GetRandomCenter()
         {
