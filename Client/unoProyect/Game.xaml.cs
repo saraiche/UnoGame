@@ -26,6 +26,8 @@ namespace unoProyect
         public string[] Players { get; set; }
         public Game(string username, string code)
         {
+
+
             InitializeComponent();
             Username = username;
             InvitationCode = code;
@@ -63,7 +65,7 @@ namespace unoProyect
                 }
             }
         }
-        
+
         public void PutUsernames(string[] players)
         {
             this.Players = players;
@@ -100,7 +102,7 @@ namespace unoProyect
 
                 }
             }
-            
+
         }
     }
 }

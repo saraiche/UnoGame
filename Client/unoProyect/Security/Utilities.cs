@@ -10,7 +10,7 @@ namespace unoProyect.Security
 {
     public class Utilities
     {
-        
+
         public static List<string> GetCards()
         {
             List<string> cards = new List<string>();
@@ -50,7 +50,7 @@ namespace unoProyect.Security
             {
               card = GetRandomCard();
             } while (card.Contains("draw") || card.Contains("reverse") || card.Contains("skip") || card.Contains("wildcard"));
-            
+
             return card;
         }
 
