@@ -59,12 +59,12 @@ namespace unoProyect.Logic
             Console.WriteLine("Hola, recibí este centro: " + center);
         }
 
-        public void OpenGame(string username)
+        public void OpenGame(string username, string invitationCode)
         {
-            GameView = new Game(username);
-            if (this.Lobby != null)
+            GameView = new Game(username,invitationCode);
+            if (this.LobbyView != null)
             {
-                Lobby.NavigationService.Navigate(GameView);
+                LobbyView.NavigationService.Navigate(GameView);
             }
         }
 
@@ -83,6 +83,15 @@ namespace unoProyect.Logic
         public void PutCardInCenter(string invitationCode, string card)
         {
             ChatServiceClient.PutCardInCenter(invitationCode, card);
+        }
+
+        public void itsMyTurn(bool myturn)
+        {
+            GameView.BtnPlay.IsEnabled = myturn;
+        }
+        public void NextTurn(string invitationCode, string username)
+        {
+            ChatServiceClient.NextTurn(invitationCode, username);
         }
     }
 }

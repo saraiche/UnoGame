@@ -71,12 +71,13 @@ namespace unoProyect
             else
             {
                 //abrir interfaz de los demás
-                CallChatService.Lobby = this;
+                CallChatService.LobbyView = this;
                 CallChatService.RequestOpenGame(InvitationCode);
                 string center = Utilities.GetRandomCard();
                 CallChatService.PutCardInCenter(InvitationCode, center);
-                Game game = new Game(Username);
+                Game game = new Game(Username,InvitationCode);
                 game.lbCenter.Content = center;
+
                 this.NavigationService.Navigate(game);
 
             }

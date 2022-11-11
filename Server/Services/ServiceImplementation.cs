@@ -94,6 +94,7 @@ namespace Services
                 con.GetUsers(user.UserName);
             }
         }
+        //logica de juego
 
         public List<string> GetPlayersByInvitationCode(string invitationCode)
         {
@@ -122,7 +123,7 @@ namespace Services
                 }
             }
         }
-
+        
         public void RequestOpenGame(string invitationCode)
         {
             IChatClient con;
@@ -131,8 +132,33 @@ namespace Services
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.OpenGame(other.UserName);
+                    con.OpenGame(other.UserName, invitationCode);
                 }
+            }
+        }
+        public void NextTurn(string invitationCode, string username)
+        {
+            int indexTurnActual = 0;
+
+            List<DTOUserChat> users = new List<DTOUserChat>();
+            foreach (var user in Rooms[invitationCode])
+            {
+                if (user.UserName == username)
+                {
+                    //guardar turno actual
+                    indexTurnActual = Rooms[invitationCode].IndexOf(user);
+                }
+            }
+            
+            users = Rooms[invitationCode];
+            users[indexTurnActual].Connection.itsMyTurn(false);
+            if (users[indexTurnActual] == users.Last())
+            {
+                users.First().Connection.itsMyTurn(true);
+            }
+            else
+            {
+                users[indexTurnActual + 1].Connection.itsMyTurn(true);
             }
         }
     }

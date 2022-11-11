@@ -19,7 +19,9 @@ namespace Services
         [OperationContract(IsOneWay = true)]
         void ReceiveCenter(string center);
         [OperationContract(IsOneWay = true)]
-        void OpenGame(string username);
+        void OpenGame(string username, string invitationCode);
+        [OperationContract(IsOneWay = true)]
+        void itsMyTurn(bool myturn);
 
 
     }
@@ -44,6 +46,8 @@ namespace Services
 
         [OperationContract]
         void PutCardInCenter(string invitationCode, string card);
+        [OperationContract]
+        void NextTurn(string invitationCode, string username);
 
     }
     [DataContract]
