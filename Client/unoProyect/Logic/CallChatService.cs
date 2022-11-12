@@ -29,7 +29,7 @@ namespace unoProyect.Logic
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-             ChatServiceClient.SendMessage(username, message, invitationCode);
+            ChatServiceClient.SendMessage(username, message, invitationCode);
 
         }
         public bool Join(string username, string code)
@@ -90,7 +90,14 @@ namespace unoProyect.Logic
             ChatServiceClient.PutCardInCenter(invitationCode, card);
         }
 
-
+        public void itsMyTurn(bool myturn)
+        {
+            GameView.BtnPlay.IsEnabled = myturn;
+        }
+        public void NextTurn(string invitationCode, string username)
+        {
+            ChatServiceClient.NextTurn(invitationCode, username);
+        }
         public void ReceiveCard(string card)
         {
             GameView.LvCards.Items.Add(card);

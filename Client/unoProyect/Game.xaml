@@ -1,33 +1,106 @@
-﻿<Page x:Class="unoProyect.Game"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:unoProyect"
-      mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Game">
+﻿<Page
+    Title="Game"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="unoProyect.Game"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:unoProyect"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Background="#FFF9F9F9">
-        <Label x:Name="lblPlayer2" Content="Username2" HorizontalAlignment="Left" Margin="78,147,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblPlayer3" Content="Username3" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblPlayer4" Content="Username4" HorizontalAlignment="Left" Margin="627,147,0,0" VerticalAlignment="Top"/>
-        <Rectangle HorizontalAlignment="Left" Height="54" Margin="95,178,0,0" Stroke="Black" VerticalAlignment="Top" Width="35"/>
-        <Rectangle HorizontalAlignment="Center" Height="54" Margin="0,74,0,0" Stroke="Black" VerticalAlignment="Top" Width="36"/>
-        <Rectangle HorizontalAlignment="Left" Height="54" Margin="644,178,0,0" Stroke="Black" VerticalAlignment="Top" Width="35"/>
-        <Label x:Name="lbCardsPlayer2" Content="7" HorizontalAlignment="Left" Margin="105,192,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbCardsPlayer3" Content="7" HorizontalAlignment="Center" Margin="0,88,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbCardsPlayer4" Content="7" HorizontalAlignment="Left" Margin="653,192,0,0" VerticalAlignment="Top"/>
-        <Image x:Name="imgBaraja" HorizontalAlignment="Left" Height="100" Margin="281,170,0,0" VerticalAlignment="Top" Width="100" Source="GraphicResources/color_back.png"/>
-        <Image x:Name="imgCenter" HorizontalAlignment="Left" Height="100" Margin="418,170,0,0" VerticalAlignment="Top" Width="100" Source="GraphicResources/color_back.png"/>
-        <Label x:Name="lblPlayer1" Content="Username1" HorizontalAlignment="Left" Margin="363,328,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="LvCards" d:ItemsSource="{d:SampleData ItemCount=1}" Margin="57,247,586,27">
+        <Label
+            Content="Username2"
+            HorizontalAlignment="Left"
+            Margin="78,147,0,0"
+            VerticalAlignment="Top"
+            x:Name="lblPlayer2" />
+        <Label
+            Content="Username3"
+            HorizontalAlignment="Center"
+            Margin="0,43,0,0"
+            VerticalAlignment="Top"
+            x:Name="lblPlayer3" />
+        <Label
+            Content="Username4"
+            HorizontalAlignment="Left"
+            Margin="627,147,0,0"
+            VerticalAlignment="Top"
+            x:Name="lblPlayer4" />
+        <Rectangle
+            Height="54"
+            HorizontalAlignment="Left"
+            Margin="95,178,0,0"
+            Stroke="Black"
+            VerticalAlignment="Top"
+            Width="35" />
+        <Rectangle
+            Height="54"
+            HorizontalAlignment="Center"
+            Margin="0,74,0,0"
+            Stroke="Black"
+            VerticalAlignment="Top"
+            Width="36" />
+        <Rectangle
+            Height="54"
+            HorizontalAlignment="Left"
+            Margin="644,178,0,0"
+            Stroke="Black"
+            VerticalAlignment="Top"
+            Width="35" />
+        <Label
+            Content="7"
+            HorizontalAlignment="Left"
+            Margin="105,192,0,0"
+            VerticalAlignment="Top"
+            x:Name="lbCardsPlayer2" />
+        <Label
+            Content="7"
+            HorizontalAlignment="Center"
+            Margin="0,88,0,0"
+            VerticalAlignment="Top"
+            x:Name="lbCardsPlayer3" />
+        <Label
+            Content="7"
+            HorizontalAlignment="Left"
+            Margin="653,192,0,0"
+            VerticalAlignment="Top"
+            x:Name="lbCardsPlayer4" />
+        <Image
+            Height="100"
+            HorizontalAlignment="Left"
+            Margin="281,170,0,0"
+            Source="GraphicResources/color_back.png"
+            VerticalAlignment="Top"
+            Width="100"
+            x:Name="imgBaraja" />
+        <Image
+            Height="100"
+            HorizontalAlignment="Left"
+            Margin="418,170,0,0"
+            Source="GraphicResources/color_back.png"
+            VerticalAlignment="Top"
+            Width="100"
+            x:Name="imgCenter" />
+        <Label
+            Content="Username1"
+            HorizontalAlignment="Left"
+            Margin="363,328,0,0"
+            VerticalAlignment="Top"
+            x:Name="lblPlayer1" />
+        <ListView
+            Margin="57,247,586,27"
+            d:ItemsSource="{d:SampleData ItemCount=1}"
+            x:Name="LvCards">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn />
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="BtnPlay" Content="Play" HorizontalAlignment="Left" Height="31" Margin="301,374,0,0" VerticalAlignment="Top" Width="70" Click="BtnPlay_Click"/>
 
 
     </Grid>

@@ -26,8 +26,6 @@ namespace unoProyect
         public string[] Players { get; set; }
         public Game(string username, string code)
         {
-
-
             InitializeComponent();
             Username = username;
             InvitationCode = code;
@@ -35,36 +33,41 @@ namespace unoProyect
             CallChatService = new Logic.CallChatService();
         }
 
-        public void PutCardOnCenter(string card)
-        {
-            BitmapImage bi3 = new BitmapImage();
-            bi3.BeginInit();
-            bi3.UriSource = new Uri("GraphicResources/" + card + ".png", UriKind.Relative);
-            bi3.EndInit();
-            imgCenter.Stretch = Stretch.Fill;
-            imgCenter.Source = bi3;
-        }
-
-        public void DealFirstCards()
-        {
-            List<string> cards = new List<string>();
-            cards = Security.Utilities.GetCards();
-            int index = 0;
-            int cardsSize = cards.Count;
-            string card = "";
-            Random random = new Random();
-            for (int i = 0; i < Players.Length; i++)
+            private void BtnPlay_Click(object sender, RoutedEventArgs e)
             {
-                for (int j = 0; j < 7; j++)
+                CallChatService.NextTurn(InvitationCode, Username);
+            }
+
+            public void PutCardOnCenter(string card)
+            {
+                BitmapImage bi3 = new BitmapImage();
+                bi3.BeginInit();
+                bi3.UriSource = new Uri("GraphicResources/" + card + ".png", UriKind.Relative);
+                bi3.EndInit();
+                imgCenter.Stretch = Stretch.Fill;
+                imgCenter.Source = bi3;
+            }
+
+            public void DealFirstCards()
+            {
+                List<string> cards = new List<string>();
+                cards = Security.Utilities.GetCards();
+                int index = 0;
+                int cardsSize = cards.Count;
+                string card = "";
+                Random random = new Random();
+                for (int i = 0; i < Players.Length; i++)
                 {
-                    index = random.Next(cardsSize);
-                    card = cards.ElementAt(index);
-                    CallChatService.DealCard(Players[i], card, InvitationCode);
-                    cards.RemoveAt(index);
-                    cardsSize--;
+                    for (int j = 0; j < 7; j++)
+                    {
+                        index = random.Next(cardsSize);
+                        card = cards.ElementAt(index);
+                        CallChatService.DealCard(Players[i], card, InvitationCode);
+                        cards.RemoveAt(index);
+                        cardsSize--;
+                    }
                 }
             }
-        }
 
         public void PutUsernames(string[] players)
         {
@@ -81,7 +84,7 @@ namespace unoProyect
             }
 
             int iterador = indexThisPlayer + 1;
-            while(iterador%players.Length != indexThisPlayer)
+            while (iterador % players.Length != indexThisPlayer)
             {
                 switch (labelIterator)
                 {
@@ -102,7 +105,6 @@ namespace unoProyect
 
                 }
             }
-
         }
     }
-}
+    }
