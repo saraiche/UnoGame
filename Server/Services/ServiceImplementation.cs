@@ -178,10 +178,33 @@ namespace Services
             if (users[indexTurnActual] == users.Last())
             {
                 users.First().Connection.itsMyTurn(true);
+                foreach (var user in users)
+                {
+                    if(user == users.First())
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        user.Connection.itsMyTurn(false);
+                    }
+                }
             }
             else
             {
                 users[indexTurnActual + 1].Connection.itsMyTurn(true);
+                foreach (var user in users)
+                {
+                    if (user == users[indexTurnActual + 1])
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        user.Connection.itsMyTurn(false);
+                    }
+                }
+
             }
         }
     }
