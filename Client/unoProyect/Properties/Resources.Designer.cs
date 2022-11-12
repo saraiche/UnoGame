@@ -412,6 +412,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Use card.
+        /// </summary>
+        public static string useCard {
+            get {
+                return ResourceManager.GetString("useCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Username.
         /// </summary>
         public static string user {

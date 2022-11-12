@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using unoProyect.Logic;
 
 namespace unoProyect
 {
@@ -24,6 +25,9 @@ namespace unoProyect
         public string InvitationCode { get; set; }
         public Logic.CallChatService CallChatService { get; set; }
         public string[] Players { get; set; }
+        public string Center { get; set; }
+        public string ActualColor { get; set; }
+        public bool Reverse { get; set; }
         public Game(string username, string code)
         {
 
@@ -37,6 +41,7 @@ namespace unoProyect
 
         public void PutCardOnCenter(string card)
         {
+            this.Center = card;
             BitmapImage bi3 = new BitmapImage();
             bi3.BeginInit();
             bi3.UriSource = new Uri("GraphicResources/" + card + ".png", UriKind.Relative);
@@ -45,10 +50,16 @@ namespace unoProyect
             imgCenter.Source = bi3;
         }
 
+        public void IsValidCard(string card)
+        {
+            Console.WriteLine("Centro: " + Center);
+            Console.WriteLine("Carta: " + card);
+        }
+
         public void DealFirstCards()
         {
             List<string> cards = new List<string>();
-            cards = Security.Utilities.GetCards();
+            cards = GameLogic.GetCards();
             int index = 0;
             int cardsSize = cards.Count;
             string card = "";
@@ -72,15 +83,10 @@ namespace unoProyect
             int labelIterator = 2;
             int indexThisPlayer = 0;
 
-            for (int i = 0; i < players.Length; i++)
-            {
-                if (players[i].Equals(Username))
-                {
-                    indexThisPlayer = i;
-                }
-            }
+            indexThisPlayer = GameLogic.GetIndexPlayer(Username, players);
 
             int iterador = indexThisPlayer + 1;
+            /// Simula un comportamiento circular
             while(iterador%players.Length != indexThisPlayer)
             {
                 switch (labelIterator)
@@ -103,6 +109,47 @@ namespace unoProyect
                 }
             }
 
+        }
+
+        private void BtnUseCard_Click(object sender, RoutedEventArgs e)
+        {
+            string card = (string)LvCards.SelectedItem;
+            if (card == null)
+            {
+                MessageBox.Show("Please select a card from the list");
+            }
+            else
+            {
+                IsValidCard(card);
+                if (GameLogic.IsValidCard(card, Center, ActualColor))
+                {
+                    PutCardOnCenter(card);
+                    if (card.Contains("wildcard"))
+                    {
+                        // elegir color 
+                        // avisarle a los demás el nuevo color
+                        //jugar comodín
+                    } 
+                    else if (card.Contains("draw4"))
+                    {
+                        //elegir color
+                        //jugar +4
+                    }
+                    else if (card.Contains("draw2"))
+                    {
+                        //jugar +2
+                    }
+                    else if (card.Contains("reverse")){
+                        //CallCharService.ChangeDirection
+                    }
+                    else if (card.Contains("skip"))
+                    {
+
+                    }
+                    //CallChatService.ChangeColor(color, invitationCode);
+                    CallChatService.PutCardInCenter(InvitationCode, card);
+                }
+            }
         }
     }
 }

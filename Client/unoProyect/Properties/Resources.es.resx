@@ -234,6 +234,9 @@
   <data name="theGameCodeIs" xml:space="preserve">
     <value>El código de la partida es:</value>
   </data>
+  <data name="useCard" xml:space="preserve">
+    <value>Usar carta</value>
+  </data>
   <data name="user" xml:space="preserve">
     <value>Usuario</value>
   </data>
