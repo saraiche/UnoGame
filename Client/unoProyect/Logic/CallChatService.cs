@@ -24,7 +24,7 @@ namespace unoProyect.Logic
             InstanceContext = new InstanceContext(this);
             ChatServiceClient = new ChatServiceClient(InstanceContext);
             Users = new ObservableCollection<string>();
-            Lobby = new Lobby();
+            LobbyView = new Lobby();
         }
 
         public void SendMessage(string username, string message, string invitationCode)
