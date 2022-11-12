@@ -6,6 +6,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace unoProyect.Logic
 {
@@ -17,12 +18,13 @@ namespace unoProyect.Logic
         public Login LoginView { get; set; }
         public Game GameView { get; set; }
         public ObservableCollection<string> Users { get; set; }
+        public string[] players = new string[10];
         public CallChatService()
         {
             InstanceContext = new InstanceContext(this);
             ChatServiceClient = new ChatServiceClient(InstanceContext);
             Users = new ObservableCollection<string>();
-            LobbyView = new Lobby();
+            Lobby = new Lobby();
         }
 
         public void SendMessage(string username, string message, string invitationCode)
@@ -55,15 +57,19 @@ namespace unoProyect.Logic
         }
         public void ReceiveCenter(string center)
         {
-            GameView.lbCenter.Content = center;
-            Console.WriteLine("Hola, recibí este centro: " + center);
+            GameView.PutCardOnCenter(center);
         }
 
-        public void OpenGame(string username, string invitationCode)
+        public void OpenGame(string username, string[] players)
         {
-            GameView = new Game(username,invitationCode);
             if (this.LobbyView != null)
             {
+                GameView = new Game(username, LobbyView.InvitationCode);
+                GameView.PutUsernames(players);
+                if (username == players.First())
+                {
+                    GameView.DealFirstCards();
+                }
                 LobbyView.NavigationService.Navigate(GameView);
             }
         }
@@ -75,8 +81,7 @@ namespace unoProyect.Logic
 
         public string[] GetPlayersByInvitationCode(string invitationCode)
         {
-            string[] players = new string[10];
-            players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
+            string[] players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
             return players;
         }
 
@@ -92,6 +97,15 @@ namespace unoProyect.Logic
         public void NextTurn(string invitationCode, string username)
         {
             ChatServiceClient.NextTurn(invitationCode, username);
+        }
+        public void ReceiveCard(string card)
+        {
+            GameView.LvCards.Items.Add(card);
+        }
+
+        public void DealCard(string username, string card, string invitationCode)
+        {
+            ChatServiceClient.DealCard(username, card, invitationCode);
         }
     }
 }

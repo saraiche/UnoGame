@@ -20,30 +20,90 @@ namespace unoProyect
     /// </summary>
     public partial class Game : Page
     {
-        public Logic.CallChatService CallChatService { get; set; }
-
         public string Username { get; set; }
         public string InvitationCode { get; set; }
-
-        public Game()
+        public Logic.CallChatService CallChatService { get; set; }
+        public string[] Players { get; set; }
+        public Game(string username)
         {
-
             InitializeComponent();
-        }
-
-        public Game(string username, string invitationCode):this()
-        {
-            lblPlayer1.Content = username;
-            this.InvitationCode = invitationCode;
-            this.Username = username;
+            Username = username;
+            InvitationCode = code;
+            lblPlayer1.Content = Username;
             CallChatService = new Logic.CallChatService();
-            BtnPlay.IsEnabled = true;
-        }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Game.xaml.cs Invitation code "+ InvitationCode + Username);
             CallChatService.NextTurn(InvitationCode, Username);
         }
+        
+        public void PutCardOnCenter(string card)
+        {
+            BitmapImage bi3 = new BitmapImage();
+            bi3.BeginInit();
+            bi3.UriSource = new Uri("GraphicResources/" + card + ".png", UriKind.Relative);
+            bi3.EndInit();
+            imgCenter.Stretch = Stretch.Fill;
+            imgCenter.Source = bi3;
+        }
+
+        public void DealFirstCards()
+        {
+            List<string> cards = new List<string>();
+            cards = Security.Utilities.GetCards();
+            int index = 0;
+            int cardsSize = cards.Count;
+            string card = "";
+            Random random = new Random();
+            for (int i = 0; i < Players.Length; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    index = random.Next(cardsSize);
+                    card = cards.ElementAt(index);
+                    CallChatService.DealCard(Players[i], card, InvitationCode);
+                    cards.RemoveAt(index);
+                    cardsSize--;
+                }
+            }
+        }
+
+        public void PutUsernames(string[] players)
+        {
+            this.Players = players;
+            int labelIterator = 2;
+            int indexThisPlayer = 0;
+
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i].Equals(Username))
+                {
+                    indexThisPlayer = i;
+                }
+            }
+
+            int iterador = indexThisPlayer + 1;
+            while(iterador%players.Length != indexThisPlayer)
+            {
+                switch (labelIterator)
+                {
+                    case 2:
+                        lblPlayer2.Content = players.ElementAt(iterador % players.Length);
+                        labelIterator++;
+                        iterador++;
+                        break;
+                    case 3:
+                        lblPlayer3.Content = players.ElementAt(iterador % players.Length);
+                        labelIterator++;
+                        iterador++;
+                        break;
+                    case 4:
+                        lblPlayer4.Content = players.ElementAt(iterador % players.Length);
+                        iterador++;
+                        break;
+
+                }
+            }
     }
 }

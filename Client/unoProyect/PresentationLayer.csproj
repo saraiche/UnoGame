@@ -203,5 +203,68 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="GraphicResources\color_back.png" />
+    <Resource Include="GraphicResources\color_blue_0.png" />
+    <Resource Include="GraphicResources\color_blue_1.png" />
+    <Resource Include="GraphicResources\color_blue_2.png" />
+    <Resource Include="GraphicResources\color_blue_3.png" />
+    <Resource Include="GraphicResources\color_blue_4.png" />
+    <Resource Include="GraphicResources\color_blue_5.png" />
+    <Resource Include="GraphicResources\color_blue_6.png" />
+    <Resource Include="GraphicResources\color_blue_7.png" />
+    <Resource Include="GraphicResources\color_blue_8.png" />
+    <Resource Include="GraphicResources\color_blue_9.png" />
+    <Resource Include="GraphicResources\color_blue_draw2.png" />
+    <Resource Include="GraphicResources\color_blue_empty.png" />
+    <Resource Include="GraphicResources\color_blue_reverse.png" />
+    <Resource Include="GraphicResources\color_blue_skip.png" />
+    <Resource Include="GraphicResources\color_draw4.png" />
+    <Resource Include="GraphicResources\color_empty.png" />
+    <Resource Include="GraphicResources\color_green_0.png" />
+    <Resource Include="GraphicResources\color_green_1.png" />
+    <Resource Include="GraphicResources\color_green_2.png" />
+    <Resource Include="GraphicResources\color_green_3.png" />
+    <Resource Include="GraphicResources\color_green_4.png" />
+    <Resource Include="GraphicResources\color_green_5.png" />
+    <Resource Include="GraphicResources\color_green_6.png" />
+    <Resource Include="GraphicResources\color_green_7.png" />
+    <Resource Include="GraphicResources\color_green_8.png" />
+    <Resource Include="GraphicResources\color_green_9.png" />
+    <Resource Include="GraphicResources\color_green_draw2.png" />
+    <Resource Include="GraphicResources\color_green_empty.png" />
+    <Resource Include="GraphicResources\color_green_reverse.png" />
+    <Resource Include="GraphicResources\color_green_skip.png" />
+    <Resource Include="GraphicResources\color_red_0.png" />
+    <Resource Include="GraphicResources\color_red_1.png" />
+    <Resource Include="GraphicResources\color_red_2.png" />
+    <Resource Include="GraphicResources\color_red_3.png" />
+    <Resource Include="GraphicResources\color_red_4.png" />
+    <Resource Include="GraphicResources\color_red_5.png" />
+    <Resource Include="GraphicResources\color_red_6.png" />
+    <Resource Include="GraphicResources\color_red_7.png" />
+    <Resource Include="GraphicResources\color_red_8.png" />
+    <Resource Include="GraphicResources\color_red_9.png" />
+    <Resource Include="GraphicResources\color_red_draw2.png" />
+    <Resource Include="GraphicResources\color_red_empty.png" />
+    <Resource Include="GraphicResources\color_red_reverse.png" />
+    <Resource Include="GraphicResources\color_red_skip.png" />
+    <Resource Include="GraphicResources\color_wildcard.png" />
+    <Resource Include="GraphicResources\color_yellow_0.png" />
+    <Resource Include="GraphicResources\color_yellow_1.png" />
+    <Resource Include="GraphicResources\color_yellow_2.png" />
+    <Resource Include="GraphicResources\color_yellow_3.png" />
+    <Resource Include="GraphicResources\color_yellow_4.png" />
+    <Resource Include="GraphicResources\color_yellow_5.png" />
+    <Resource Include="GraphicResources\color_yellow_6.png" />
+    <Resource Include="GraphicResources\color_yellow_7.png" />
+    <Resource Include="GraphicResources\color_yellow_8.png" />
+    <Resource Include="GraphicResources\color_yellow_9.png" />
+    <Resource Include="GraphicResources\color_yellow_draw2.png" />
+    <Resource Include="GraphicResources\color_yellow_empty.png" />
+    <Resource Include="GraphicResources\color_yellow_reverse.png" />
+    <Resource Include="GraphicResources\color_yellow_skip.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

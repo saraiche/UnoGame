@@ -19,9 +19,11 @@ namespace Services
         [OperationContract(IsOneWay = true)]
         void ReceiveCenter(string center);
         [OperationContract(IsOneWay = true)]
-        void OpenGame(string username, string invitationCode);
+        void OpenGame(string username, List<string> players);
         [OperationContract(IsOneWay = true)]
         void itsMyTurn(bool myturn);
+        [OperationContract(IsOneWay = true)]
+        void ReceiveCard(string card);
 
 
     }
@@ -49,6 +51,8 @@ namespace Services
         [OperationContract]
         void NextTurn(string invitationCode, string username);
 
+        [OperationContract]
+        void DealCard(string username, string card, string invitationCode);
     }
     [DataContract]
     public class DTOUserChat

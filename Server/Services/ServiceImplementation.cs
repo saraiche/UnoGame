@@ -94,7 +94,6 @@ namespace Services
                 con.GetUsers(user.UserName);
             }
         }
-        //logica de juego
 
         public List<string> GetPlayersByInvitationCode(string invitationCode)
         {
@@ -123,42 +122,41 @@ namespace Services
                 }
             }
         }
-        
+
         public void RequestOpenGame(string invitationCode)
         {
             IChatClient con;
             if (Rooms.Keys.Contains(invitationCode))
             {
+                List<string> users = GetUserListFromDtoList(Rooms[invitationCode]);
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.OpenGame(other.UserName, invitationCode);
+                    con.OpenGame(other.UserName, users);
                 }
             }
         }
-        public void NextTurn(string invitationCode, string username)
-        {
-            int indexTurnActual = 0;
 
-            List<DTOUserChat> users = new List<DTOUserChat>();
-            foreach (var user in Rooms[invitationCode])
+        private List<string> GetUserListFromDtoList(List<DTOUserChat> dtoUserChats)
+        {
+            List<string> users = new List<string>();
+            foreach (var user in dtoUserChats)
+            {
+                users.Add(user.UserName);
+            }
+            return users;
+        }
+
+        public void DealCard(string username, string card, string invitationCode)
+        {
+            IChatClient con;
+            foreach(var user in Rooms[invitationCode])
             {
                 if (user.UserName == username)
                 {
-                    //guardar turno actual
-                    indexTurnActual = Rooms[invitationCode].IndexOf(user);
+                    con = user.Connection;
+                    con.ReceiveCard(card);
                 }
-            }
-            
-            users = Rooms[invitationCode];
-            users[indexTurnActual].Connection.itsMyTurn(false);
-            if (users[indexTurnActual] == users.Last())
-            {
-                users.First().Connection.itsMyTurn(true);
-            }
-            else
-            {
-                users[indexTurnActual + 1].Connection.itsMyTurn(true);
             }
         }
     }
