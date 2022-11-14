@@ -29,7 +29,7 @@ namespace unoProyect.Logic
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-             ChatServiceClient.SendMessage(username, message, invitationCode);
+            ChatServiceClient.SendMessage(username, message, invitationCode);
 
         }
         public bool Join(string username, string code)
@@ -69,6 +69,10 @@ namespace unoProyect.Logic
                 if (username == players.First())
                 {
                     GameView.DealFirstCards();
+                    GameView.LvCards.Items.Add("color_blue_draw2");
+                    GameView.LvCards.Items.Add("color_red_draw2");
+                    GameView.LvCards.Items.Add("color_red_skip");
+                    GameView.LvCards.Items.Add("color_wildcard");
                 }
                 LobbyView.NavigationService.Navigate(GameView);
             }
@@ -90,7 +94,14 @@ namespace unoProyect.Logic
             ChatServiceClient.PutCardInCenter(invitationCode, card);
         }
 
-
+        public void itsMyTurn(bool myturn)
+        {
+            GameView.BtnUseCard.IsEnabled = myturn;
+        }
+        public void NextTurn(string invitationCode, string username)
+        {
+            ChatServiceClient.NextTurn(invitationCode, username);
+        }
         public void ReceiveCard(string card)
         {
             GameView.LvCards.Items.Add(card);

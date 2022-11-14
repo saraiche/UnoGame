@@ -159,6 +159,22 @@ namespace Services
                 }
             }
         }
+        public void NextTurn(string invitationCode, string username)
+        {
+            int indexTurnActual = 0;
+            List<DTOUserChat> users = Rooms[invitationCode];
+            foreach (var user in users)
+            {
+                if (user != users[indexTurnActual])
+                {
+                    user.Connection.itsMyTurn(false);
+                }
+                else
+                {
+                    user.Connection.itsMyTurn(true);
+                }
+            }
+        }
     }
 
 

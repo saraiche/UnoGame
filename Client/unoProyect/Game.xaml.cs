@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,15 +31,18 @@ namespace unoProyect
         public bool Reverse { get; set; }
         public Game(string username, string code)
         {
-
-
             InitializeComponent();
             Username = username;
             InvitationCode = code;
             lblPlayer1.Content = Username;
             CallChatService = new Logic.CallChatService();
         }
-
+        /*
+        private void BtnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            CallChatService.NextTurn(InvitationCode, Username);
+        }
+        */
         public void PutCardOnCenter(string card)
         {
             this.Center = card;
@@ -50,11 +54,6 @@ namespace unoProyect
             imgCenter.Source = bi3;
         }
 
-        public void IsValidCard(string card)
-        {
-            Console.WriteLine("Centro: " + Center);
-            Console.WriteLine("Carta: " + card);
-        }
 
         public void DealFirstCards()
         {
@@ -72,11 +71,10 @@ namespace unoProyect
                     card = cards.ElementAt(index);
                     CallChatService.DealCard(Players[i], card, InvitationCode);
                     cards.RemoveAt(index);
-                    cardsSize--;
+                    cardsSize--;   
                 }
             }
         }
-
         public void PutUsernames(string[] players)
         {
             this.Players = players;
@@ -120,36 +118,119 @@ namespace unoProyect
             }
             else
             {
-                IsValidCard(card);
                 if (GameLogic.IsValidCard(card, Center, ActualColor))
                 {
-                    PutCardOnCenter(card);
-                    if (card.Contains("wildcard"))
+                    Center = card;
+                    if (card.Contains("wildcard") || card.Contains("draw4"))
                     {
-                        // elegir color 
-                        // avisarle a los demás el nuevo color
-                        //jugar comodín
-                    } 
-                    else if (card.Contains("draw4"))
+                        MessageBox.Show("Elige un color");
+                        GrdColors.Visibility = Visibility.Visible;
+                    }
+                    else
                     {
-                        //elegir color
-                        //jugar +4
+                        PlayCard("");
                     }
-                    else if (card.Contains("draw2"))
-                    {
-                        //jugar +2
-                    }
-                    else if (card.Contains("reverse")){
-                        //CallCharService.ChangeDirection
-                    }
-                    else if (card.Contains("skip"))
-                    {
-
-                    }
-                    //CallChatService.ChangeColor(color, invitationCode);
-                    CallChatService.PutCardInCenter(InvitationCode, card);
+                }
+                else
+                {
+                    MessageBox.Show("Carta inválida");
                 }
             }
         }
+
+        private string SkipPlayer()
+        {
+            string auxiliar = GameLogic.NextPlayer(Username, Players, Reverse);
+            string nextPlayer = GameLogic.NextPlayer(auxiliar, Players, Reverse);
+            return nextPlayer;
+        }
+
+        public void IsReverse(bool isReverse)
+        {
+            Reverse = isReverse;
+            if (isReverse)
+            {
+                imgDirectionNormalLeft.Visibility = Visibility.Visible;
+                imgDirectionNormalRight.Visibility = Visibility.Visible;
+                imgDirectionReverseLeft.Visibility = Visibility.Hidden;
+                imgDirectionReverseRight.Visibility = Visibility.Hidden;
+                LblActualDirection.Content = "Contrario al reloj";
+            }
+            else
+            {
+                imgDirectionNormalLeft.Visibility = Visibility.Hidden;
+                imgDirectionNormalRight.Visibility = Visibility.Hidden;
+                imgDirectionReverseLeft.Visibility = Visibility.Visible;
+                imgDirectionReverseRight.Visibility = Visibility.Visible;
+                LblActualDirection.Content = "Sentido del reloj";
+            }
+        }
+
+        private void PlayCard(string color)
+        {
+            string nextPlayer = GameLogic.NextPlayer(Username, Players, Reverse);
+            if (color == "")
+            {
+                if (Center.Contains("draw2"))
+                {
+                    CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                    CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                    nextPlayer = SkipPlayer();
+                    MessageBox.Show("El siguiente jugador es: " + nextPlayer);
+                }
+                else if (Center.Contains("reverse"))
+                {
+                    nextPlayer = GameLogic.NextPlayer(Username, Players, !(Reverse));
+                    //CallCharService.ChangeDirection
+                }
+                else if (Center.Contains("skip"))
+                {
+                    nextPlayer = SkipPlayer();
+                    //saltar turno
+                }
+            }
+            else
+            {
+                MessageBox.Show("Se eligió el color: " + color);
+                GrdColors.Visibility = Visibility.Hidden;
+                if (Center.Contains("wildcard"))
+                {
+                    // ya se eligió color
+                    ActualColor = color;
+                    // avisarle a los demás el nuevo color
+                    //jugar comodín
+                }
+                else if (Center.Contains("draw4"))
+                {
+                    ActualColor = color;
+                    //elegir color
+                    //jugar +4
+                }
+                //CallChatService.ChangeColor(color, invitationCode);
+            }
+            CallChatService.PutCardInCenter(InvitationCode, Center);
+            CallChatService.NextTurn(InvitationCode, nextPlayer);
+        }
+
+        private void BtnBlue_Click(object sender, RoutedEventArgs e)
+        {
+            PlayCard("blue");
+        }
+
+        private void BtnRed_Click(object sender, RoutedEventArgs e)
+        {
+            PlayCard("red");
+        }
+
+        private void BtnGreen_Click(object sender, RoutedEventArgs e)
+        {
+            PlayCard("green");
+        }
+
+        private void BtnYellow_Click(object sender, RoutedEventArgs e)
+        {
+            PlayCard("yellow");
+        }
+
     }
-}
+    }
