@@ -37,9 +37,9 @@ namespace unoProyect.Logic
             return ChatServiceClient.Join(username, code);
         }
 
-        public void GetUsersChat(string code)
+        public void GetUsersChat(string code, string username)
         {
-            ChatServiceClient.GetUsersChat(code);
+            ChatServiceClient.GetUsersChat(code, username);
         }
         public string NewRoom(string username)
         {
@@ -53,7 +53,7 @@ namespace unoProyect.Logic
 
         public void GetUsers(string user)
         {
-            Console.WriteLine(user);
+            LobbyView.LvFriendList.Items.Add(user);
         }
         public void ReceiveCenter(string center)
         {
@@ -106,6 +106,10 @@ namespace unoProyect.Logic
         public void DealCard(string username, string card, string invitationCode)
         {
             ChatServiceClient.DealCard(username, card, invitationCode);
+        }
+        public bool DeletePlayer(string code, string username)
+        {
+            return ChatServiceClient.DeletePlayer(code, username);
         }
     }
 }

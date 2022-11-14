@@ -44,6 +44,7 @@ namespace unoProyect
             TbCodeGame.Text = this.InvitationCode.ToString();
             LvFriendList.Items.Add(CallChatService.Users);
             IsHost = isHost;
+            BtnKickFromTheGame.IsEnabled = false;
             IsPlayer();
         }
 
@@ -53,6 +54,7 @@ namespace unoProyect
             {
                 WpPlayWithFriends.Visibility = Visibility.Collapsed;
                 BtnStart.Visibility = Visibility.Collapsed;
+                BtnKickFromTheGame.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -77,10 +79,7 @@ namespace unoProyect
             }
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        
 
         private void BtnSendByUsername_Click(object sender, RoutedEventArgs e)
         {
@@ -134,6 +133,19 @@ namespace unoProyect
         public void GetUsers(string user)
         {
             LvFriendList.Items.Add(user);
+        }
+
+        private void BtnKickFromTheGame_Click(object sender, RoutedEventArgs e)
+        {
+            CallChatService.DeletePlayer(InvitationCode, LvFriendList.SelectedItem.ToString());
+        }
+
+        private void LvFriendList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsHost)
+            {
+                BtnKickFromTheGame.IsEnabled = true;
+            }
         }
     }
 }

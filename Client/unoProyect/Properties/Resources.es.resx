@@ -183,6 +183,9 @@
   <data name="instructionSendConfirmCode" xml:space="preserve">
     <value>Te enviaremos un código a tu correo electrónico para confirmar el registro</value>
   </data>
+  <data name="Kickfromthegame" xml:space="preserve">
+    <value>Expulsar de la partida</value>
+  </data>
   <data name="lobby" xml:space="preserve">
     <value>Sala de espera</value>
   </data>

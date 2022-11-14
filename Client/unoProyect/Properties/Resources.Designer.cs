@@ -259,6 +259,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Kick from the game.
+        /// </summary>
+        public static string Kickfromthegame {
+            get {
+                return ResourceManager.GetString("Kickfromthegame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Lobby.
         /// </summary>
         public static string lobby {

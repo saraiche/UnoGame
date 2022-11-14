@@ -12,7 +12,7 @@
     <Grid Background="#FFF9F9F9">
         <Label Content="{x:Static p:Resources.chat}" HorizontalAlignment="Left" Height="25" Margin="289,78,0,0" VerticalAlignment="Top" Width="135"/>
         <Label Content="{x:Static p:Resources.friendsList}" HorizontalAlignment="Left" Height="50" Margin="580,80,0,0" VerticalAlignment="Top" Width="186"/>
-        <ListView x:Name="LvFriendList" HorizontalAlignment="Left" Height="167" Margin="575,117,0,0" VerticalAlignment="Top" Width="208" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="LvFriendList" HorizontalAlignment="Left" Height="167" Margin="575,117,0,0" VerticalAlignment="Top" Width="208" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LvFriendList_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -43,6 +43,7 @@
             <Button x:Name="BtnSendByEmail" Content="{x:Static p:Resources.instructionSendCodeByEmail}" Width="200" Click="BtnSendByEmail_Click"/>
 
         </WrapPanel>
+        <Button x:Name="BtnKickFromTheGame" Content="{x:Static p:Resources.Kickfromthegame}" HorizontalAlignment="Left" Height="34" Margin="661,400,0,0" VerticalAlignment="Top" Width="86" Click="BtnKickFromTheGame_Click"/>
 
 
     </Grid>

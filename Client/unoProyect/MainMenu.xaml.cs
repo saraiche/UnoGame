@@ -42,6 +42,7 @@ namespace unoProyect
             string invitationCode = CallChatService.NewRoom(this.Username);
             Lobby lobby = new Lobby(this.Username, invitationCode, true);
             CallChatService.LobbyView = lobby;
+            CallChatService.GetUsersChat(invitationCode,Username);
             this.NavigationService.Navigate(lobby);
         }
 
@@ -55,6 +56,7 @@ namespace unoProyect
             if(CallChatService.Join(Username, TbInvitationCode.Text))
             {
                 Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text, false);
+                CallChatService.GetUsersChat(TbInvitationCode.Text, Username);
                 CallChatService.LobbyView = lobby;
                 this.NavigationService.Navigate(lobby);
 

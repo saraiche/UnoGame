@@ -34,8 +34,8 @@ namespace Services
         bool Join(string username, string code);
         [OperationContract(IsOneWay = true)]
         void SendMessage(string username,string message, string invitationCode);
-        [OperationContract]
-        void GetUsersChat(string code);
+        [OperationContract(IsOneWay = true)]
+        void GetUsersChat(string code, string username);
 
         [OperationContract]
         string NewRoom(string username);
@@ -53,6 +53,8 @@ namespace Services
 
         [OperationContract]
         void DealCard(string username, string card, string invitationCode);
+        [OperationContract]
+        bool DeletePlayer(string invitationCode, string username);
     }
     [DataContract]
     public class DTOUserChat

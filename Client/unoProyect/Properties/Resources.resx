@@ -183,6 +183,9 @@
   <data name="instructionSendConfirmCode" xml:space="preserve">
     <value>We'll send you a code by email to confirm your account</value>
   </data>
+  <data name="Kickfromthegame" xml:space="preserve">
+    <value>Kick from the game</value>
+  </data>
   <data name="lobby" xml:space="preserve">
     <value>Lobby</value>
   </data>

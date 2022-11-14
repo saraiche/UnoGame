@@ -85,13 +85,12 @@ namespace Services
             return invitationCode;
         }
 
-        public void GetUsersChat(string code)
+        public void GetUsersChat(string code, string username)
         {
-            IChatClient con;
+         
             foreach (var user in Rooms[code])
             {
-                con = user.Connection;
-                con.GetUsers(user.UserName);
+                user.Connection.GetUsers(username);
             }
         }
 
@@ -162,50 +161,36 @@ namespace Services
         public void NextTurn(string invitationCode, string username)
         {
             int indexTurnActual = 0;
-
-            List<DTOUserChat> users = new List<DTOUserChat>();
+            List<DTOUserChat> users = Rooms[invitationCode];
+            foreach (var user in users)
+            {
+                if (user != users[indexTurnActual])
+                {
+                    user.Connection.itsMyTurn(false);
+                }
+                else
+                {
+                    user.Connection.itsMyTurn(true);
+                }
+            }
+        }
+        public bool DeletePlayer(string invitationCode, string username)
+        {
+            bool flag = false;
+            int index = -1;
             foreach (var user in Rooms[invitationCode])
             {
-                if (user.UserName == username)
+                if(user.UserName == username)
                 {
-                    //guardar turno actual
-                    indexTurnActual = Rooms[invitationCode].IndexOf(user);
+                    index = Rooms[invitationCode].IndexOf(user);
                 }
             }
-
-            users = Rooms[invitationCode];
-            users[indexTurnActual].Connection.itsMyTurn(false);
-            if (users[indexTurnActual] == users.Last())
+            if (index != -1)
             {
-                users.First().Connection.itsMyTurn(true);
-                foreach (var user in users)
-                {
-                    if(user == users.First())
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        user.Connection.itsMyTurn(false);
-                    }
-                }
+                Rooms[invitationCode].RemoveAt(index);
+                flag = true;
             }
-            else
-            {
-                users[indexTurnActual + 1].Connection.itsMyTurn(true);
-                foreach (var user in users)
-                {
-                    if (user == users[indexTurnActual + 1])
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        user.Connection.itsMyTurn(false);
-                    }
-                }
-
-            }
+            return flag;
         }
     }
 
