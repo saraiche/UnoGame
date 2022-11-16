@@ -234,6 +234,9 @@
   <data name="theGameCodeIs" xml:space="preserve">
     <value>The game code is: </value>
   </data>
+  <data name="useCard" xml:space="preserve">
+    <value>Use card</value>
+  </data>
   <data name="user" xml:space="preserve">
     <value>Username</value>
   </data>

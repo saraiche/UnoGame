@@ -71,7 +71,7 @@ namespace unoProyect
             else
             {
                 CallChatService.RequestOpenGame(InvitationCode);
-                string center = Utilities.GetRandomCenter();
+                string center = GameLogic.GetRandomCenter();
                 CallChatService.PutCardInCenter(InvitationCode, center);
 
             }

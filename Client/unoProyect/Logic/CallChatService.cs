@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Windows.Markup;
 
 namespace unoProyect.Logic
 {
@@ -69,6 +70,13 @@ namespace unoProyect.Logic
                 if (username == players.First())
                 {
                     GameView.DealFirstCards();
+                    GameView.LvCards.Items.Add("color_blue_draw2");
+                    GameView.LvCards.Items.Add("color_red_draw2");
+                    GameView.LvCards.Items.Add("color_red_skip");
+                    GameView.LvCards.Items.Add("color_wildcard");
+                    GameView.LvCards.Items.Add("color_draw4");
+                    GameView.LvCards.Items.Add("color_blue_reverse");
+                    GameView.InitTurn();
                 }
                 LobbyView.NavigationService.Navigate(GameView);
             }
@@ -92,7 +100,8 @@ namespace unoProyect.Logic
 
         public void itsMyTurn(bool myturn)
         {
-            GameView.BtnPlay.IsEnabled = myturn;
+            GameView.BtnUseCard.IsEnabled = myturn;
+            GameView.BtnStack.IsEnabled = myturn;
         }
         public void NextTurn(string invitationCode, string username)
         {
@@ -107,5 +116,25 @@ namespace unoProyect.Logic
         {
             ChatServiceClient.DealCard(username, card, invitationCode);
         }
+
+        public void RequestChangeDirection(string invitationCode)
+        {
+            ChatServiceClient.RequestChangeDirection(invitationCode);
+        }
+        public void ChangeDirection()
+        {
+            GameView.ChangeDirection();
+        }
+
+        public void SendTurnInformation(string invitationCode, string color, string actualTurn)
+        {
+            ChatServiceClient.SendTurnInformation(invitationCode, color, actualTurn);
+        }
+
+        public void ReceiveTurnInformation(string color, string actualTurn)
+        {
+            GameView.UpdateTurnInformation(color, actualTurn);
+        }
+
     }
 }

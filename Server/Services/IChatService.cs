@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -24,8 +25,10 @@ namespace Services
         void itsMyTurn(bool myturn);
         [OperationContract(IsOneWay = true)]
         void ReceiveCard(string card);
-
-
+        [OperationContract(IsOneWay = true)]
+        void ChangeDirection();
+        [OperationContract(IsOneWay = true)]
+        void ReceiveTurnInformation(string color, string actualTurn);
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
@@ -53,6 +56,11 @@ namespace Services
 
         [OperationContract]
         void DealCard(string username, string card, string invitationCode);
+
+        [OperationContract]
+        void RequestChangeDirection(string invitationCode);
+        [OperationContract]
+        void SendTurnInformation(string invitationCode, string color, string actualTurn);
     }
     [DataContract]
     public class DTOUserChat

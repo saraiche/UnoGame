@@ -161,50 +161,44 @@ namespace Services
         }
         public void NextTurn(string invitationCode, string username)
         {
-            int indexTurnActual = 0;
-
-            List<DTOUserChat> users = new List<DTOUserChat>();
-            foreach (var user in Rooms[invitationCode])
+            //int indexTurnActual = 0;
+            List<DTOUserChat> users = Rooms[invitationCode];
+            foreach (var user in users)
             {
-                if (user.UserName == username)
+                if (user.UserName != username)
                 {
-                    //guardar turno actual
-                    indexTurnActual = Rooms[invitationCode].IndexOf(user);
+                    user.Connection.itsMyTurn(false);
+                }
+                else
+                {
+                    user.Connection.itsMyTurn(true);
                 }
             }
+        }
 
-            users = Rooms[invitationCode];
-            users[indexTurnActual].Connection.itsMyTurn(false);
-            if (users[indexTurnActual] == users.Last())
+        public void RequestChangeDirection(string invitationCode)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
             {
-                users.First().Connection.itsMyTurn(true);
-                foreach (var user in users)
+                foreach (var other in Rooms[invitationCode])
                 {
-                    if(user == users.First())
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        user.Connection.itsMyTurn(false);
-                    }
+                    con = other.Connection;
+                    con.ChangeDirection();
                 }
             }
-            else
-            {
-                users[indexTurnActual + 1].Connection.itsMyTurn(true);
-                foreach (var user in users)
-                {
-                    if (user == users[indexTurnActual + 1])
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        user.Connection.itsMyTurn(false);
-                    }
-                }
+        }
 
+        public void SendTurnInformation(string invitationCode, string color, string actualTurn)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ReceiveTurnInformation(color, actualTurn);
+                }
             }
         }
     }
