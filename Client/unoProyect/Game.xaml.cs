@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,6 +37,7 @@ namespace unoProyect
             InvitationCode = code;
             lblPlayer1.Content = Username;
             CallChatService = new Logic.CallChatService();
+            Reverse = false;
         }
         /*
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
@@ -138,6 +140,15 @@ namespace unoProyect
             }
         }
 
+        public void InitTurn()
+        {
+            int PlayersOnGame = Players.Length;
+            Random random = new Random();
+            int indexFirstPlayer = random.Next(0, PlayersOnGame);
+            Console.WriteLine("Empieza el turno: " + Players[indexFirstPlayer]);
+            CallChatService.NextTurn(InvitationCode, Players[indexFirstPlayer]);
+        }
+
         private string SkipPlayer()
         {
             string auxiliar = GameLogic.NextPlayer(Username, Players, Reverse);
@@ -145,10 +156,10 @@ namespace unoProyect
             return nextPlayer;
         }
 
-        public void IsReverse(bool isReverse)
+        public void ChangeDirection()
         {
-            Reverse = isReverse;
-            if (isReverse)
+            Reverse = !(Reverse);
+            if (Reverse)
             {
                 imgDirectionNormalLeft.Visibility = Visibility.Visible;
                 imgDirectionNormalRight.Visibility = Visibility.Visible;
@@ -166,11 +177,19 @@ namespace unoProyect
             }
         }
 
+        public void UpdateTurnInformation(string color, string actualPlayer)
+        {
+            ActualColor = color;
+            LblActualColor.Content = ActualColor;
+            LblNowPlaying.Content = actualPlayer;
+        }
         private void PlayCard(string color)
         {
             string nextPlayer = GameLogic.NextPlayer(Username, Players, Reverse);
+            string newColor = "";
             if (color == "")
             {
+                newColor = GameLogic.getColor(Center);
                 if (Center.Contains("draw2"))
                 {
                     CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
@@ -181,12 +200,11 @@ namespace unoProyect
                 else if (Center.Contains("reverse"))
                 {
                     nextPlayer = GameLogic.NextPlayer(Username, Players, !(Reverse));
-                    //CallCharService.ChangeDirection
+                    CallChatService.RequestChangeDirection(InvitationCode);
                 }
                 else if (Center.Contains("skip"))
                 {
                     nextPlayer = SkipPlayer();
-                    //saltar turno
                 }
             }
             else
@@ -195,21 +213,23 @@ namespace unoProyect
                 GrdColors.Visibility = Visibility.Hidden;
                 if (Center.Contains("wildcard"))
                 {
-                    // ya se eligió color
-                    ActualColor = color;
-                    // avisarle a los demás el nuevo color
-                    //jugar comodín
+                    //avisarles nuevo color
                 }
                 else if (Center.Contains("draw4"))
                 {
-                    ActualColor = color;
-                    //elegir color
-                    //jugar +4
+                    //avisarles nuevo color
+                    for (int i = 0; i < 4; i++)
+                    {
+                        CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                    }
+                    nextPlayer = SkipPlayer();
                 }
-                //CallChatService.ChangeColor(color, invitationCode);
+                newColor = color;
             }
             CallChatService.PutCardInCenter(InvitationCode, Center);
             CallChatService.NextTurn(InvitationCode, nextPlayer);
+            CallChatService.SendTurnInformation(InvitationCode, newColor, nextPlayer);
+            LvCards.Items.Remove(Center);
         }
 
         private void BtnBlue_Click(object sender, RoutedEventArgs e)
@@ -232,5 +252,22 @@ namespace unoProyect
             PlayCard("yellow");
         }
 
+        private void BtnStack_Click(object sender, RoutedEventArgs e)
+        {
+            LvCards.Items.Add(GameLogic.GetRandomCard());
+            BtnStack.IsEnabled = false;
+        }
+
+        private void BtnPaso_Click(object sender, RoutedEventArgs e)
+        {
+            if (BtnStack.IsEnabled)
+            {
+                MessageBox.Show("Ups! Debes tomar una carta de la pila antes de pasar");
+            }
+            else
+            {
+                CallChatService.NextTurn(InvitationCode, GameLogic.NextPlayer(Username, Players, Reverse));
+            }
+        }
     }
-    }
+}

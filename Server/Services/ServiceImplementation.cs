@@ -161,17 +161,43 @@ namespace Services
         }
         public void NextTurn(string invitationCode, string username)
         {
-            int indexTurnActual = 0;
+            //int indexTurnActual = 0;
             List<DTOUserChat> users = Rooms[invitationCode];
             foreach (var user in users)
             {
-                if (user != users[indexTurnActual])
+                if (user.UserName != username)
                 {
                     user.Connection.itsMyTurn(false);
                 }
                 else
                 {
                     user.Connection.itsMyTurn(true);
+                }
+            }
+        }
+
+        public void RequestChangeDirection(string invitationCode)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ChangeDirection();
+                }
+            }
+        }
+
+        public void SendTurnInformation(string invitationCode, string color, string actualTurn)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ReceiveTurnInformation(color, actualTurn);
                 }
             }
         }

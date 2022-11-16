@@ -51,6 +51,21 @@ namespace unoProyect.Logic
 
             return card;
         }
+
+        public static string getColor(string card)
+        {
+            string[] descomposeCard = card.Split('_');
+            string colorCard = "";
+            try
+            {
+                colorCard = descomposeCard[1];
+            }
+            catch (IndexOutOfRangeException exception)
+            {
+                Console.WriteLine(exception.StackTrace);
+            }
+            return colorCard;
+        }
         public static bool IsValidCard(string card, string center, string actualColor)
         {
             bool isValid = false;
@@ -58,8 +73,8 @@ namespace unoProyect.Logic
             string[] descomposeCard = card.Split('_');
             string[] descomposeCenter = center.Split('_');
 
-            string colorCard = descomposeCard[1];
-            string colorCenter = descomposeCenter[1];
+            string colorCard = getColor(card);
+            string colorCenter = getColor(center);
 
             string numberCard = "card";
             string numberCenter = "center";
