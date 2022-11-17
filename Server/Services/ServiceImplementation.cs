@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -339,5 +340,61 @@ namespace Services
             return status;
         }
 
+        public bool AddFriend(string playerName, string friendName)
+        {
+            bool flag = false;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    Credentials findCredentialsFriend = dataBase.CredentialsSet1.Where(x => x.username == friendName).FirstOrDefault();
+                    if (findCredentialsPlayer != null || findCredentialsFriend != null)
+                    {
+                        Player playerDb =  findCredentialsPlayer.Player;
+                        Player friendDb = findCredentialsFriend.Player;
+                        dataBase.PlayerSet1.Attach(friendDb);
+                        playerDb.Friends.Add(friendDb);                       
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                        flag = true;
+                    }
+                    return flag;
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+
+        }
+        public List<string> GetFriends(string playerName)
+        {
+            List<string> friends = new List<string>();
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    if (findCredentialsPlayer != null)
+                    {
+                        Player playerDb = findCredentialsPlayer.Player;
+                        List<Player> friendsDb = new List<Player>();
+                        friendsDb = playerDb.Friends.ToList();
+                        foreach (Player friend in friendsDb)
+                        {
+                            friends.Add(friend.Credentials.username);
+                        }
+                    }
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+            return friends;
+        }
     }
 }

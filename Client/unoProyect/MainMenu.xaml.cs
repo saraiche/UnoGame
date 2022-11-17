@@ -48,6 +48,8 @@ namespace unoProyect
 
         private void BtnFriends_Click(object sender, RoutedEventArgs e)
         {
+            UserProfile userProfile = new UserProfile(Username);
+            this.NavigationService.Navigate(userProfile);
 
         }
 

@@ -1,0 +1,19 @@
+﻿<Page x:Class="unoProyect.UserProfile"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:unoProyect"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UserProfile">
+
+    <Grid Background="#FFF6F3F3">
+        <Label x:Name="LblUsername" Content="Username" HorizontalAlignment="Left" Height="39" Margin="238,57,0,0" VerticalAlignment="Top" Width="127"/>
+        <ListBox x:Name="LbFriendList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="489,162,79,158"/>
+        <Label Content="Friend list" HorizontalAlignment="Left" Margin="498,135,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="BtnAddFriend" Content="AddFriend" HorizontalAlignment="Left" Margin="533,358,0,0" VerticalAlignment="Top" Click="BtnAddFriend_Click"/>
+        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="599,359,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+    </Grid>
+</Page>
