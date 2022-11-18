@@ -4,14 +4,35 @@ using System.Linq;
 using System.ServiceModel.Security;
 using System.Text;
 using System.Threading.Tasks;
+using unoProyect.Proxy;
 
 namespace unoProyect.Logic
 {
     class GameLogic
     {
-        public static List<string> GetCards()
+        public static Card DtoCardToCard(DTOCard dtoCard)
         {
-            List<string> cards = new List<string>();
+            Card card = new Card();
+            card.Color = dtoCard.Color;
+            card.Type = dtoCard.Type;
+            card.Url = dtoCard.Url;
+            card.Id = dtoCard.Id;
+            return card;
+        }
+
+        public static DTOCard CardToDtoCard(Card card)
+        {
+            DTOCard dTOCard = new DTOCard();
+            dTOCard.Color = card.Color;
+            dTOCard.Type = card.Type;
+            dTOCard.Url = card.Url;
+            dTOCard.Id = card.Id;
+            return dTOCard;
+        }       
+
+        public static List<Card> GetCards()
+        {
+            List<Card> cards = new List<Card>();
             List<string> colors = new List<string>();
             colors.Add("green");
             colors.Add("blue");
@@ -21,87 +42,115 @@ namespace unoProyect.Logic
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    cards.Add("color_" + color + "_" + i.ToString());
+                    Card card = new Card();
+                    card.Color = color;
+                    card.Type = i.ToString();
+                    card.Url = "GraphicResources/color_" + color + "_" + i + ".png";
+                    card.Id = "color_" + color + "_" + i;
+                    cards.Add(card);
                 }
-                cards.Add("color_" + color + "_draw2");
-                cards.Add("color_" + color + "_reverse");
-                cards.Add("color_" + color + "_skip");
+                Card cardDraw2 = new Card();
+                cardDraw2.Color = color;
+                cardDraw2.Type = "draw2";
+                cardDraw2.Url = "GraphicResources/color_" + color + "_" + "draw2" + ".png";
+                cardDraw2.Id = "color_" + color + "_" + "draw2";
+                cards.Add(cardDraw2);
+                Card cardReverse = new Card();
+                cardReverse.Color = color;
+                cardReverse.Type = "reverse";
+                cardReverse.Url = "GraphicResources/color_" + color + "_" + "reverse" + ".png";
+                cardReverse.Id = "color_" + color + "_" + "reverse";
+                cards.Add(cardReverse);
+                Card cardSkip = new Card();
+                cardSkip.Color = color;
+                cardSkip.Type = "skip";
+                cardSkip.Url = "GraphicResources/color_" + color + "_" + "skip" + ".png";
+                cardSkip.Id = "color_" + color + "_" + "skip";
+                cards.Add(cardSkip);
             }
-            cards.Add("color_wildcard");
-            cards.Add("color_draw4");
+            Card cardWildcard = new Card();
+            cardWildcard.Type = "wildcard";
+            cardWildcard.Url = "GraphicResources/color_wildcard.png";
+            cardWildcard.Id = "color_wildcard";
+            cards.Add(cardWildcard);
+            Card cardDraw4 = new Card();
+            cardDraw4.Type = "draw4";
+            cardDraw4.Url = "GraphicResources/color_draw4.png";
+            cardDraw4.Id = "color_draw4";
+            cards.Add(cardDraw4);
             return cards;
         }
 
-        public static string GetRandomCard()
+        public static Card GetCardById(string idCard)
         {
-            Random random = new Random();
-            List<string> cards = GetCards();
-            string card = cards.ElementAt(random.Next(cards.Count)).ToString();
+            List<Card> cards = GetCards();
+            Card card = new Card();
+            int iterator = 0;
+            while (iterator < cards.Count && cards[iterator].Id != idCard) 
+            {
+                iterator++;
+            }
+            try
+            {
+                card = cards[iterator];
+            }
+            catch(IndexOutOfRangeException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
             return card;
         }
 
-
-        public static string GetRandomCenter()
+        public static Card GetRandomCard()
         {
-            string card = "";
+            Random random = new Random();
+            Card card = new Card();
+            List<Card> cards = GetCards();
+            card = cards.ElementAt(random.Next(cards.Count));
+            return card;
+        }
+       
+        public static Card GetRandomCenter()
+        {
+            Card card = new Card();
             do
             {
                 card = GetRandomCard();
-            } while (card.Contains("draw") || card.Contains("reverse") || card.Contains("skip") || card.Contains("wildcard"));
+            } while (card.Type.Contains("draw") || card.Type.Contains("reverse") || card.Type.Contains("skip") || card.Type.Contains("wildcard"));
 
             return card;
         }
 
-        public static string getColor(string card)
+        public static bool IsValidCard(Card card, Card center, string actualColor)
         {
-            string[] descomposeCard = card.Split('_');
-            string colorCard = "";
-            try
-            {
-                colorCard = descomposeCard[1];
-            }
-            catch (IndexOutOfRangeException exception)
-            {
-                Console.WriteLine(exception.StackTrace);
-            }
-            return colorCard;
-        }
-        public static bool IsValidCard(string card, string center, string actualColor)
-        {
-            bool isValid = false;
-            
-            string[] descomposeCard = card.Split('_');
-            string[] descomposeCenter = center.Split('_');
-
-            string colorCard = getColor(card);
-            string colorCenter = getColor(center);
-
-            string numberCard = "card";
-            string numberCenter = "center";
-            if (descomposeCard.Length == 3)
-            {
-                numberCard = descomposeCard[2];
-            }
-
-            if (descomposeCenter.Length == 3)
-            {
-                numberCenter = descomposeCenter[2];
-            }
-
             /// 1: es comodín?
-            /// 2: es del mismo color?
-            /// 3: había un comodín en el centro y estoy poniendo una carta del color que se había seleccionado?
-            /// 4: es la misma carta aunque el color no sea el mismo?
-            if (colorCard == "draw4" || colorCard == "wildcard" || 
-                colorCenter == colorCard || 
-                (colorCard == actualColor && (colorCenter == "draw4" || colorCenter == "wildcard")) ||
-                numberCard == numberCenter)
-            {
-                isValid = true;
-            }
-            return isValid;
+            /// 2: es del mismo color? o había un comodín en el centro y estoy poniendo una carta del color que se había seleccionado?
+            /// 3: es la misma carta aunque el color no sea el mismo?
+            return (IsWildcard(card) || IsSameColor(card, actualColor) || IsSameType(card, center));
         }
-        
+
+        public static bool IsWildcard(Card card)
+        {
+            return (card.Type == "wildcard" || card.Type == "draw4");
+        }
+
+        public static bool IsSameColor(Card card, string actualColor)
+        {
+            bool isTheSame = false;
+
+            if (card.Color == actualColor)
+            {
+                isTheSame = true;
+            }
+
+            return isTheSame;
+        }
+
+        public static bool IsSameType(Card card, Card center)
+        {
+            return (card.Type == center.Type);
+        }
+
         public static int GetIndexPlayer(string actualPlayer, string[] players)
         {
             int indexPlayer = -1;
