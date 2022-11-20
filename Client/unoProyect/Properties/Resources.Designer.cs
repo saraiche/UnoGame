@@ -61,6 +61,24 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Actual color.
+        /// </summary>
+        public static string actualColor {
+            get {
+                return ResourceManager.GetString("actualColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Blue.
+        /// </summary>
+        public static string blue {
+            get {
+                return ResourceManager.GetString("blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Change password.
         /// </summary>
         public static string changePassword {
@@ -75,6 +93,24 @@ namespace unoProyect.Properties {
         public static string chat {
             get {
                 return ResourceManager.GetString("chat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Choose a color.
+        /// </summary>
+        public static string chooseColor {
+            get {
+                return ResourceManager.GetString("chooseColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Game Direction.
+        /// </summary>
+        public static string direction {
+            get {
+                return ResourceManager.GetString("direction", resourceCulture);
             }
         }
         
@@ -102,6 +138,15 @@ namespace unoProyect.Properties {
         public static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a A game can&apos;t be started with less than or more than 5 players in the lobby.
+        /// </summary>
+        public static string errorStartGamePlayers {
+            get {
+                return ResourceManager.GetString("errorStartGamePlayers", resourceCulture);
             }
         }
         
@@ -138,6 +183,15 @@ namespace unoProyect.Properties {
         public static string game {
             get {
                 return ResourceManager.GetString("game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Green.
+        /// </summary>
+        public static string green {
+            get {
+                return ResourceManager.GetString("green", resourceCulture);
             }
         }
         
@@ -241,6 +295,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Please select a card.
+        /// </summary>
+        public static string instructionSelectACard {
+            get {
+                return ResourceManager.GetString("instructionSelectACard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Send code by email.
         /// </summary>
         public static string instructionSendCodeByEmail {
@@ -259,6 +322,24 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invalid card.
+        /// </summary>
+        public static string invalidCard {
+            get {
+                return ResourceManager.GetString("invalidCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Email or password invalids.
+        /// </summary>
+        public static string invalidPasswordOrEmail {
+            get {
+                return ResourceManager.GetString("invalidPasswordOrEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Lobby.
         /// </summary>
         public static string lobby {
@@ -273,6 +354,15 @@ namespace unoProyect.Properties {
         public static string login {
             get {
                 return ResourceManager.GetString("login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a My cards.
+        /// </summary>
+        public static string myCards {
+            get {
+                return ResourceManager.GetString("myCards", resourceCulture);
             }
         }
         
@@ -300,6 +390,15 @@ namespace unoProyect.Properties {
         public static string notEmptyFields {
             get {
                 return ResourceManager.GetString("notEmptyFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Now playing.
+        /// </summary>
+        public static string nowPlaying {
+            get {
+                return ResourceManager.GetString("nowPlaying", resourceCulture);
             }
         }
         
@@ -349,6 +448,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Red.
+        /// </summary>
+        public static string red {
+            get {
+                return ResourceManager.GetString("red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Request new code.
         /// </summary>
         public static string requestNewCode {
@@ -394,6 +502,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We&apos;re sorry....
+        /// </summary>
+        public static string sorry {
+            get {
+                return ResourceManager.GetString("sorry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Start.
         /// </summary>
         public static string start {
@@ -430,6 +547,24 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t find the username entered..
+        /// </summary>
+        public static string usernameNotFound {
+            get {
+                return ResourceManager.GetString("usernameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ups! You must take a card from the stack before skip.
+        /// </summary>
+        public static string warningSkip {
+            get {
+                return ResourceManager.GetString("warningSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Welcome.
         /// </summary>
         public static string welcome {
@@ -453,6 +588,15 @@ namespace unoProyect.Properties {
         public static string wrongEmail {
             get {
                 return ResourceManager.GetString("wrongEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Yellow.
+        /// </summary>
+        public static string yellow {
+            get {
+                return ResourceManager.GetString("yellow", resourceCulture);
             }
         }
         

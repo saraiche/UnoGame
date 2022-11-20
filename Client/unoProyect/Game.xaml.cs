@@ -114,7 +114,7 @@ namespace unoProyect
             Card card = GameLogic.GetCardById(imageCard.Name);
             if (card == null)
             {
-                MessageBox.Show("Please select a card from the list");
+                MessageBox.Show(Properties.Resources.instructionSelectACard);
             }
             else
             {
@@ -123,7 +123,7 @@ namespace unoProyect
                     Center = card;
                     if (card.Type == "wildcard" || card.Type == "draw4")
                     {
-                        MessageBox.Show("Elige un color");
+                        MessageBox.Show(Properties.Resources.chooseColor);
                         GrdColors.Visibility = Visibility.Visible;
                     }
                     else
@@ -133,7 +133,7 @@ namespace unoProyect
                 }
                 else
                 {
-                    MessageBox.Show("Carta inválida");
+                    MessageBox.Show(Properties.Resources.invalidCard);
                 }
             }
         }
@@ -207,7 +207,7 @@ namespace unoProyect
             }
             else
             {
-                MessageBox.Show("Se eligió el color: " + color);
+                //MessageBox.Show("Se eligió el color: " + color);
                 GrdColors.Visibility = Visibility.Hidden;
                 if (Center.Type == "wildcard")
                 {
@@ -277,7 +277,7 @@ namespace unoProyect
         {
             if (BtnStack.IsEnabled)
             {
-                MessageBox.Show("Ups! Debes tomar una carta de la pila antes de pasar");
+                MessageBox.Show(Properties.Resources.warningSkip);
             }
             else
             {

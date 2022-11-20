@@ -273,7 +273,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="direction.jpg" />
+    <Resource Include="GraphicResources\direction.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

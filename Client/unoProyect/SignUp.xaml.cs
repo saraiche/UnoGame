@@ -64,7 +64,7 @@ namespace unoProyect
                 }
                 else
                 {
-                    MessageBox.Show("Contraseña o email inválidos", "");
+                    MessageBox.Show(Properties.Resources.invalidPasswordOrEmail, "");
                 }
             }
         }
