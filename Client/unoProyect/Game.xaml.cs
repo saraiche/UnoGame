@@ -44,7 +44,6 @@ namespace unoProyect
         public void PutCardOnCenter(Card card)
         {
             this.Center = card;
-            ActualColor = card.Color;
             BitmapImage bi3 = new BitmapImage();
             bi3.BeginInit();
             bi3.UriSource = new Uri(card.Url, UriKind.Relative);
@@ -70,11 +69,11 @@ namespace unoProyect
                     card = cards.ElementAt(index);
                     CallChatService.DealCard(Players[i], card, InvitationCode);
                     cards.RemoveAt(index);
-                    cardsSize--;   
+                    cardsSize--;
                 }
             }
         }
-        
+
         public void PutUsernames(string[] players)
         {
             this.Players = players;
@@ -178,10 +177,10 @@ namespace unoProyect
 
         public void UpdateTurnInformation(string color, string actualPlayer)
         {
-            LblActualColor.Content = ActualColor;
+            LblActualColor.Content = color;
             LblNowPlaying.Content = actualPlayer;
         }
-        
+
         private void PlayCard(string color, Image imageCard)
         {
             string nextPlayer = GameLogic.NextPlayer(Username, Players, Reverse);
@@ -215,7 +214,7 @@ namespace unoProyect
                     //avisarles nuevo color
                 }
                 else if (Center.Type == "draw4")
-                {   
+                {
                     //avisarles nuevo color
                     for (int i = 0; i < 4; i++)
                     {

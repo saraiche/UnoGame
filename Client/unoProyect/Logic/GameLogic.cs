@@ -28,7 +28,7 @@ namespace unoProyect.Logic
             dTOCard.Url = card.Url;
             dTOCard.Id = card.Id;
             return dTOCard;
-        }       
+        }
 
         public static List<Card> GetCards()
         {
@@ -86,7 +86,7 @@ namespace unoProyect.Logic
             List<Card> cards = GetCards();
             Card card = new Card();
             int iterator = 0;
-            while (iterator < cards.Count && cards[iterator].Id != idCard) 
+            while (iterator < cards.Count && cards[iterator].Id != idCard)
             {
                 iterator++;
             }
@@ -109,7 +109,7 @@ namespace unoProyect.Logic
             card = cards.ElementAt(random.Next(cards.Count));
             return card;
         }
-       
+
         public static Card GetRandomCenter()
         {
             Card card = new Card();
@@ -167,7 +167,7 @@ namespace unoProyect.Logic
         public static string NextPlayer(string actualPlayer, string[] players, bool isReverse)
         {
             string nextPlayer = "";
-            int indexActualPlayer = GetIndexPlayer(actualPlayer, players);  
+            int indexActualPlayer = GetIndexPlayer(actualPlayer, players);
             int indexLastPlayer = players.Length - 1;
             if (isReverse)
             {
@@ -192,7 +192,7 @@ namespace unoProyect.Logic
                 }
             }
 
-            return nextPlayer;          
+            return nextPlayer;
         }
     }
 }
