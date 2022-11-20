@@ -56,9 +56,9 @@ namespace unoProyect.Logic
         {
             Console.WriteLine(user);
         }
-        public void ReceiveCenter(string center)
+        public void ReceiveCenter(DTOCard center)
         {
-            GameView.PutCardOnCenter(center);
+            GameView.PutCardOnCenter(GameLogic.DtoCardToCard(center));
         }
 
         public void OpenGame(string username, string[] players)
@@ -70,12 +70,6 @@ namespace unoProyect.Logic
                 if (username == players.First())
                 {
                     GameView.DealFirstCards();
-                    GameView.LvCards.Items.Add("color_blue_draw2");
-                    GameView.LvCards.Items.Add("color_red_draw2");
-                    GameView.LvCards.Items.Add("color_red_skip");
-                    GameView.LvCards.Items.Add("color_wildcard");
-                    GameView.LvCards.Items.Add("color_draw4");
-                    GameView.LvCards.Items.Add("color_blue_reverse");
                     GameView.InitTurn();
                 }
                 LobbyView.NavigationService.Navigate(GameView);
@@ -93,9 +87,9 @@ namespace unoProyect.Logic
             return players;
         }
 
-        public void PutCardInCenter(string invitationCode, string card)
+        public void PutCardInCenter(string invitationCode, Card card)
         {
-            ChatServiceClient.PutCardInCenter(invitationCode, card);
+            ChatServiceClient.PutCardInCenter(invitationCode, GameLogic.CardToDtoCard(card));
         }
 
         public void itsMyTurn(bool myturn)
@@ -107,14 +101,14 @@ namespace unoProyect.Logic
         {
             ChatServiceClient.NextTurn(invitationCode, username);
         }
-        public void ReceiveCard(string card)
+        public void ReceiveCard(DTOCard card)
         {
-            GameView.LvCards.Items.Add(card);
+            GameView.AddCard(GameLogic.DtoCardToCard(card));
         }
 
-        public void DealCard(string username, string card, string invitationCode)
+        public void DealCard(string username, Card card, string invitationCode)
         {
-            ChatServiceClient.DealCard(username, card, invitationCode);
+            ChatServiceClient.DealCard(username, GameLogic.CardToDtoCard(card), invitationCode);
         }
 
         public void RequestChangeDirection(string invitationCode)

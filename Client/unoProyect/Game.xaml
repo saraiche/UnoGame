@@ -91,6 +91,7 @@
                 <GridView>
                     <GridViewColumn />
                 </GridView>
+
             </ListView.View>
         </ListView>
         <Button x:Name="BtnUseCard" Content="{x:Static p:Resources.useCard}" HorizontalAlignment="Center" Margin="0,381,0,0" VerticalAlignment="Top" Click="BtnUseCard_Click"/>

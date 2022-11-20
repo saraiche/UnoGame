@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Logic;
+using Image = System.Windows.Controls.Image;
 
 namespace unoProyect
 {
@@ -27,7 +28,7 @@ namespace unoProyect
         public string InvitationCode { get; set; }
         public Logic.CallChatService CallChatService { get; set; }
         public string[] Players { get; set; }
-        public string Center { get; set; }
+        public Card Center { get; set; }
         public string ActualColor { get; set; }
         public bool Reverse { get; set; }
         public Game(string username, string code)
@@ -39,18 +40,13 @@ namespace unoProyect
             CallChatService = new Logic.CallChatService();
             Reverse = false;
         }
-        /*
-        private void BtnPlay_Click(object sender, RoutedEventArgs e)
-        {
-            CallChatService.NextTurn(InvitationCode, Username);
-        }
-        */
-        public void PutCardOnCenter(string card)
+
+        public void PutCardOnCenter(Card card)
         {
             this.Center = card;
             BitmapImage bi3 = new BitmapImage();
             bi3.BeginInit();
-            bi3.UriSource = new Uri("GraphicResources/" + card + ".png", UriKind.Relative);
+            bi3.UriSource = new Uri(card.Url, UriKind.Relative);
             bi3.EndInit();
             imgCenter.Stretch = Stretch.Fill;
             imgCenter.Source = bi3;
@@ -59,24 +55,25 @@ namespace unoProyect
 
         public void DealFirstCards()
         {
-            List<string> cards = new List<string>();
+            List<Card> cards = new List<Card>();
             cards = GameLogic.GetCards();
             int index = 0;
             int cardsSize = cards.Count;
-            string card = "";
             Random random = new Random();
             for (int i = 0; i < Players.Length; i++)
             {
                 for (int j = 0; j < 7; j++)
                 {
+                    Card card = new Card();
                     index = random.Next(cardsSize);
                     card = cards.ElementAt(index);
                     CallChatService.DealCard(Players[i], card, InvitationCode);
                     cards.RemoveAt(index);
-                    cardsSize--;   
+                    cardsSize--;
                 }
             }
         }
+
         public void PutUsernames(string[] players)
         {
             this.Players = players;
@@ -113,7 +110,8 @@ namespace unoProyect
 
         private void BtnUseCard_Click(object sender, RoutedEventArgs e)
         {
-            string card = (string)LvCards.SelectedItem;
+            System.Windows.Controls.Image imageCard = LvCards.SelectedValue as System.Windows.Controls.Image;
+            Card card = GameLogic.GetCardById(imageCard.Name);
             if (card == null)
             {
                 MessageBox.Show("Please select a card from the list");
@@ -123,14 +121,14 @@ namespace unoProyect
                 if (GameLogic.IsValidCard(card, Center, ActualColor))
                 {
                     Center = card;
-                    if (card.Contains("wildcard") || card.Contains("draw4"))
+                    if (card.Type == "wildcard" || card.Type == "draw4")
                     {
                         MessageBox.Show("Elige un color");
                         GrdColors.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        PlayCard("");
+                        PlayCard("", imageCard);
                     }
                 }
                 else
@@ -179,30 +177,30 @@ namespace unoProyect
 
         public void UpdateTurnInformation(string color, string actualPlayer)
         {
-            ActualColor = color;
-            LblActualColor.Content = ActualColor;
+            LblActualColor.Content = color;
             LblNowPlaying.Content = actualPlayer;
         }
-        private void PlayCard(string color)
+
+        private void PlayCard(string color, Image imageCard)
         {
             string nextPlayer = GameLogic.NextPlayer(Username, Players, Reverse);
             string newColor = "";
             if (color == "")
             {
-                newColor = GameLogic.getColor(Center);
-                if (Center.Contains("draw2"))
+                newColor = Center.Color;
+                if (Center.Type == "draw2")
                 {
                     CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
                     CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
                     nextPlayer = SkipPlayer();
                     MessageBox.Show("El siguiente jugador es: " + nextPlayer);
                 }
-                else if (Center.Contains("reverse"))
+                else if (Center.Type == "reverse")
                 {
                     nextPlayer = GameLogic.NextPlayer(Username, Players, !(Reverse));
                     CallChatService.RequestChangeDirection(InvitationCode);
                 }
-                else if (Center.Contains("skip"))
+                else if (Center.Type == "skip")
                 {
                     nextPlayer = SkipPlayer();
                 }
@@ -211,11 +209,11 @@ namespace unoProyect
             {
                 MessageBox.Show("Se eligió el color: " + color);
                 GrdColors.Visibility = Visibility.Hidden;
-                if (Center.Contains("wildcard"))
+                if (Center.Type == "wildcard")
                 {
                     //avisarles nuevo color
                 }
-                else if (Center.Contains("draw4"))
+                else if (Center.Type == "draw4")
                 {
                     //avisarles nuevo color
                     for (int i = 0; i < 4; i++)
@@ -229,33 +227,50 @@ namespace unoProyect
             CallChatService.PutCardInCenter(InvitationCode, Center);
             CallChatService.NextTurn(InvitationCode, nextPlayer);
             CallChatService.SendTurnInformation(InvitationCode, newColor, nextPlayer);
-            LvCards.Items.Remove(Center);
+            LvCards.Items.Remove(imageCard);
         }
 
         private void BtnBlue_Click(object sender, RoutedEventArgs e)
         {
-            PlayCard("blue");
+            Image image = LvCards.SelectedValue as System.Windows.Controls.Image;
+            PlayCard("blue", image);
         }
 
         private void BtnRed_Click(object sender, RoutedEventArgs e)
         {
-            PlayCard("red");
+            Image image = LvCards.SelectedValue as System.Windows.Controls.Image;
+            PlayCard("red", image);
         }
 
         private void BtnGreen_Click(object sender, RoutedEventArgs e)
         {
-            PlayCard("green");
+            Image image = LvCards.SelectedValue as System.Windows.Controls.Image;
+            PlayCard("green", image);
         }
 
         private void BtnYellow_Click(object sender, RoutedEventArgs e)
         {
-            PlayCard("yellow");
+            Image image = LvCards.SelectedValue as System.Windows.Controls.Image;
+            PlayCard("yellow", image);
         }
 
         private void BtnStack_Click(object sender, RoutedEventArgs e)
         {
-            LvCards.Items.Add(GameLogic.GetRandomCard());
+            AddCard(GameLogic.GetRandomCard());
             BtnStack.IsEnabled = false;
+        }
+
+        public void AddCard(Card card)
+        {
+            System.Windows.Controls.Image image = new Image();
+            BitmapImage bi3 = new BitmapImage();
+            bi3.BeginInit();
+            bi3.UriSource = new Uri(card.Url, UriKind.Relative);
+            bi3.EndInit();
+            image.Stretch = Stretch.Fill;
+            image.Source = bi3;
+            image.Name = card.Id;
+            LvCards.Items.Add(image);
         }
 
         private void BtnPaso_Click(object sender, RoutedEventArgs e)

@@ -18,13 +18,13 @@ namespace Services
         [OperationContract(IsOneWay = true)]
         void GetUsers(string user);
         [OperationContract(IsOneWay = true)]
-        void ReceiveCenter(string center);
+        void ReceiveCenter(DTOCard center);
         [OperationContract(IsOneWay = true)]
         void OpenGame(string username, List<string> players);
         [OperationContract(IsOneWay = true)]
         void itsMyTurn(bool myturn);
         [OperationContract(IsOneWay = true)]
-        void ReceiveCard(string card);
+        void ReceiveCard(DTOCard card);
         [OperationContract(IsOneWay = true)]
         void ChangeDirection();
         [OperationContract(IsOneWay = true)]
@@ -50,12 +50,12 @@ namespace Services
         void RequestOpenGame(string invitationCode);
 
         [OperationContract]
-        void PutCardInCenter(string invitationCode, string card);
+        void PutCardInCenter(string invitationCode, DTOCard card);
         [OperationContract]
         void NextTurn(string invitationCode, string username);
 
         [OperationContract]
-        void DealCard(string username, string card, string invitationCode);
+        void DealCard(string username, DTOCard card, string invitationCode);
 
         [OperationContract]
         void RequestChangeDirection(string invitationCode);
@@ -70,6 +70,17 @@ namespace Services
         [DataMember]
         public IChatClient Connection { get; set; }
     }
-
+    [DataContract]
+    public class DTOCard
+    {
+        [DataMember]
+        public string Color { get; set; } // blue, red, yellow, green
+        [DataMember]
+        public string Type { get; set; } //0-9, draw2, reverse, skip, wildcard, draw4
+        [DataMember]
+        public string Url { get; set; }
+        [DataMember]
+        public string Id { get; set; }
+    }
 
 }
