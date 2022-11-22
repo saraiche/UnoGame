@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -50,6 +49,14 @@ namespace Services
             return flag;
 
         }
+        public void GetUsersChat(string code, string username)
+        {
+         
+            foreach (var user in Rooms[code])
+            {
+                user.Connection.GetUsers(username);
+            }
+        }
 
         public void SendMessage(string username, string message, string invitationCode)
         {
@@ -85,13 +92,32 @@ namespace Services
             Console.WriteLine(username + " creó la sala "+ invitationCode);
             return invitationCode;
         }
-
-        public void GetUsersChat(string code, string username)
+        public bool DeletePlayer(string invitationCode, string username)
         {
-         
+            bool flag = false;
+            int index = -1;
+            foreach (var user in Rooms[invitationCode])
+            {
+                if (user.UserName == username)
+                {
+                    index = Rooms[invitationCode].IndexOf(user);
+                }
+            }
+            if (index != -1)
+            {
+                Rooms[invitationCode].RemoveAt(index);
+                flag = true;
+            }
+            return flag;
+        }
+
+        public void GetUsersChat(string code)
+        {
+            IChatClient con;
             foreach (var user in Rooms[code])
             {
-                user.Connection.GetUsers(username);
+                con = user.Connection;
+                con.GetUsers(user.UserName);
             }
         }
 
@@ -110,7 +136,7 @@ namespace Services
             Rooms = new Dictionary<string, List<DTOUserChat>>();
         }
 
-        public void PutCardInCenter(string invitationCode, string card)
+        public void PutCardInCenter(string invitationCode, Card card)
         {
             IChatClient con;
             if (Rooms.Keys.Contains(invitationCode))
@@ -147,7 +173,7 @@ namespace Services
             return users;
         }
 
-        public void DealCard(string username, string card, string invitationCode)
+        public void DealCard(string username, Card card, string invitationCode)
         {
             IChatClient con;
             foreach(var user in Rooms[invitationCode])
@@ -161,11 +187,10 @@ namespace Services
         }
         public void NextTurn(string invitationCode, string username)
         {
-            int indexTurnActual = 0;
             List<DTOUserChat> users = Rooms[invitationCode];
             foreach (var user in users)
             {
-                if (user != users[indexTurnActual])
+                if (user.UserName != username)
                 {
                     user.Connection.itsMyTurn(false);
                 }
@@ -175,23 +200,44 @@ namespace Services
                 }
             }
         }
-        public bool DeletePlayer(string invitationCode, string username)
+
+        public void RequestChangeDirection(string invitationCode)
         {
-            bool flag = false;
-            int index = -1;
-            foreach (var user in Rooms[invitationCode])
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
             {
-                if(user.UserName == username)
+                foreach (var other in Rooms[invitationCode])
                 {
-                    index = Rooms[invitationCode].IndexOf(user);
+                    con = other.Connection;
+                    con.ChangeDirection();
                 }
             }
-            if (index != -1)
+        }
+
+        public void SendTurnInformation(string invitationCode, string color, string actualTurn)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
             {
-                Rooms[invitationCode].RemoveAt(index);
-                flag = true;
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ReceiveTurnInformation(color, actualTurn);
+                }
             }
-            return flag;
+        }
+
+        public void SendWinner(string invitationCode, string username)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ReceiveWinner(username);
+                }
+            }
         }
     }
 
@@ -310,36 +356,6 @@ namespace Services
                 throw new EntityException(ex.Message);
             }
         }
-
-        public bool SendMail(string to, string emailSubject, string message)
-        {
-            bool status = false;
-            string from = "uno.game@hotmail.com";
-            string displayName = "Uno Game";
-            try
-            {
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(from, displayName);
-                mailMessage.To.Add(to);
-
-                mailMessage.Subject = emailSubject;
-                mailMessage.Body = message;
-                mailMessage.IsBodyHtml = true;
-
-                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
-                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
-                client.EnableSsl = true;
-
-                client.Send(mailMessage);
-                status = true;
-            }
-            catch (SmtpException ex)
-            {
-                throw new SmtpException(ex.Message);
-            }
-            return status;
-        }
-
         public bool AddFriend(string playerName, string friendName)
         {
             bool flag = false;
@@ -352,10 +368,10 @@ namespace Services
                     Credentials findCredentialsFriend = dataBase.CredentialsSet1.Where(x => x.username == friendName).FirstOrDefault();
                     if (findCredentialsPlayer != null || findCredentialsFriend != null)
                     {
-                        Player playerDb =  findCredentialsPlayer.Player;
+                        Player playerDb = findCredentialsPlayer.Player;
                         Player friendDb = findCredentialsFriend.Player;
                         dataBase.PlayerSet1.Attach(friendDb);
-                        playerDb.Friends.Add(friendDb);                       
+                        playerDb.Friends.Add(friendDb);
                         dataBase.PlayerSet1.Attach(playerDb);
                         dataBase.SaveChanges();
                         flag = true;
@@ -396,5 +412,37 @@ namespace Services
             }
             return friends;
         }
+
+
+        public bool SendMail(string to, string emailSubject, string message)
+        {
+            bool status = false;
+            string from = "uno.game@hotmail.com";
+            string displayName = "Uno Game";
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, displayName);
+                mailMessage.To.Add(to);
+
+                mailMessage.Subject = emailSubject;
+                mailMessage.Body = message;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
+                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
+                client.EnableSsl = true;
+
+                client.Send(mailMessage);
+                status = true;
+            }
+            catch (SmtpException ex)
+            {
+                throw new SmtpException(ex.Message);
+            }
+            return status;
+        }
+
     }
+
 }

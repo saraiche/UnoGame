@@ -68,12 +68,12 @@ namespace unoProyect
             string[] players = CallChatService.GetPlayersByInvitationCode(InvitationCode);
             if (players.Length < 2)
             {
-                MessageBox.Show("No se puede iniciar una partida con menos de dos jugadores", Properties.Resources.error);
+                MessageBox.Show(Properties.Resources.errorStartGamePlayers, Properties.Resources.error);
             }
             else
             {
                 CallChatService.RequestOpenGame(InvitationCode);
-                string center = Utilities.GetRandomCenter();
+                Card center = GameLogic.GetRandomCenter();
                 CallChatService.PutCardInCenter(InvitationCode, center);
 
             }
@@ -97,7 +97,7 @@ namespace unoProyect
                 }
                 else
                 {
-                    MessageBox.Show("El username no existe");
+                    MessageBox.Show(Properties.Resources.usernameNotFound, Properties.Resources.sorry);
                 }
 
             }

@@ -7,6 +7,8 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Windows.Markup;
+using System.Windows;
 
 namespace unoProyect.Logic
 {
@@ -55,7 +57,7 @@ namespace unoProyect.Logic
         {
             LobbyView.LvFriendList.Items.Add(user);
         }
-        public void ReceiveCenter(string center)
+        public void ReceiveCenter(Card center)
         {
             GameView.PutCardOnCenter(center);
         }
@@ -69,6 +71,7 @@ namespace unoProyect.Logic
                 if (username == players.First())
                 {
                     GameView.DealFirstCards();
+                    GameView.InitTurn();
                 }
                 LobbyView.NavigationService.Navigate(GameView);
             }
@@ -85,27 +88,59 @@ namespace unoProyect.Logic
             return players;
         }
 
-        public void PutCardInCenter(string invitationCode, string card)
+        public void PutCardInCenter(string invitationCode, Card card)
         {
             ChatServiceClient.PutCardInCenter(invitationCode, card);
         }
 
         public void itsMyTurn(bool myturn)
         {
-            GameView.BtnPlay.IsEnabled = myturn;
+            GameView.BtnUseCard.IsEnabled = myturn;
+            GameView.BtnStack.IsEnabled = myturn;
+            GameView.BtnPaso.Visibility = Visibility.Hidden;
         }
         public void NextTurn(string invitationCode, string username)
         {
             ChatServiceClient.NextTurn(invitationCode, username);
         }
-        public void ReceiveCard(string card)
+        public void ReceiveCard(Card card)
         {
-            GameView.LvCards.Items.Add(card);
+            GameView.AddCard(card);
         }
 
-        public void DealCard(string username, string card, string invitationCode)
+        public void DealCard(string username, Card card, string invitationCode)
         {
             ChatServiceClient.DealCard(username, card, invitationCode);
+        }
+
+        public void RequestChangeDirection(string invitationCode)
+        {
+            ChatServiceClient.RequestChangeDirection(invitationCode);
+        }
+        public void ChangeDirection()
+        {
+            GameView.ChangeDirection();
+        }
+
+        public void SendTurnInformation(string invitationCode, string color, string actualTurn)
+        {
+            ChatServiceClient.SendTurnInformation(invitationCode, color, actualTurn);
+        }
+
+        public void ReceiveTurnInformation(string color, string actualTurn)
+        {
+            GameView.UpdateTurnInformation(color, actualTurn);
+        }
+
+        public void ReceiveWinner(string username)
+        {
+            GameView.ShowWinner(username);
+            GameView.NavigationService.Navigate(LobbyView);
+        }
+
+        public void SendWinner(string invitationCode, string username)
+        {
+            ChatServiceClient.SendWinner(invitationCode, username);
         }
         public bool DeletePlayer(string code, string username)
         {

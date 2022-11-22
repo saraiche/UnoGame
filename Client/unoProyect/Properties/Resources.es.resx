@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="actualColor" xml:space="preserve">
+    <value>Color actual</value>
+  </data>
+  <data name="blue" xml:space="preserve">
+    <value>Azul</value>
+  </data>
   <data name="changePassword" xml:space="preserve">
     <value>Cambiar contraseña</value>
   </data>
   <data name="chat" xml:space="preserve">
     <value>Chat</value>
+  </data>
+  <data name="chooseColor" xml:space="preserve">
+    <value>Elige un color</value>
+  </data>
+  <data name="direction" xml:space="preserve">
+    <value>Sentido actual</value>
   </data>
   <data name="email" xml:space="preserve">
     <value>Correo electrónico</value>
@@ -131,6 +143,9 @@
   </data>
   <data name="error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="errorStartGamePlayers" xml:space="preserve">
+    <value>No se puede inciar la partida con menos de 2 o más de 5 jugadores en la sala de estar</value>
   </data>
   <data name="exit" xml:space="preserve">
     <value>Salir</value>
@@ -143,6 +158,9 @@
   </data>
   <data name="game" xml:space="preserve">
     <value>UNO</value>
+  </data>
+  <data name="green" xml:space="preserve">
+    <value>Verde</value>
   </data>
   <data name="informationSuccesfullSignUp" xml:space="preserve">
     <value>Registro exitoso :)</value>
@@ -177,11 +195,20 @@
   <data name="instructionRepeatPassword" xml:space="preserve">
     <value>Repite la nueva contraseña</value>
   </data>
+  <data name="instructionSelectACard" xml:space="preserve">
+    <value>Por favor, selecciona una carta</value>
+  </data>
   <data name="instructionSendCodeByEmail" xml:space="preserve">
     <value>Enviar código por correo electrónico</value>
   </data>
   <data name="instructionSendConfirmCode" xml:space="preserve">
     <value>Te enviaremos un código a tu correo electrónico para confirmar el registro</value>
+  </data>
+  <data name="invalidCard" xml:space="preserve">
+    <value>Carta inválida</value>
+  </data>
+  <data name="invalidPasswordOrEmail" xml:space="preserve">
+    <value>Correo electrónico o contraseña inválidos</value>
   </data>
   <data name="Kickfromthegame" xml:space="preserve">
     <value>Expulsar de la partida</value>
@@ -192,6 +219,9 @@
   <data name="login" xml:space="preserve">
     <value>Iniciar sesión</value>
   </data>
+  <data name="myCards" xml:space="preserve">
+    <value>Mis cartas</value>
+  </data>
   <data name="newGame" xml:space="preserve">
     <value>Crear partida</value>
   </data>
@@ -200,6 +230,9 @@
   </data>
   <data name="notEmptyFields" xml:space="preserve">
     <value>No se pueden dejar campos vacíos</value>
+  </data>
+  <data name="nowPlaying" xml:space="preserve">
+    <value>Ahora jugando</value>
   </data>
   <data name="ok" xml:space="preserve">
     <value>Aceptar</value>
@@ -216,6 +249,9 @@
   <data name="playWithFriends" xml:space="preserve">
     <value>Invitar amigos</value>
   </data>
+  <data name="red" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
   <data name="requestNewCode" xml:space="preserve">
     <value>Solicitar nuevo código</value>
   </data>
@@ -231,14 +267,26 @@
   <data name="signUp" xml:space="preserve">
     <value>Registrarse</value>
   </data>
+  <data name="sorry" xml:space="preserve">
+    <value>Lo sentimos...</value>
+  </data>
   <data name="start" xml:space="preserve">
     <value>Iniciar partida</value>
   </data>
   <data name="theGameCodeIs" xml:space="preserve">
     <value>El código de la partida es:</value>
   </data>
+  <data name="useCard" xml:space="preserve">
+    <value>Usar carta</value>
+  </data>
   <data name="user" xml:space="preserve">
     <value>Usuario</value>
+  </data>
+  <data name="usernameNotFound" xml:space="preserve">
+    <value>No pudimos encontrar el nombre de usuario ingresado</value>
+  </data>
+  <data name="warningSkip" xml:space="preserve">
+    <value>Ups! Debes tomar una carta de la pila antes de pasar</value>
   </data>
   <data name="welcome" xml:space="preserve">
     <value>Bienvenido</value>
@@ -248,6 +296,9 @@
   </data>
   <data name="wrongEmail" xml:space="preserve">
     <value>El correo electrónico ingresado no es válido</value>
+  </data>
+  <data name="yellow" xml:space="preserve">
+    <value>Amarillo</value>
   </data>
   <data name="yes" xml:space="preserve">
     <value>Sí</value>
