@@ -87,7 +87,7 @@ namespace unoProyect
 
             int iterador = indexThisPlayer + 1;
             /// Simula un comportamiento circular
-            while(iterador%players.Length != indexThisPlayer)
+            while (iterador % players.Length != indexThisPlayer)
             {
                 switch (labelIterator)
                 {

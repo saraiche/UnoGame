@@ -24,6 +24,10 @@ namespace Services
 
         [OperationContract]
         bool SendMail(string to, string emailSubject, string message);
+        [OperationContract]
+        bool AddFriend(string playerName, string friendName);
+        [OperationContract]
+        List<string> GetFriends(string playerName);
 
     }
     [DataContract]

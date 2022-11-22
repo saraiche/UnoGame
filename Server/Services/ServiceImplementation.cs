@@ -49,6 +49,14 @@ namespace Services
             return flag;
 
         }
+        public void GetUsersChat(string code, string username)
+        {
+         
+            foreach (var user in Rooms[code])
+            {
+                user.Connection.GetUsers(username);
+            }
+        }
 
         public void SendMessage(string username, string message, string invitationCode)
         {
@@ -83,6 +91,24 @@ namespace Services
             Rooms.Add(invitationCode, dTOUserChats);
             Console.WriteLine(username + " creó la sala "+ invitationCode);
             return invitationCode;
+        }
+        public bool DeletePlayer(string invitationCode, string username)
+        {
+            bool flag = false;
+            int index = -1;
+            foreach (var user in Rooms[invitationCode])
+            {
+                if (user.UserName == username)
+                {
+                    index = Rooms[invitationCode].IndexOf(user);
+                }
+            }
+            if (index != -1)
+            {
+                Rooms[invitationCode].RemoveAt(index);
+                flag = true;
+            }
+            return flag;
         }
 
         public void GetUsersChat(string code)
@@ -330,6 +356,63 @@ namespace Services
                 throw new EntityException(ex.Message);
             }
         }
+        public bool AddFriend(string playerName, string friendName)
+        {
+            bool flag = false;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    Credentials findCredentialsFriend = dataBase.CredentialsSet1.Where(x => x.username == friendName).FirstOrDefault();
+                    if (findCredentialsPlayer != null || findCredentialsFriend != null)
+                    {
+                        Player playerDb = findCredentialsPlayer.Player;
+                        Player friendDb = findCredentialsFriend.Player;
+                        dataBase.PlayerSet1.Attach(friendDb);
+                        playerDb.Friends.Add(friendDb);
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                        flag = true;
+                    }
+                    return flag;
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+
+        }
+        public List<string> GetFriends(string playerName)
+        {
+            List<string> friends = new List<string>();
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    if (findCredentialsPlayer != null)
+                    {
+                        Player playerDb = findCredentialsPlayer.Player;
+                        List<Player> friendsDb = new List<Player>();
+                        friendsDb = playerDb.Friends.ToList();
+                        foreach (Player friend in friendsDb)
+                        {
+                            friends.Add(friend.Credentials.username);
+                        }
+                    }
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+            return friends;
+        }
+
 
         public bool SendMail(string to, string emailSubject, string message)
         {
@@ -361,4 +444,5 @@ namespace Services
         }
 
     }
+
 }
