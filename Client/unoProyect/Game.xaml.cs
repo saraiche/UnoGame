@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Logic;
+using unoProyect.Proxy;
 using Image = System.Windows.Controls.Image;
 
 namespace unoProyect
@@ -39,11 +40,13 @@ namespace unoProyect
             lblPlayer1.Content = Username;
             CallChatService = new Logic.CallChatService();
             Reverse = false;
+            LblActualDirection.Content = "Sentido del reloj";
         }
 
         public void PutCardOnCenter(Card card)
         {
             this.Center = card;
+            ActualColor = card.Color;
             BitmapImage bi3 = new BitmapImage();
             bi3.BeginInit();
             bi3.UriSource = new Uri(card.Url, UriKind.Relative);
@@ -111,19 +114,19 @@ namespace unoProyect
         private void BtnUseCard_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.Image imageCard = LvCards.SelectedValue as System.Windows.Controls.Image;
-            Card card = GameLogic.GetCardById(imageCard.Name);
-            if (card == null)
+            if (imageCard == null)
             {
-                MessageBox.Show("Please select a card from the list");
+                MessageBox.Show(Properties.Resources.instructionSelectACard);
             }
             else
             {
+                Card card = GameLogic.GetCardById(imageCard.Name);
                 if (GameLogic.IsValidCard(card, Center, ActualColor))
                 {
                     Center = card;
                     if (card.Type == "wildcard" || card.Type == "draw4")
                     {
-                        MessageBox.Show("Elige un color");
+                        MessageBox.Show(Properties.Resources.chooseColor);
                         GrdColors.Visibility = Visibility.Visible;
                     }
                     else
@@ -133,7 +136,7 @@ namespace unoProyect
                 }
                 else
                 {
-                    MessageBox.Show("Carta inválida");
+                    MessageBox.Show(Properties.Resources.invalidCard);
                 }
             }
         }
@@ -143,7 +146,6 @@ namespace unoProyect
             int PlayersOnGame = Players.Length;
             Random random = new Random();
             int indexFirstPlayer = random.Next(0, PlayersOnGame);
-            Console.WriteLine("Empieza el turno: " + Players[indexFirstPlayer]);
             CallChatService.NextTurn(InvitationCode, Players[indexFirstPlayer]);
         }
 
@@ -177,6 +179,7 @@ namespace unoProyect
 
         public void UpdateTurnInformation(string color, string actualPlayer)
         {
+            ActualColor = color;
             LblActualColor.Content = color;
             LblNowPlaying.Content = actualPlayer;
         }
@@ -190,10 +193,13 @@ namespace unoProyect
                 newColor = Center.Color;
                 if (Center.Type == "draw2")
                 {
-                    CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
-                    CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Card card = new Card();
+                        card = GameLogic.GetRandomCard();
+                        CallChatService.DealCard(nextPlayer, card, InvitationCode);
+                    }
                     nextPlayer = SkipPlayer();
-                    MessageBox.Show("El siguiente jugador es: " + nextPlayer);
                 }
                 else if (Center.Type == "reverse")
                 {
@@ -207,7 +213,7 @@ namespace unoProyect
             }
             else
             {
-                MessageBox.Show("Se eligió el color: " + color);
+                //MessageBox.Show("Se eligió el color: " + color);
                 GrdColors.Visibility = Visibility.Hidden;
                 if (Center.Type == "wildcard")
                 {
@@ -218,16 +224,32 @@ namespace unoProyect
                     //avisarles nuevo color
                     for (int i = 0; i < 4; i++)
                     {
-                        CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                        Card card = new Card();
+                        card = GameLogic.GetRandomCard();
+                        CallChatService.DealCard(nextPlayer, card, InvitationCode);
                     }
                     nextPlayer = SkipPlayer();
                 }
                 newColor = color;
             }
-            CallChatService.PutCardInCenter(InvitationCode, Center);
-            CallChatService.NextTurn(InvitationCode, nextPlayer);
-            CallChatService.SendTurnInformation(InvitationCode, newColor, nextPlayer);
             LvCards.Items.Remove(imageCard);
+            CallChatService.PutCardInCenter(InvitationCode, Center);
+            if (!IsWinner())
+            {
+                CallChatService.NextTurn(InvitationCode, nextPlayer);
+                CallChatService.SendTurnInformation(InvitationCode, newColor, nextPlayer);
+            }
+        }
+
+        private bool IsWinner()
+        {
+            bool isWinner = false;
+            if (LvCards.Items.Count == 0)
+            {
+                isWinner = true;
+                CallChatService.SendWinner(InvitationCode, Username);
+            }
+            return isWinner;
         }
 
         private void BtnBlue_Click(object sender, RoutedEventArgs e)
@@ -256,7 +278,16 @@ namespace unoProyect
 
         private void BtnStack_Click(object sender, RoutedEventArgs e)
         {
-            AddCard(GameLogic.GetRandomCard());
+            Card card = GameLogic.GetRandomCard();
+            AddCard(card);
+            if (!GameLogic.IsValidCard(card, Center, ActualColor))
+            {
+                CallChatService.NextTurn(InvitationCode, GameLogic.NextPlayer(Username, Players, Reverse));
+            }
+            else
+            {
+                BtnPaso.Visibility = Visibility.Visible;
+            }
             BtnStack.IsEnabled = false;
         }
 
@@ -277,12 +308,17 @@ namespace unoProyect
         {
             if (BtnStack.IsEnabled)
             {
-                MessageBox.Show("Ups! Debes tomar una carta de la pila antes de pasar");
+                MessageBox.Show(Properties.Resources.warningSkip);
             }
             else
             {
                 CallChatService.NextTurn(InvitationCode, GameLogic.NextPlayer(Username, Players, Reverse));
             }
+        }
+
+        public void ShowWinner(string usernameWinner)
+        {
+            MessageBox.Show("The winner is: " + usernameWinner);
         }
     }
 }

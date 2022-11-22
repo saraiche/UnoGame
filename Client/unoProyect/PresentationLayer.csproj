@@ -80,7 +80,6 @@
     </Compile>
     <Compile Include="Logic\CallChatService.cs" />
     <Compile Include="Logic\CallDataService.cs" />
-    <Compile Include="Logic\Card.cs" />
     <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
@@ -273,7 +272,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="direction.jpg" />
+    <Resource Include="GraphicResources\direction.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
