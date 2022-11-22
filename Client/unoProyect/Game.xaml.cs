@@ -44,6 +44,7 @@ namespace unoProyect
         public void PutCardOnCenter(Card card)
         {
             this.Center = card;
+            ActualColor = card.Color;
             BitmapImage bi3 = new BitmapImage();
             bi3.BeginInit();
             bi3.UriSource = new Uri(card.Url, UriKind.Relative);
@@ -111,13 +112,13 @@ namespace unoProyect
         private void BtnUseCard_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.Image imageCard = LvCards.SelectedValue as System.Windows.Controls.Image;
-            Card card = GameLogic.GetCardById(imageCard.Name);
-            if (card == null)
+            if (imageCard == null)
             {
                 MessageBox.Show(Properties.Resources.instructionSelectACard);
             }
             else
             {
+                Card card = GameLogic.GetCardById(imageCard.Name);
                 if (GameLogic.IsValidCard(card, Center, ActualColor))
                 {
                     Center = card;
@@ -177,6 +178,7 @@ namespace unoProyect
 
         public void UpdateTurnInformation(string color, string actualPlayer)
         {
+            ActualColor = color;
             LblActualColor.Content = color;
             LblNowPlaying.Content = actualPlayer;
         }
