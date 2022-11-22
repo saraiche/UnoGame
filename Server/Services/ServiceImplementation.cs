@@ -110,7 +110,7 @@ namespace Services
             Rooms = new Dictionary<string, List<DTOUserChat>>();
         }
 
-        public void PutCardInCenter(string invitationCode, DTOCard card)
+        public void PutCardInCenter(string invitationCode, Card card)
         {
             IChatClient con;
             if (Rooms.Keys.Contains(invitationCode))
@@ -147,7 +147,7 @@ namespace Services
             return users;
         }
 
-        public void DealCard(string username, DTOCard card, string invitationCode)
+        public void DealCard(string username, Card card, string invitationCode)
         {
             IChatClient con;
             foreach(var user in Rooms[invitationCode])
@@ -197,6 +197,19 @@ namespace Services
                 {
                     con = other.Connection;
                     con.ReceiveTurnInformation(color, actualTurn);
+                }
+            }
+        }
+
+        public void SendWinner(string invitationCode, string username)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ReceiveWinner(username);
                 }
             }
         }

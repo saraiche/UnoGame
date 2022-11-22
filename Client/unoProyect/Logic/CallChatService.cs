@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Windows.Markup;
+using System.Windows;
 
 namespace unoProyect.Logic
 {
@@ -56,9 +57,9 @@ namespace unoProyect.Logic
         {
             Console.WriteLine(user);
         }
-        public void ReceiveCenter(DTOCard center)
+        public void ReceiveCenter(Card center)
         {
-            GameView.PutCardOnCenter(GameLogic.DtoCardToCard(center));
+            GameView.PutCardOnCenter(center);
         }
 
         public void OpenGame(string username, string[] players)
@@ -89,26 +90,27 @@ namespace unoProyect.Logic
 
         public void PutCardInCenter(string invitationCode, Card card)
         {
-            ChatServiceClient.PutCardInCenter(invitationCode, GameLogic.CardToDtoCard(card));
+            ChatServiceClient.PutCardInCenter(invitationCode, card);
         }
 
         public void itsMyTurn(bool myturn)
         {
             GameView.BtnUseCard.IsEnabled = myturn;
             GameView.BtnStack.IsEnabled = myturn;
+            GameView.BtnPaso.Visibility = Visibility.Hidden;
         }
         public void NextTurn(string invitationCode, string username)
         {
             ChatServiceClient.NextTurn(invitationCode, username);
         }
-        public void ReceiveCard(DTOCard card)
+        public void ReceiveCard(Card card)
         {
-            GameView.AddCard(GameLogic.DtoCardToCard(card));
+            GameView.AddCard(card);
         }
 
         public void DealCard(string username, Card card, string invitationCode)
         {
-            ChatServiceClient.DealCard(username, GameLogic.CardToDtoCard(card), invitationCode);
+            ChatServiceClient.DealCard(username, card, invitationCode);
         }
 
         public void RequestChangeDirection(string invitationCode)
@@ -130,5 +132,15 @@ namespace unoProyect.Logic
             GameView.UpdateTurnInformation(color, actualTurn);
         }
 
+        public void ReceiveWinner(string username)
+        {
+            GameView.ShowWinner(username);
+            GameView.NavigationService.Navigate(LobbyView);
+        }
+
+        public void SendWinner(string invitationCode, string username)
+        {
+            ChatServiceClient.SendWinner(invitationCode, username);
+        }
     }
 }

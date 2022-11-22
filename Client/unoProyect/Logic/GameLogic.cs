@@ -10,26 +10,6 @@ namespace unoProyect.Logic
 {
     class GameLogic
     {
-        public static Card DtoCardToCard(DTOCard dtoCard)
-        {
-            Card card = new Card();
-            card.Color = dtoCard.Color;
-            card.Type = dtoCard.Type;
-            card.Url = dtoCard.Url;
-            card.Id = dtoCard.Id;
-            return card;
-        }
-
-        public static DTOCard CardToDtoCard(Card card)
-        {
-            DTOCard dTOCard = new DTOCard();
-            dTOCard.Color = card.Color;
-            dTOCard.Type = card.Type;
-            dTOCard.Url = card.Url;
-            dTOCard.Id = card.Id;
-            return dTOCard;
-        }
-
         public static List<Card> GetCards()
         {
             List<Card> cards = new List<Card>();

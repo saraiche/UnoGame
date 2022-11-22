@@ -18,17 +18,19 @@ namespace Services
         [OperationContract(IsOneWay = true)]
         void GetUsers(string user);
         [OperationContract(IsOneWay = true)]
-        void ReceiveCenter(DTOCard center);
+        void ReceiveCenter(Card center);
         [OperationContract(IsOneWay = true)]
         void OpenGame(string username, List<string> players);
         [OperationContract(IsOneWay = true)]
         void itsMyTurn(bool myturn);
         [OperationContract(IsOneWay = true)]
-        void ReceiveCard(DTOCard card);
+        void ReceiveCard(Card card);
         [OperationContract(IsOneWay = true)]
         void ChangeDirection();
         [OperationContract(IsOneWay = true)]
         void ReceiveTurnInformation(string color, string actualTurn);
+        [OperationContract(IsOneWay = true)]
+        void ReceiveWinner(string username);
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
@@ -50,17 +52,19 @@ namespace Services
         void RequestOpenGame(string invitationCode);
 
         [OperationContract]
-        void PutCardInCenter(string invitationCode, DTOCard card);
+        void PutCardInCenter(string invitationCode, Card card);
         [OperationContract]
         void NextTurn(string invitationCode, string username);
 
         [OperationContract]
-        void DealCard(string username, DTOCard card, string invitationCode);
+        void DealCard(string username, Card card, string invitationCode);
 
         [OperationContract]
         void RequestChangeDirection(string invitationCode);
         [OperationContract]
         void SendTurnInformation(string invitationCode, string color, string actualTurn);
+        [OperationContract]
+        void SendWinner(string invitationCode, string username);
     }
     [DataContract]
     public class DTOUserChat
@@ -71,7 +75,7 @@ namespace Services
         public IChatClient Connection { get; set; }
     }
     [DataContract]
-    public class DTOCard
+    public class Card
     {
         [DataMember]
         public string Color { get; set; } // blue, red, yellow, green

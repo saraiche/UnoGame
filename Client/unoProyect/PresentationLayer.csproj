@@ -80,7 +80,6 @@
     </Compile>
     <Compile Include="Logic\CallChatService.cs" />
     <Compile Include="Logic\CallDataService.cs" />
-    <Compile Include="Logic\Card.cs" />
     <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>

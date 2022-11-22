@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Logic;
+using unoProyect.Proxy;
 using Image = System.Windows.Controls.Image;
 
 namespace unoProyect
@@ -39,6 +40,7 @@ namespace unoProyect
             lblPlayer1.Content = Username;
             CallChatService = new Logic.CallChatService();
             Reverse = false;
+            LblActualDirection.Content = "Sentido del reloj";
         }
 
         public void PutCardOnCenter(Card card)
@@ -144,7 +146,6 @@ namespace unoProyect
             int PlayersOnGame = Players.Length;
             Random random = new Random();
             int indexFirstPlayer = random.Next(0, PlayersOnGame);
-            Console.WriteLine("Empieza el turno: " + Players[indexFirstPlayer]);
             CallChatService.NextTurn(InvitationCode, Players[indexFirstPlayer]);
         }
 
@@ -192,10 +193,13 @@ namespace unoProyect
                 newColor = Center.Color;
                 if (Center.Type == "draw2")
                 {
-                    CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
-                    CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Card card = new Card();
+                        card = GameLogic.GetRandomCard();
+                        CallChatService.DealCard(nextPlayer, card, InvitationCode);
+                    }
                     nextPlayer = SkipPlayer();
-                    MessageBox.Show("El siguiente jugador es: " + nextPlayer);
                 }
                 else if (Center.Type == "reverse")
                 {
@@ -220,16 +224,32 @@ namespace unoProyect
                     //avisarles nuevo color
                     for (int i = 0; i < 4; i++)
                     {
-                        CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                        Card card = new Card();
+                        card = GameLogic.GetRandomCard();
+                        CallChatService.DealCard(nextPlayer, card, InvitationCode);
                     }
                     nextPlayer = SkipPlayer();
                 }
                 newColor = color;
             }
-            CallChatService.PutCardInCenter(InvitationCode, Center);
-            CallChatService.NextTurn(InvitationCode, nextPlayer);
-            CallChatService.SendTurnInformation(InvitationCode, newColor, nextPlayer);
             LvCards.Items.Remove(imageCard);
+            CallChatService.PutCardInCenter(InvitationCode, Center);
+            if (!IsWinner())
+            {
+                CallChatService.NextTurn(InvitationCode, nextPlayer);
+                CallChatService.SendTurnInformation(InvitationCode, newColor, nextPlayer);
+            }
+        }
+
+        private bool IsWinner()
+        {
+            bool isWinner = false;
+            if (LvCards.Items.Count == 0)
+            {
+                isWinner = true;
+                CallChatService.SendWinner(InvitationCode, Username);
+            }
+            return isWinner;
         }
 
         private void BtnBlue_Click(object sender, RoutedEventArgs e)
@@ -258,7 +278,16 @@ namespace unoProyect
 
         private void BtnStack_Click(object sender, RoutedEventArgs e)
         {
-            AddCard(GameLogic.GetRandomCard());
+            Card card = GameLogic.GetRandomCard();
+            AddCard(card);
+            if (!GameLogic.IsValidCard(card, Center, ActualColor))
+            {
+                CallChatService.NextTurn(InvitationCode, GameLogic.NextPlayer(Username, Players, Reverse));
+            }
+            else
+            {
+                BtnPaso.Visibility = Visibility.Visible;
+            }
             BtnStack.IsEnabled = false;
         }
 
@@ -285,6 +314,11 @@ namespace unoProyect
             {
                 CallChatService.NextTurn(InvitationCode, GameLogic.NextPlayer(Username, Players, Reverse));
             }
+        }
+
+        public void ShowWinner(string usernameWinner)
+        {
+            MessageBox.Show("The winner is: " + usernameWinner);
         }
     }
 }
