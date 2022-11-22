@@ -59,7 +59,7 @@ namespace unoProyect.Logic
         }
         public void ReceiveCenter(Card center)
         {
-            GameView.PutCardOnCenter(center);
+            GameView.PutCardOnCenter(GameLogic.DtoCardToCard(center));
         }
 
         public void OpenGame(string username, string[] players)
@@ -90,7 +90,7 @@ namespace unoProyect.Logic
 
         public void PutCardInCenter(string invitationCode, Card card)
         {
-            ChatServiceClient.PutCardInCenter(invitationCode, card);
+            ChatServiceClient.PutCardInCenter(invitationCode, GameLogic.CardToDtoCard(card));
         }
 
         public void itsMyTurn(bool myturn)
@@ -110,7 +110,7 @@ namespace unoProyect.Logic
 
         public void DealCard(string username, Card card, string invitationCode)
         {
-            ChatServiceClient.DealCard(username, card, invitationCode);
+            ChatServiceClient.DealCard(username, GameLogic.CardToDtoCard(card), invitationCode);
         }
 
         public void RequestChangeDirection(string invitationCode)
