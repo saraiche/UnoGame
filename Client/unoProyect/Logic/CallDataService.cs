@@ -69,5 +69,13 @@ namespace unoProyect.Logic
             }
             return code;
         }
+        public bool AddFriend(string playerName, string friendName)
+        {
+            return dataServiceClient.AddFriend(playerName, friendName);
+        }
+        public List<string> GetFriends(string playerName)
+        {
+            return dataServiceClient.GetFriends(playerName).ToList();
+        }
     }
 }

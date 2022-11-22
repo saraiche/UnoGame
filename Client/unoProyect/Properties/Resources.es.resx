@@ -210,6 +210,9 @@
   <data name="invalidPasswordOrEmail" xml:space="preserve">
     <value>Correo electrónico o contraseña inválidos</value>
   </data>
+  <data name="Kickfromthegame" xml:space="preserve">
+    <value>Expulsar de la partida</value>
+  </data>
   <data name="lobby" xml:space="preserve">
     <value>Sala de espera</value>
   </data>

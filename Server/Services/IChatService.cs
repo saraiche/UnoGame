@@ -39,8 +39,8 @@ namespace Services
         bool Join(string username, string code);
         [OperationContract(IsOneWay = true)]
         void SendMessage(string username,string message, string invitationCode);
-        [OperationContract]
-        void GetUsersChat(string code);
+        [OperationContract(IsOneWay = true)]
+        void GetUsersChat(string code, string username);
 
         [OperationContract]
         string NewRoom(string username);
@@ -65,6 +65,8 @@ namespace Services
         void SendTurnInformation(string invitationCode, string color, string actualTurn);
         [OperationContract]
         void SendWinner(string invitationCode, string username);
+        [OperationContract]
+        bool DeletePlayer(string invitationCode, string username);
     }
     [DataContract]
     public class DTOUserChat
