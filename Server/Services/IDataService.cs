@@ -23,11 +23,13 @@ namespace Services
         bool SearchUser(DTOCredentials credentials);
 
         [OperationContract]
-        bool SendMail(string to, string emailSubject, string message);
-        [OperationContract]
         bool AddFriend(string playerName, string friendName);
         [OperationContract]
         List<string> GetFriends(string playerName);
+        [OperationContract]
+        DTOCredentials SearchUserByUsername(string username);
+        [OperationContract]
+        bool ModifyPassword(string playerName, string password);
 
     }
     [DataContract]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -412,37 +413,55 @@ namespace Services
             }
             return friends;
         }
-
-
-        public bool SendMail(string to, string emailSubject, string message)
+        public DTOCredentials SearchUserByUsername(string username)
         {
-            bool status = false;
-            string from = "uno.game@hotmail.com";
-            string displayName = "Uno Game";
+            DTOCredentials userFound = new DTOCredentials();
             try
             {
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(from, displayName);
-                mailMessage.To.Add(to);
-
-                mailMessage.Subject = emailSubject;
-                mailMessage.Body = message;
-                mailMessage.IsBodyHtml = true;
-
-                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
-                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
-                client.EnableSsl = true;
-
-                client.Send(mailMessage);
-                status = true;
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == username).FirstOrDefault();
+                    if (findCredentialsPlayer != null)
+                    {
+                        Player playerDb = findCredentialsPlayer.Player;
+                        userFound.Username = playerDb.Credentials.username;
+                        userFound.Email = playerDb.Credentials.email;
+                    }
+                }
             }
-            catch (SmtpException ex)
+            catch (EntityException ex)
             {
-                throw new SmtpException(ex.Message);
+                throw new EntityException(ex.Message);
             }
-            return status;
+            return userFound;
         }
-
+        public bool ModifyPassword(string playerName, string password)
+        {
+            bool result = false;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    if (findCredentialsPlayer != null)
+                    {
+                        //findCredentialsPlayer.password = password;
+                        Player playerDb = findCredentialsPlayer.Player;
+                        playerDb.Credentials.password = password;
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                        result = true;
+                    }
+                }
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new DbUpdateException(exception.Message);
+            }
+            return result;
+        }
     }
 
 }

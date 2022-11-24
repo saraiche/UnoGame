@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,9 +11,6 @@ namespace unoProyect.Security
 {
     public class Utilities
     {
-
-        
-
         public static string ComputeSHA256Hash(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -43,6 +41,35 @@ namespace unoProyect.Security
         public static bool ValidatePassword(string password)
         {
             return (password.Length > 8);
+        }
+
+        public static bool SendMail(string to, string emailSubject, string message)
+        {
+            bool status = false;
+            string from = "uno.game@hotmail.com";
+            string displayName = "Uno Game";
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, displayName);
+                mailMessage.To.Add(to);
+
+                mailMessage.Subject = emailSubject;
+                mailMessage.Body = message;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
+                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
+                client.EnableSsl = true;
+
+                client.Send(mailMessage);
+                status = true;
+            }
+            catch (SmtpException ex)
+            {
+                throw new SmtpException(ex.Message);
+            }
+            return status;
         }
     }
 }
