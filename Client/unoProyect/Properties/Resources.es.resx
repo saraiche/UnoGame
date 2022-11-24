@@ -231,6 +231,9 @@
   <data name="notEmptyFields" xml:space="preserve">
     <value>No se pueden dejar campos vacíos</value>
   </data>
+  <data name="notMatches" xml:space="preserve">
+    <value>Sorry, no pudimos encontrar coincidencias con los datos ingresados. Revísalos y prueba de nuevo.</value>
+  </data>
   <data name="nowPlaying" xml:space="preserve">
     <value>Ahora jugando</value>
   </data>
@@ -239,6 +242,12 @@
   </data>
   <data name="password" xml:space="preserve">
     <value>Contraseña</value>
+  </data>
+  <data name="passwordPolicy" xml:space="preserve">
+    <value>La contraseña debe tener al menos 8 caracteres</value>
+  </data>
+  <data name="passwordsMayBeTheSame" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
   </data>
   <data name="playAsGuest" xml:space="preserve">
     <value>Jugar como invitado</value>
@@ -276,6 +285,9 @@
   <data name="theGameCodeIs" xml:space="preserve">
     <value>El código de la partida es:</value>
   </data>
+  <data name="tryAgain" xml:space="preserve">
+    <value>Ocurrió un error, por favor intenta de nuevo.</value>
+  </data>
   <data name="useCard" xml:space="preserve">
     <value>Usar carta</value>
   </data>
@@ -290,6 +302,9 @@
   </data>
   <data name="welcome" xml:space="preserve">
     <value>Bienvenido</value>
+  </data>
+  <data name="wrongCode" xml:space="preserve">
+    <value>El código ingresado no coincide con el código enviado. Verifícalo o solicita uno nuevo.</value>
   </data>
   <data name="wrongCredentials" xml:space="preserve">
     <value>Credenciales incorrectas</value>

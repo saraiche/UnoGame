@@ -231,6 +231,9 @@
   <data name="notEmptyFields" xml:space="preserve">
     <value>Can't leave empty fields</value>
   </data>
+  <data name="notMatches" xml:space="preserve">
+    <value>Ups!, we couldn't find matches with the data entered. Check it and try again.</value>
+  </data>
   <data name="nowPlaying" xml:space="preserve">
     <value>Now playing</value>
   </data>
@@ -239,6 +242,12 @@
   </data>
   <data name="password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="passwordPolicy" xml:space="preserve">
+    <value>Password must have at least 8 characters</value>
+  </data>
+  <data name="passwordsMayBeTheSame" xml:space="preserve">
+    <value>Passwords don't match</value>
   </data>
   <data name="playAsGuest" xml:space="preserve">
     <value>Play as guest</value>
@@ -276,6 +285,9 @@
   <data name="theGameCodeIs" xml:space="preserve">
     <value>The game code is: </value>
   </data>
+  <data name="tryAgain" xml:space="preserve">
+    <value>An error ocurred, please try again later.</value>
+  </data>
   <data name="useCard" xml:space="preserve">
     <value>Use card</value>
   </data>
@@ -290,6 +302,9 @@
   </data>
   <data name="welcome" xml:space="preserve">
     <value>Welcome</value>
+  </data>
+  <data name="wrongCode" xml:space="preserve">
+    <value>The code you entered doesn't match with the one sent.</value>
   </data>
   <data name="wrongCredentials" xml:space="preserve">
     <value>Wrong credentials</value>

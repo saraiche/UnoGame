@@ -102,7 +102,7 @@
                 VerticalAlignment="Center" 
                 HorizontalContentAlignment="Center" 
                 Width="179" 
-                Background="White" Height="11"/>
+                Background="White" Height="27"/>
             <Label 
                 x:Name="LblNowPlaying" 
                 HorizontalAlignment="Center" 

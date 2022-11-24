@@ -57,18 +57,6 @@ namespace unoProyect.Logic
             }
             return result;
         }
-
-        public string SendMail(string email, string emailSubject)
-        {
-            string code = "";
-            code = (new Random().Next(100000, 999999)).ToString();
-            bool result = dataServiceClient.SendMail(email, emailSubject, "El código es: " + code);
-            if (!result)
-            {
-                code = "";
-            }
-            return code;
-        }
         public bool AddFriend(string playerName, string friendName)
         {
             return dataServiceClient.AddFriend(playerName, friendName);
@@ -76,6 +64,15 @@ namespace unoProyect.Logic
         public List<string> GetFriends(string playerName)
         {
             return dataServiceClient.GetFriends(playerName).ToList();
+        }
+        public DTOCredentials SearchUserByUsername(string username)
+        {
+            DTOCredentials result = dataServiceClient.SearchUserByUsername(username);
+            return result;
+        }
+        public bool ModifyPassword(string username, string password)
+        {
+            return dataServiceClient.ModifyPassword(username, password);
         }
     }
 }

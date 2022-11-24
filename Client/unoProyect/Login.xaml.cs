@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Security;
+using System.Net;
 
 namespace unoProyect
 {
@@ -66,18 +67,9 @@ namespace unoProyect
 
         private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
         {
-
-            string code = logic.SendMail("cashdezsarai@gmail.com", "Código");
-            if (string.IsNullOrEmpty(code))
-            {
-                MessageBox.Show("Upsi, error");
-            }
-            else
-            {
-                MessageBox.Show("Se envió el código: " + code);
-            }
-
-
+           // Console.WriteLine("Se cambió: " + logic.ModifyPassword("saraiche2", Utilities.ComputeSHA256Hash("quetimatipoti")));
+            ChangePassword changePassword = new ChangePassword();
+            this.NavigationService.Navigate(changePassword);
         }
 
         private void btnAsGuest_Click(object sender, RoutedEventArgs e)
