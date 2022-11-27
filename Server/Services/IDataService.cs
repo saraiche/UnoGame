@@ -28,6 +28,10 @@ namespace Services
         bool AddFriend(string playerName, string friendName);
         [OperationContract]
         List<string> GetFriends(string playerName);
+        [OperationContract]
+        DTOPlayer GetPlayer(string playerName);
+        [OperationContract]
+        int SetPlayer(DTOPlayer player, string username);
 
     }
     [DataContract]
@@ -45,6 +49,14 @@ namespace Services
 
         [DataMember]
         public string Email { get; set; }
+
+        public DTOCredentials()
+        {
+            Id = 0;
+            Password = "";
+            Username = "";
+            Email = "";
+        }
     }
     [DataContract]
     public class DTOPlayer
@@ -54,5 +66,10 @@ namespace Services
         [DataMember]
         public DTOCredentials Credentials { get; set; }
 
+        public DTOPlayer()
+        {
+            Image = "";
+            Credentials = new DTOCredentials();
+        }
     }
 }

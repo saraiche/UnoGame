@@ -4,16 +4,33 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:unoProyect"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
       Title="UserProfile">
 
     <Grid Background="#FFF6F3F3">
-        <Label x:Name="LblUsername" Content="Username" HorizontalAlignment="Left" Height="39" Margin="238,57,0,0" VerticalAlignment="Top" Width="127"/>
-        <ListBox x:Name="LbFriendList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="489,162,79,158"/>
+        <Label x:Name="LblUsername" Content="Username" HorizontalAlignment="Left" Height="39" Margin="75,20,0,0" VerticalAlignment="Top" Width="127"/>
+        <ListBox x:Name="LbFriendList" Margin="489,162,79,158" d:ItemsSource="{d:SampleData ItemCount=5}"/>
         <Label Content="Friend list" HorizontalAlignment="Left" Margin="498,135,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="BtnAddFriend" Content="AddFriend" HorizontalAlignment="Left" Margin="533,358,0,0" VerticalAlignment="Top" Click="BtnAddFriend_Click"/>
-        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="599,359,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="BtnAddFriend" HorizontalAlignment="Left" Margin="538,366,0,0" VerticalAlignment="Top" Click="BtnAddFriend_Click" >
+            <materialDesign:PackIcon Kind="Add"  />
+        </Button>
+        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="599,359,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+  materialDesign:HintAssist.Hint="Username"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+        <Image x:Name="ImPlayer" HorizontalAlignment="Left" Height="68" Margin="624,19,0,0" VerticalAlignment="Top" Width="80" Source="GraphicResources/playerImages/Recurso 13.png"/>
+        <Button Content="Delete player" HorizontalAlignment="Left" Margin="372,358,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.492,1.147"/>
+        <Button x:Name="BtnChange" Content="Change" HorizontalAlignment="Left" Height="25" Margin="611,95,0,0" VerticalAlignment="Top" Width="101" Click="BtnChange_Click"/>
+        <Button x:Name="BtnSaveImage" Content="Save" HorizontalAlignment="Left" Height="28" Margin="41,362,0,0" VerticalAlignment="Top" Width="80" Click="BtnSaveImage_Click"/>
+       
+            
+
 
     </Grid>
 </Page>

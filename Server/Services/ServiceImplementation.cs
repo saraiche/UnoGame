@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -333,6 +334,7 @@ namespace Services
             result.password = dTOCredentials.Password;
             return result;
         }
+        
 
         public bool SearchUser(DTOCredentials credentials)
         {
@@ -443,6 +445,97 @@ namespace Services
             return status;
         }
 
+        public DTOPlayer GetPlayer(string playerName)
+        {
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    Player playerDb = dataBase.PlayerSet1.Where(x => x.Credentials.username == playerName).FirstOrDefault();
+                    if(playerDb != null)
+                    {
+                        DTOPlayer dTOPlayer = new DTOPlayer();
+                        dTOPlayer.Credentials.Email = playerDb.Credentials.email;
+                        dTOPlayer.Credentials.Username = playerDb.Credentials.username;
+                        dTOPlayer.Credentials.Password = playerDb.Credentials.password;
+                        dTOPlayer.Credentials.Id = playerDb.Credentials.Id;
+                        dTOPlayer.Image = playerDb.Images.path;
+                        return dTOPlayer;
+                    }
+                    else
+                    {
+                        return new DTOPlayer();
+                    }
+                    
+                   
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+            
+           
+        }
+
+        public int SetPlayer(DTOPlayer player, string username)
+        {
+            Player playerDb = null;
+            int flag = 1;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    //buscar el username
+                    playerDb = dataBase.PlayerSet1.Where(x => x.Credentials.username == username).FirstOrDefault();
+                    //modifificar emal
+                    playerDb.Credentials.email = player.Credentials.Email;
+                    dataBase.PlayerSet1.Attach(playerDb);
+                    dataBase.SaveChanges();
+                    //modificar password
+                    playerDb.Credentials.password = player.Credentials.Password;
+                    dataBase.PlayerSet1.Attach(playerDb);
+                    dataBase.SaveChanges();
+
+                    //modificar imagen
+                    //buscar imagen
+                    Images findImage = dataBase.ImagesSet1.Where(x => x.path == player.Image).FirstOrDefault();
+                    if(findImage == null)
+                    {
+                        Images newImage = new Images();
+                        newImage.path = player.Image;
+                        Images imagesdb = dataBase.ImagesSet1.Add(newImage);
+                        playerDb.Images = imagesdb;
+                        dataBase.PlayerSet1.Attach(playerDb); 
+                        dataBase.SaveChanges();
+
+                    }
+                    else
+                    {
+                        playerDb.Images = findImage;
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                    }
+
+                    //modificar username
+                    Player findPlayer = dataBase.PlayerSet1.Where(x => x.Credentials.username == player.Credentials.Username).FirstOrDefault();
+                    if (findPlayer != null)
+                    {
+                        playerDb.Credentials.username = player.Credentials.Username;
+                    }
+                    else
+                    {
+                        flag = 2;
+                    }
+                    return flag;
+
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+        }
     }
 
 }

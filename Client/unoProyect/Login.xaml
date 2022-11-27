@@ -5,19 +5,30 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:p="clr-namespace:unoProyect.Properties"
       xmlns:local="clr-namespace:unoProyect"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="{x:Static p:Resources.login}">
     <Grid Background="White">
-        <Label x:Name="lblUno" Grid.Column="1" Grid.Row="1" Content="{x:Static p:Resources.game}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Height="59" Grid.RowSpan="2"/>
+        <Label x:Name="lblUno" Grid.Column="1" Grid.Row="1" Content="{x:Static p:Resources.game}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Height="59" Grid.RowSpan="2" Width="90"/>
         <Label x:Name="lblUser" Grid.Column="1" Grid.Row="3" Content="{x:Static p:Resources.user}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" Margin="176,5,0,0" Height="28" Width="142"/>
         <TextBox x:Name="tbUser" Grid.Column="1" Grid.Row="3" Margin="336,3,254,13" RenderTransformOrigin="0.551,0.152"/>
         <Label x:Name="lblPassword" Grid.Column="1" Grid.Row="4" Content="{x:Static p:Resources.password}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="176,0,0,0" Height="26" Width="79"/>
-        <PasswordBox x:Name="pbPassword" Grid.Column="1"  Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="171" Margin="336,0,0,0" Height="28"/>
-        <Button Grid.Column="1" Grid.Row="6"  x:Name="BtnLogin" Content="{x:Static p:Resources.login}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="92" Click="BtnLogin_Click" Height="35"/>
-        <Button Grid.Column="1" Grid.Row="7" x:Name="btnForgotMyPassword" Content="{x:Static p:Resources.forgetMyPassword}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,16,0,0" Click="btnForgotMyPassword_Click"/>
-        <Button Grid.Column="1" Grid.Row="7" x:Name="BtnSignUp" Content="{x:Static p:Resources.signUp}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnSignUp_Click" Margin="397,16,0,0" Height="20" Width="75"/>
-        <Button Grid.Column="1" Grid.Row="8" x:Name="btnAsGuest" Content="{x:Static p:Resources.playAsGuest}" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="0,15,0,0" Click="btnAsGuest_Click"/>
+        <PasswordBox x:Name="pbPassword"  Grid.Column="1"  Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="199" Margin="336,0,0,0"
+    Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
+    IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
+    materialDesign:HintAssist.Hint="Password"
+    materialDesign:TextFieldAssist.HasClearButton="True"
+    materialDesign:HintAssist.HelperText="Not bound password" Height="50" />
+        <Button Grid.Column="1" Grid.Row="7" x:Name="btnForgotMyPassword" Content="{x:Static p:Resources.forgetMyPassword}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,16,0,0" Click="btnForgotMyPassword_Click" Height="32" Grid.RowSpan="2" Width="166"/>
+        <Button Grid.Column="1" Grid.Row="7" x:Name="BtnSignUp" Content="{x:Static p:Resources.signUp}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnSignUp_Click" Margin="448,17,0,0" Height="25" Width="110"/>
+        <Button Grid.Column="1" Grid.Row="8" x:Name="btnAsGuest" Content="{x:Static p:Resources.playAsGuest}" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="0,15,0,0" Click="btnAsGuest_Click" Height="32" Grid.RowSpan="2" Width="162"/>
+        <Button Grid.Column="1" Grid.Row="6"  x:Name="BtnLogin" Content="{x:Static p:Resources.login}" Width="130" Click="BtnLogin_Click" Height="35" Margin="341,3,0,8" HorizontalAlignment="Left"/>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -27,15 +38,15 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="73*"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="46*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 

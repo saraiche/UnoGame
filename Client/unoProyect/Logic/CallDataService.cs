@@ -77,5 +77,14 @@ namespace unoProyect.Logic
         {
             return dataServiceClient.GetFriends(playerName).ToList();
         }
+        public DTOPlayer GetPlayer(string username)
+        {
+            return dataServiceClient.GetPlayer(username);
+        }
+        public int SetPlayer(DTOPlayer player, string username)
+        {
+            return dataServiceClient.SetPlayer(player, username);
+        }
+
     }
 }
