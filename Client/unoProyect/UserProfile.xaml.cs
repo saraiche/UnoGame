@@ -43,7 +43,7 @@ namespace unoProyect
             ImPlayer.Source = new BitmapImage(new Uri(PlayerData.Image, UriKind.Relative));
             BtnSaveImage.IsEnabled = false;
             NumImage = 3;
-            LblUsername.Content = username;
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(TbAddFriend, username);
         }
 
         private void BtnAddFriend_Click(object sender, RoutedEventArgs e)

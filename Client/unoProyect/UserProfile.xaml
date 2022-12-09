@@ -15,17 +15,16 @@
       Title="UserProfile">
 
     <Grid Background="#FFF6F3F3">
-        <Label x:Name="LblUsername" Content="Username" HorizontalAlignment="Left" Height="39" Margin="75,20,0,0" VerticalAlignment="Top" Width="127"/>
         <ListBox x:Name="LbFriendList" Margin="489,162,79,158" d:ItemsSource="{d:SampleData ItemCount=5}"/>
         <Label Content="Friend list" HorizontalAlignment="Left" Margin="498,135,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="BtnAddFriend" HorizontalAlignment="Left" Margin="538,366,0,0" VerticalAlignment="Top" Click="BtnAddFriend_Click" >
+        <Button x:Name="BtnAddFriend" HorizontalAlignment="Left" Margin="506,329,0,0" VerticalAlignment="Top" Click="BtnAddFriend_Click" >
             <materialDesign:PackIcon Kind="Add"  />
         </Button>
-        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="599,359,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
-  materialDesign:HintAssist.Hint="Username"
-  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="121,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+            materialDesign:HintAssist.Hint="username"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
         <Image x:Name="ImPlayer" HorizontalAlignment="Left" Height="68" Margin="624,19,0,0" VerticalAlignment="Top" Width="80" Source="GraphicResources/playerImages/Recurso 13.png"/>
-        <Button Content="Delete player" HorizontalAlignment="Left" Margin="372,358,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.492,1.147"/>
+        <Button Content="Delete player" HorizontalAlignment="Left" Margin="604,315,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.492,1.147"/>
         <Button x:Name="BtnChange" Content="Change" HorizontalAlignment="Left" Height="25" Margin="611,95,0,0" VerticalAlignment="Top" Width="101" Click="BtnChange_Click"/>
         <Button x:Name="BtnSaveImage" Content="Save" HorizontalAlignment="Left" Height="28" Margin="41,362,0,0" VerticalAlignment="Top" Width="80" Click="BtnSaveImage_Click"/>
        
