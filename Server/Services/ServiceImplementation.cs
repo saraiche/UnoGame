@@ -387,6 +387,34 @@ namespace Services
             }
 
         }
+        public bool DeleteFriend(string playerName, string friendName)
+        {
+            bool flag = false;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    Credentials findCredentialsFriend = dataBase.CredentialsSet1.Where(x => x.username == friendName).FirstOrDefault();
+                    if (findCredentialsPlayer != null || findCredentialsFriend != null)
+                    {
+                        Player playerDb = findCredentialsPlayer.Player;
+                        Player friendDb = findCredentialsFriend.Player;
+                        dataBase.PlayerSet1.Attach(friendDb);
+                        playerDb.Friends.Remove(friendDb);
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                        flag = true;
+                    }
+                    return flag;
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+        }
         public List<string> GetFriends(string playerName)
         {
             List<string> friends = new List<string>();
@@ -477,7 +505,13 @@ namespace Services
             
            
         }
-
+        /// <summary>
+        /// Esta funcion sirve para modificar los datos de un jugador
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="username"></param>
+        /// <returns>1 si la modificacion es exitosa 2 si el username ya esta ocupado</returns>
+        /// <exception cref="EntityException"></exception>
         public int SetPlayer(DTOPlayer player, string username)
         {
             Player playerDb = null;
@@ -518,15 +552,23 @@ namespace Services
                     }
 
                     //modificar username
-                    Player findPlayer = dataBase.PlayerSet1.Where(x => x.Credentials.username == player.Credentials.Username).FirstOrDefault();
-                    if (findPlayer != null)
+                    if(username != player.Credentials.Username)
                     {
-                        playerDb.Credentials.username = player.Credentials.Username;
+                        Player findPlayer = dataBase.PlayerSet1.Where(x => x.Credentials.username == player.Credentials.Username).FirstOrDefault();
+                        if (findPlayer != null)
+                        {
+                            flag = 2;
+
+                        }
+                        else
+                        {
+                            playerDb.Credentials.username = player.Credentials.Username;
+                            dataBase.PlayerSet1.Attach(playerDb);
+                            dataBase.SaveChanges();
+
+                        }
                     }
-                    else
-                    {
-                        flag = 2;
-                    }
+                    
                     return flag;
 
                 }

@@ -85,6 +85,9 @@ namespace unoProyect.Logic
         {
             return dataServiceClient.SetPlayer(player, username);
         }
-
+        public bool DeleteFriend(string playerName, string friendName)
+        {
+            return dataServiceClient.DeleteFriend(playerName, friendName);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -32,7 +33,8 @@ namespace Services
         DTOPlayer GetPlayer(string playerName);
         [OperationContract]
         int SetPlayer(DTOPlayer player, string username);
-
+        [OperationContract]
+        bool DeleteFriend(string playerName, string friendName);
     }
     [DataContract]
     public class DTOCredentials

@@ -4,9 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:unoProyect"
+      xmlns:p="clr-namespace:unoProyect.Properties"
+
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Height="450"
+      Width="800"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{DynamicResource MaterialDesignPaper}"
       TextElement.FontWeight="Medium"
@@ -15,20 +19,36 @@
       Title="UserProfile">
 
     <Grid Background="#FFF6F3F3">
-        <ListBox x:Name="LbFriendList" Margin="489,162,79,158" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <Label Content="Friend list" HorizontalAlignment="Left" Margin="498,135,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="BtnAddFriend" HorizontalAlignment="Left" Margin="506,329,0,0" VerticalAlignment="Top" Click="BtnAddFriend_Click" >
-            <materialDesign:PackIcon Kind="Add"  />
+        <ListBox x:Name="LbFriendList" Margin="489,162,79,158" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LbFriendList_SelectionChanged"/>
+        <Label Content="Friend list" HorizontalAlignment="Left" Margin="498,135,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="456,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                materialDesign:HintAssist.Hint="{x:Static p:Resources.addFriend}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" RenderTransformOrigin="0.572,0.51"/>
+        <Button x:Name="BtnAddFriend" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Margin="408,324,352,86" Click="BtnAddFriend_Click">
+            <materialDesign:PackIcon Kind="Plus"/>
         </Button>
-        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="121,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
-            materialDesign:HintAssist.Hint="username"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-        <Image x:Name="ImPlayer" HorizontalAlignment="Left" Height="68" Margin="624,19,0,0" VerticalAlignment="Top" Width="80" Source="GraphicResources/playerImages/Recurso 13.png"/>
-        <Button Content="Delete player" HorizontalAlignment="Left" Margin="604,315,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.492,1.147"/>
-        <Button x:Name="BtnChange" Content="Change" HorizontalAlignment="Left" Height="25" Margin="611,95,0,0" VerticalAlignment="Top" Width="101" Click="BtnChange_Click"/>
-        <Button x:Name="BtnSaveImage" Content="Save" HorizontalAlignment="Left" Height="28" Margin="41,362,0,0" VerticalAlignment="Top" Width="80" Click="BtnSaveImage_Click"/>
-       
-            
+        <TextBox x:Name="TbUsername" HorizontalAlignment="Left" Margin="98,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"
+                materialDesign:HintAssist.Hint="username"
+                materialDesign:HintAssist.HelperText="{x:Static p:Resources.changeUsername}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="36" TextChanged="TbUsername_TextChanged" />
+        <TextBox x:Name="TbPassword" HorizontalAlignment="Left" Margin="98,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"
+                materialDesign:HintAssist.Hint="password"
+                materialDesign:HintAssist.HelperText="{x:Static p:Resources.changePassword}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="36" TextChanged="TbPassword_TextChanged"/>
+        <TextBox x:Name="TbEmail" HorizontalAlignment="Left" Margin="98,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"
+                materialDesign:HintAssist.Hint="Email"
+                materialDesign:HintAssist.HelperText="{x:Static p:Resources.changeEmail}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="36" TextChanged="TbEmail_TextChanged"/>
+        <Button x:Name="BtnDeleteFriend" Content="{x:Static p:Resources.delete}" HorizontalAlignment="Left" Margin="606,329,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.492,1.147" Click="BtnDeleteFriend_Click"/>
+        <StackPanel HorizontalAlignment="Left" Margin="489,19,0,0" Orientation="Vertical" VerticalAlignment="Top">
+            <Image x:Name="ImPlayer" Height="68" Width="80" Source="GraphicResources/playerImages/Recurso 13.png"/>
+            <Button x:Name="BtnChange" Content="Change" Height="26" Width="100" Click="BtnChange_Click"/>
+        </StackPanel>
+        
+        <Button x:Name="BtnSave" Content="{x:Static p:Resources.save}" HorizontalAlignment="Left" Height="28" Margin="138,333,0,0" VerticalAlignment="Top" Width="96" Click="BtnSave_Click"/>
+
+
 
 
     </Grid>
