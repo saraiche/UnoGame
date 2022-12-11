@@ -70,7 +70,6 @@ namespace unoProyect
 
         private bool ValidateCode()
         {
-            Console.WriteLine(ValidationCode);
             if (ValidationCode != TbValidationCode.Text)
             {
                 MessageBox.Show(Properties.Resources.wrongCode);

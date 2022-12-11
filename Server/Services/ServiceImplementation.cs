@@ -240,6 +240,19 @@ namespace Services
                 }
             }
         }
+
+        public void SendPlayerUno(string invitationCode, string username, bool hasUno)
+        {
+            IChatClient con;
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    con = other.Connection;
+                    con.ReceivePlayerUno(username, hasUno);
+                }
+            }
+        }
     }
 
 

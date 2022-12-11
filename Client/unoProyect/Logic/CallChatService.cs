@@ -146,5 +146,21 @@ namespace unoProyect.Logic
         {
             return ChatServiceClient.DeletePlayer(code, username);
         }
+        public void SendPlayerUno(string invitationCode, string username, bool hasUno)
+        {
+            ChatServiceClient.SendPlayerUno(invitationCode, username, hasUno);
+        }
+
+        public void ReceivePlayerUno(string username, bool hasUno)
+        {
+            if (hasUno == true)
+            {
+                GameView.PlayerSaidUno(username);
+            }
+            else
+            {
+                GameView.PlayerWithoutUno(username);
+            }
+        }
     }
 }

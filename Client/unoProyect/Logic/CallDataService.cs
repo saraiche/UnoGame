@@ -21,7 +21,7 @@ namespace unoProyect.Logic
             int result = 0;
             Proxy.DTOCredentials dTOcredentials = new Proxy.DTOCredentials();
             dTOcredentials.Username = username;
-            dTOcredentials.Password = Utilities.ComputeSHA256Hash(password);
+            dTOcredentials.Password = password;
             dTOcredentials.Email = email;
             result = dataServiceClient.AddCredentials(dTOcredentials);
             return result;
