@@ -15,9 +15,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Background="#FFF9F9F9" Margin="0,19,-31,0">
-        
-        <Grid HorizontalAlignment="Left" Height="204" VerticalAlignment="Top" Width="275" Margin="303,92,0,0">
-            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1"/>
+
+        <Grid
+            Height="204"
+            HorizontalAlignment="Left"
+            Margin="303,92,0,0"
+            VerticalAlignment="Top"
+            Width="275">
+            <Border
+                Background="GhostWhite"
+                BorderBrush="Gainsboro"
+                BorderThickness="1" />
             <Label
                 Content="{x:Static p:Resources.chat}"
                 Height="25"
@@ -27,10 +35,11 @@
             <ListView
                 Height="179"
                 HorizontalAlignment="Center"
+                Margin="0,25,0,0"
                 VerticalAlignment="Top"
                 Width="275"
                 d:ItemsSource="{d:SampleData ItemCount=5}"
-                x:Name="LvChat" Margin="0,25,0,0" />
+                x:Name="LvChat" />
         </Grid>
         <Label
             Content="{x:Static p:Resources.nowPlaying}"
