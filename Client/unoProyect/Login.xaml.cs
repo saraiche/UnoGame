@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Security;
 using System.Net;
+using System.Configuration;
+using System.Reflection;
 
 namespace unoProyect
 {
@@ -25,9 +27,11 @@ namespace unoProyect
     public partial class Login : Page
     {
         Logic.CallDataService logic = new Logic.CallDataService();
+        private readonly Configuration appConfiguration;
         public Login()
         {
             InitializeComponent();
+            appConfiguration = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
         }
 
 
@@ -78,5 +82,24 @@ namespace unoProyect
 
         }
 
+        private void BtnEnglish_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeLanguage("en");
+        }
+
+        private void BtnSpanish_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeLanguage("es");
+            
+        }
+
+        public void ChangeLanguage(string languaje)
+        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(languaje);
+            appConfiguration.Save();
+            ConfigurationManager.RefreshSection("appSettings");
+            Login login = new Login();
+            this.NavigationService.Navigate(login);
+        }
     }
 }

@@ -18,6 +18,34 @@
         <Button Grid.Column="1" Grid.Row="7" x:Name="btnForgotMyPassword" Content="{x:Static p:Resources.forgetMyPassword}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,16,0,0" Click="btnForgotMyPassword_Click"/>
         <Button Grid.Column="1" Grid.Row="7" x:Name="BtnSignUp" Content="{x:Static p:Resources.signUp}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnSignUp_Click" Margin="397,16,0,0" Height="20" Width="75"/>
         <Button Grid.Column="1" Grid.Row="8" x:Name="btnAsGuest" Content="{x:Static p:Resources.playAsGuest}" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="0,15,0,0" Click="btnAsGuest_Click"/>
+        <Button 
+            x:Name="BtnEnglish" 
+            Grid.Column="1" 
+            Content="" 
+            HorizontalAlignment="Left" 
+            Margin="607,13,0,0" 
+            Grid.Row="1" 
+            VerticalAlignment="Top" 
+            Width="45" 
+            Height="26" Click="BtnEnglish_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/GraphicResources/eeuu.png"/>
+            </Button.Background>
+        </Button>
+        <Button 
+            x:Name="BtnSpanish" 
+            Grid.Column="1" 
+            Content="" 
+            HorizontalAlignment="Left" 
+            Margin="664,13,0,0" 
+            Grid.Row="1" 
+            VerticalAlignment="Top" 
+            Width="45" 
+            Height="26" Click="BtnSpanish_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/GraphicResources/mexico.png"/>
+            </Button.Background>
+        </Button>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
