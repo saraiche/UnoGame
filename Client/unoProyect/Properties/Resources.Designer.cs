@@ -322,6 +322,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a is inviting you to join a game in UNOGame. .
+        /// </summary>
+        public static string instructionSomebodyIsInvitingYou {
+            get {
+                return ResourceManager.GetString("instructionSomebodyIsInvitingYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Invalid card.
         /// </summary>
         public static string invalidCard {
@@ -336,6 +345,24 @@ namespace unoProyect.Properties {
         public static string invalidPasswordOrEmail {
             get {
                 return ResourceManager.GetString("invalidPasswordOrEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitation code.
+        /// </summary>
+        public static string invitationCode {
+            get {
+                return ResourceManager.GetString("invitationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitation sent.
+        /// </summary>
+        public static string invitationSent {
+            get {
+                return ResourceManager.GetString("invitationSent", resourceCulture);
             }
         }
         
