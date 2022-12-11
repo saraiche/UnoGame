@@ -4,6 +4,7 @@ using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using unoProyect.Proxy;
 using unoProyect.Security;
 
@@ -36,9 +37,9 @@ namespace unoProyect.Logic
             try
             {
                 result = dataServiceClient.IsUser(isUser);
-            }catch(Exception ex)
+            }catch(System.ServiceModel.EndpointNotFoundException)
             {
-                throw new Exception(ex.Message);
+                MessageBox.Show(Properties.Resources.error, "");
             }
             return result;
         }
@@ -51,9 +52,9 @@ namespace unoProyect.Logic
             {
                 result = dataServiceClient.SearchUser(searchUser);
             }
-            catch (EntityException ex)
+            catch (EntityException)
             {
-                throw new EntityException(ex.Message);
+                MessageBox.Show(Properties.Resources.invalidPasswordOrEmail, "");
             }
             return result;
         }
@@ -73,6 +74,18 @@ namespace unoProyect.Logic
         public bool ModifyPassword(string username, string password)
         {
             return dataServiceClient.ModifyPassword(username, password);
+        }
+        public DTOPlayer GetPlayer(string username)
+        {
+            return dataServiceClient.GetPlayer(username);
+        }
+        public int SetPlayer(DTOPlayer player, string username)
+        {
+            return dataServiceClient.SetPlayer(player, username);
+        }
+        public bool DeleteFriend(string playerName, string friendName)
+        {
+            return dataServiceClient.DeleteFriend(playerName, friendName);
         }
     }
 }

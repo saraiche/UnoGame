@@ -126,6 +126,9 @@
   <data name="changePassword" xml:space="preserve">
     <value>Cambiar contraseña</value>
   </data>
+  <data name="changeUsername" xml:space="preserve">
+    <value>Cambiar nombre de usuario</value>
+  </data>
   <data name="chat" xml:space="preserve">
     <value>Chat</value>
   </data>
@@ -283,7 +286,7 @@
     <value>Iniciar partida</value>
   </data>
   <data name="theGameCodeIs" xml:space="preserve">
-    <value>El código de la partida es:</value>
+    <value>El código del juego es:</value>
   </data>
   <data name="tryAgain" xml:space="preserve">
     <value>Ocurrió un error, por favor intenta de nuevo.</value>
@@ -295,7 +298,7 @@
     <value>Usuario</value>
   </data>
   <data name="usernameNotFound" xml:space="preserve">
-    <value>No pudimos encontrar el nombre de usuario ingresado</value>
+    <value>No pudimos encontrar el nombre de usuario ingresado.</value>
   </data>
   <data name="warningSkip" xml:space="preserve">
     <value>Ups! Debes tomar una carta de la pila antes de pasar</value>
@@ -317,5 +320,20 @@
   </data>
   <data name="yes" xml:space="preserve">
     <value>Sí</value>
+  </data>
+  <data name="changeEmail" xml:space="preserve">
+    <value>Cambiar correo electronico</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="addFriend" xml:space="preserve">
+    <value>Agregar amigo</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="message" xml:space="preserve">
+    <value>Mensaje</value>
   </data>
 </root>
