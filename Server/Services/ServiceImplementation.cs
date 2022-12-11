@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -52,7 +53,7 @@ namespace Services
         }
         public void GetUsersChat(string code, string username)
         {
-         
+
             foreach (var user in Rooms[code])
             {
                 user.Connection.GetUsers(username);
@@ -61,13 +62,11 @@ namespace Services
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-            IChatClient con;
-            if (Rooms.Keys.Contains(invitationCode))
+            if (Rooms.Keys.Contains(invitationCode) && Rooms[invitationCode].Where(x => x.UserName == username).FirstOrDefault() != null)
             {
                 foreach (var other in Rooms[invitationCode])
                 {
-                    con = other.Connection;
-                    con.RecieveMessage(username, message);
+                    other.Connection.RecieveMessage(username, message);
                 }
             }
         }
@@ -90,7 +89,7 @@ namespace Services
 
             dTOUserChats.Add(dTOUser);
             Rooms.Add(invitationCode, dTOUserChats);
-            Console.WriteLine(username + " creó la sala "+ invitationCode);
+            Console.WriteLine(username + " creó la sala " + invitationCode);
             return invitationCode;
         }
         public bool DeletePlayer(string invitationCode, string username)
@@ -177,7 +176,7 @@ namespace Services
         public void DealCard(string username, Card card, string invitationCode)
         {
             IChatClient con;
-            foreach(var user in Rooms[invitationCode])
+            foreach (var user in Rooms[invitationCode])
             {
                 if (user.UserName == username)
                 {
@@ -276,7 +275,8 @@ namespace Services
             {
                 using (unoDbModelContainer context = new unoDbModelContainer())
                 {
-                    Player findPlayer = context.PlayerSet1.Where(x => x.Credentials.username == credentials.Username).FirstOrDefault();
+                    Player findPlayer = context.PlayerSet1.Where(x => x.Credentials.username == credentials.Username)
+                        .FirstOrDefault();
                     if (findPlayer == null)
                     {
                         Images images = new Images { Id = 1 };
@@ -298,6 +298,7 @@ namespace Services
             {
                 throw new DbUpdateException(exception.Message);
             }
+
             return result;
         }
 
@@ -318,11 +319,14 @@ namespace Services
                 {
                     DTOPlayer dTOPlayer = new DTOPlayer();
                     //buscar credenciales
-                    Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username && x.password == credentials.Password).FirstOrDefault();
+                    Credentials findCredentials = dataBase.CredentialsSet1
+                        .Where(x => x.username == credentials.Username && x.password == credentials.Password)
+                        .FirstOrDefault();
                     if (findCredentials != null)
                     {
                         flag = true;
                     }
+
                     return flag;
                 }
             }
@@ -357,11 +361,13 @@ namespace Services
                 using (unoDbModelContainer dataBase = new unoDbModelContainer())
                 {
                     DTOPlayer dTOPlayer = new DTOPlayer();
-                    Credentials findCredentials = dataBase.CredentialsSet1.Where(x => x.username == credentials.Username).FirstOrDefault();
+                    Credentials findCredentials = dataBase.CredentialsSet1
+                        .Where(x => x.username == credentials.Username).FirstOrDefault();
                     if (findCredentials != null)
                     {
                         flag = true;
                     }
+
                     return flag;
                 }
             }
@@ -369,6 +375,36 @@ namespace Services
             {
                 throw new EntityException(ex.Message);
             }
+        }
+
+        public bool SendMail(string to, string emailSubject, string message)
+        {
+            bool status = false;
+            string from = "uno.game@hotmail.com";
+            string displayName = "Uno Game";
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from, displayName);
+                mailMessage.To.Add(to);
+
+                mailMessage.Subject = emailSubject;
+                mailMessage.Body = message;
+                mailMessage.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
+                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
+                client.EnableSsl = true;
+
+                client.Send(mailMessage);
+                status = true;
+            }
+            catch (SmtpException ex)
+            {
+                throw new SmtpException(ex.Message);
+            }
+
+            return status;
         }
         public bool AddFriend(string playerName, string friendName)
         {
@@ -449,6 +485,116 @@ namespace Services
             }
             return userFound;
         }
+
+
+        public DTOPlayer GetPlayer(string playerName)
+        {
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    Player playerDb = dataBase.PlayerSet1.Where(x => x.Credentials.username == playerName)
+                        .FirstOrDefault();
+                    if (playerDb != null)
+                    {
+                        DTOPlayer dTOPlayer = new DTOPlayer();
+                        dTOPlayer.Credentials.Email = playerDb.Credentials.email;
+                        dTOPlayer.Credentials.Username = playerDb.Credentials.username;
+                        dTOPlayer.Credentials.Password = playerDb.Credentials.password;
+                        dTOPlayer.Credentials.Id = playerDb.Credentials.Id;
+                        dTOPlayer.Image = playerDb.Images.path;
+                        return dTOPlayer;
+                    }
+                    else
+                    {
+                        return new DTOPlayer();
+                    }
+
+
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+
+
+        }
+
+        /// <summary>
+        /// Esta funcion sirve para modificar los datos de un jugador
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="username"></param>
+        /// <returns>1 si la modificacion es exitosa 2 si el username ya esta ocupado</returns>
+        /// <exception cref="EntityException"></exception>
+        public int SetPlayer(DTOPlayer player, string username)
+        {
+            Player playerDb = null;
+            int flag = 1;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    //buscar el username
+                    playerDb = dataBase.PlayerSet1.Where(x => x.Credentials.username == username).FirstOrDefault();
+                    //modifificar emal
+                    playerDb.Credentials.email = player.Credentials.Email;
+                    dataBase.PlayerSet1.Attach(playerDb);
+                    dataBase.SaveChanges();
+                    //modificar password
+                    playerDb.Credentials.password = player.Credentials.Password;
+                    dataBase.PlayerSet1.Attach(playerDb);
+                    dataBase.SaveChanges();
+
+                    //modificar imagen
+                    //buscar imagen
+                    Images findImage = dataBase.ImagesSet1.Where(x => x.path == player.Image).FirstOrDefault();
+                    if (findImage == null)
+                    {
+                        Images newImage = new Images();
+                        newImage.path = player.Image;
+                        Images imagesdb = dataBase.ImagesSet1.Add(newImage);
+                        playerDb.Images = imagesdb;
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+
+                    }
+                    else
+                    {
+                        playerDb.Images = findImage;
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                    }
+
+                    //modificar username
+                    if (username != player.Credentials.Username)
+                    {
+                        Player findPlayer = dataBase.PlayerSet1
+                            .Where(x => x.Credentials.username == player.Credentials.Username).FirstOrDefault();
+                        if (findPlayer != null)
+                        {
+                            flag = 2;
+
+                        }
+                        else
+                        {
+                            playerDb.Credentials.username = player.Credentials.Username;
+                            dataBase.PlayerSet1.Attach(playerDb);
+                            dataBase.SaveChanges();
+
+                        }
+                    }
+
+                    return flag;
+
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+        }
         public bool ModifyPassword(string playerName, string password)
         {
             bool result = false;
@@ -475,6 +621,33 @@ namespace Services
             }
             return result;
         }
+        public bool DeleteFriend(string playerName, string friendName)
+        {
+            bool flag = false;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    DTOPlayer dTOPlayer = new DTOPlayer();
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    Credentials findCredentialsFriend = dataBase.CredentialsSet1.Where(x => x.username == friendName).FirstOrDefault();
+                    if (findCredentialsPlayer != null || findCredentialsFriend != null)
+                    {
+                        Player playerDb = findCredentialsPlayer.Player;
+                        Player friendDb = findCredentialsFriend.Player;
+                        dataBase.PlayerSet1.Attach(friendDb);
+                        playerDb.Friends.Remove(friendDb);
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                        flag = true;
+                    }
+                    return flag;
+                }
+            }
+            catch (EntityException ex)
+            {
+                throw new EntityException(ex.Message);
+            }
+        }
     }
-
 }

@@ -42,7 +42,7 @@ namespace unoProyect
             this.InvitationCode = invitationCode;
             CallChatService = new Logic.CallChatService();
             TbCodeGame.Text = this.InvitationCode.ToString();
-            LvFriendList.Items.Add(CallChatService.Users);
+            //LvFriendList.Items.Add(CallChatService.Users);
             IsHost = isHost;
             BtnKickFromTheGame.IsEnabled = false;
             IsPlayer();
@@ -54,7 +54,9 @@ namespace unoProyect
             {
                 WpPlayWithFriends.Visibility = Visibility.Collapsed;
                 BtnStart.Visibility = Visibility.Collapsed;
+                LblNowPlaying.Visibility = Visibility.Collapsed;
                 BtnKickFromTheGame.Visibility = Visibility.Collapsed;
+                LvFriendList.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -138,6 +140,7 @@ namespace unoProyect
         private void BtnKickFromTheGame_Click(object sender, RoutedEventArgs e)
         {
             CallChatService.DeletePlayer(InvitationCode, LvFriendList.SelectedItem.ToString());
+            LvFriendList.Items.Remove(LvFriendList.SelectedItem.ToString());
         }
 
         private void LvFriendList_SelectionChanged(object sender, SelectionChangedEventArgs e)
