@@ -13,7 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using unoProyect.Logic;
 using unoProyect.Security;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 
 namespace unoProyect
@@ -23,7 +26,7 @@ namespace unoProyect
     /// </summary>
     public partial class SignUp : Page
     {
-        Logic.CallDataService logic = new Logic.CallDataService();
+        CallDataService callDataService = new CallDataService();
         public SignUp()
         {
             InitializeComponent();
@@ -42,31 +45,34 @@ namespace unoProyect
             }
             else
             {
-                
-                if(Utilities.ValidatePassword(password) && Utilities.ValidateEmail(email))
+                if(!ExistUsername(username) && ValidateEmailAndPassword(password, email))
                 {
-                    
-                    int result = logic.AddCredentials(username,password,email);
-                    switch (result)
-                    {
-                        case 0:
-                            MessageBox.Show(Properties.Resources.informationWrongSignUp, "");
-                            break;
-                        case 1:
-                            MessageBox.Show(Properties.Resources.informationSuccesfullSignUp, "");
-                            break;
-                        case 2:
-                            MessageBox.Show(Properties.Resources.informationUsernameDuplicate, "");
-                            break;
-                    }
-                        //TODO: abrir ventana para ingresar código de email
-                    
-                }
-                else
-                {
-                    MessageBox.Show(Properties.Resources.invalidPasswordOrEmail, "");
+                    password = Utilities.ComputeSHA256Hash(password);
+                    VerifyAccount verifyAccount = new VerifyAccount(username, password, email);
+                    this.NavigationService.Navigate(verifyAccount);
                 }
             }
         }
+
+        private bool ExistUsername(string username)
+        {
+            bool existUsername = callDataService.SearchUser(username);
+            if (existUsername)
+            {
+                MessageBox.Show(Properties.Resources.informationUsernameDuplicate, "");
+            }
+            return existUsername;
+
+        }
+        private bool ValidateEmailAndPassword(string password, string email)
+        {
+            bool isValid = Utilities.ValidatePassword(password) && Utilities.ValidateEmail(email);
+            if (!isValid)
+            {
+                MessageBox.Show(Properties.Resources.invalidPasswordOrEmail, "");
+            }
+            return isValid;
+        }
+
     }
 }
