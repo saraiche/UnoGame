@@ -318,4 +318,7 @@
   <data name="delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="message" xml:space="preserve">
+    <value>Message</value>
+  </data>
 </root>

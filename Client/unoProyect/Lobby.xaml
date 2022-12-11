@@ -1,5 +1,5 @@
 ﻿<Page
-    MinHeight="450"
+    MinHeight="460"
     MinWidth="800"
     Title="{x:Static p:Resources.login}"
     d:DesignHeight="450"
@@ -11,79 +11,64 @@
     xmlns:local="clr-namespace:unoProyect"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:unoProyect.Properties"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Grid Background="#FFF9F9F9">
+    <Grid Background="#FFF9F9F9" Margin="0,19,-31,0">
         <Label
             Content="{x:Static p:Resources.chat}"
             Height="25"
             HorizontalAlignment="Left"
-            Margin="289,78,0,0"
+            Margin="304,97,0,0"
             VerticalAlignment="Top"
-            Width="135" />
+            Width="136" />
         <Label
-            Content="{x:Static p:Resources.friendsList}"
-            Height="50"
+            Content="{x:Static p:Resources.nowPlaying}"
+            x:Name="LblNowPlaying"
+            Height="26"
             HorizontalAlignment="Left"
             Margin="580,80,0,0"
             VerticalAlignment="Top"
-            Width="186" />
+            Width="109" />
         <ListView
-            Height="167"
+            Height="186"
             HorizontalAlignment="Left"
             Margin="575,117,0,0"
             SelectionChanged="LvFriendList_SelectionChanged"
             VerticalAlignment="Top"
-            Width="208"
+            Width="230"
             d:ItemsSource="{d:SampleData ItemCount=5}"
             x:Name="LvFriendList">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn />
-                </GridView>
-            </ListView.View>
         </ListView>
         <ListView
-            Height="166"
+            Height="179"
             HorizontalAlignment="Left"
-            Margin="289,119,0,0"
+            Margin="304,118,0,0"
             VerticalAlignment="Top"
-            Width="181"
+            Width="275"
             d:ItemsSource="{d:SampleData ItemCount=5}"
             x:Name="LvChat">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn />
-                </GridView>
-            </ListView.View>
+            
         </ListView>
         <Button
             Click="BtnStart_Click"
             Content="{x:Static p:Resources.start}"
             Height="43"
             HorizontalAlignment="Left"
-            Margin="676,324,0,0"
+            Margin="643,324,0,0"
             VerticalAlignment="Top"
-            Width="83"
+            Width="140"
             x:Name="BtnStart" />
-        <TextBox
-            Height="39"
-            HorizontalAlignment="Left"
-            Margin="282,321,0,0"
-            Text="TextBox"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="200"
-            x:Name="TbMessage" />
-        <Button
-            Click="BtnSend_Click"
-            Content="{x:Static p:Resources.send}"
-            Height="44"
-            HorizontalAlignment="Left"
-            Margin="501,319,0,0"
-            VerticalAlignment="Top"
-            Width="98"
-            x:Name="BtnSend" />
+
+        <WrapPanel HorizontalAlignment="Left" Margin="304,319,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="265" Height="49">
+            <Button x:Name="BtnSend" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="BtnSend_Click">
+                <materialDesign:PackIcon Kind="Send"/>
+            </Button>
+            <TextBox x:Name="TbMessage" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="151"
+                materialDesign:HintAssist.Hint="{x:Static p:Resources.message}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}" RenderTransformOrigin="0.572,0.51" Height="45"/>
+        </WrapPanel>
         <Label
             Content="{x:Static p:Resources.theGameCodeIs}"
             Height="44"
@@ -103,7 +88,7 @@
 
         <WrapPanel
             Background="White"
-            Margin="31,100,545,104"
+            Margin="19,71,528,57"
             Orientation="Vertical"
             x:Name="WpPlayWithFriends">
             <Label
@@ -131,8 +116,7 @@
             <Button
                 Click="BtnSendByUsername_Click"
                 Content="{x:Static p:Resources.sendCode}"
-                Margin="7"
-                Width="150"
+                Width="216"
                 x:Name="BtnSendByUsername" />
             <TextBox
                 BorderBrush="{x:Null}"
@@ -160,7 +144,7 @@
             <Button
                 Click="BtnSendByEmail_Click"
                 Content="{x:Static p:Resources.instructionSendCodeByEmail}"
-                Width="200"
+                Width="268"
                 x:Name="BtnSendByEmail" />
 
         </WrapPanel>
@@ -169,7 +153,7 @@
             Content="{x:Static p:Resources.Kickfromthegame}"
             Height="34"
             HorizontalAlignment="Left"
-            Margin="661,400,0,0"
+            Margin="696,76,0,0"
             VerticalAlignment="Top"
             Width="86"
             x:Name="BtnKickFromTheGame" />

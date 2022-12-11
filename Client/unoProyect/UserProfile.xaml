@@ -20,14 +20,16 @@
 
     <Grid Background="#FFF6F3F3">
         <ListBox x:Name="LbFriendList" Margin="489,162,79,158" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LbFriendList_SelectionChanged"/>
-        <Label Content="Friend list" HorizontalAlignment="Left" Margin="498,135,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" Margin="456,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+        <Label Content="{x:Static p:Resources.friendsList}" HorizontalAlignment="Left" Margin="498,135,0,0" VerticalAlignment="Top" />
+        <WrapPanel HorizontalAlignment="Left" Margin="408,324,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+            <Button x:Name="BtnAddFriend" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="BtnAddFriend_Click">
+                <materialDesign:PackIcon Kind="Plus"/>
+            </Button>
+            <TextBox x:Name="TbAddFriend" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
                 materialDesign:HintAssist.Hint="{x:Static p:Resources.addFriend}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" RenderTransformOrigin="0.572,0.51"/>
-        <Button x:Name="BtnAddFriend" HorizontalAlignment="Left" VerticalAlignment="Top" 
-            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Margin="408,324,352,86" Click="BtnAddFriend_Click">
-            <materialDesign:PackIcon Kind="Plus"/>
-        </Button>
+        </WrapPanel>
         <TextBox x:Name="TbUsername" HorizontalAlignment="Left" Margin="98,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"
                 materialDesign:HintAssist.Hint="username"
                 materialDesign:HintAssist.HelperText="{x:Static p:Resources.changeUsername}"
@@ -45,7 +47,7 @@
             <Image x:Name="ImPlayer" Height="68" Width="80" Source="GraphicResources/playerImages/Recurso 13.png"/>
             <Button x:Name="BtnChange" Content="Change" Height="26" Width="100" Click="BtnChange_Click"/>
         </StackPanel>
-        
+
         <Button x:Name="BtnSave" Content="{x:Static p:Resources.save}" HorizontalAlignment="Left" Height="28" Margin="138,333,0,0" VerticalAlignment="Top" Width="96" Click="BtnSave_Click"/>
 
 

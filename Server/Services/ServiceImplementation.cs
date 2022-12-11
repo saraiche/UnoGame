@@ -61,13 +61,11 @@ namespace Services
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-            IChatClient con;
-            if (Rooms.Keys.Contains(invitationCode))
+            if (Rooms.Keys.Contains(invitationCode) && Rooms[invitationCode].Where(x => x.UserName == username).FirstOrDefault() != null)
             {
                 foreach (var other in Rooms[invitationCode])
                 {
-                    con = other.Connection;
-                    con.RecieveMessage(username, message);
+                    other.Connection.RecieveMessage(username, message);
                 }
             }
         }
