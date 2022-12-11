@@ -147,9 +147,6 @@
     <Compile Include="UserProfile.xaml.cs">
       <DependentUpon>UserProfile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserProfile.xaml.cs">
-      <DependentUpon>UserProfile.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VerifyAccount.xaml.cs">
       <DependentUpon>VerifyAccount.xaml</DependentUpon>
     </Compile>

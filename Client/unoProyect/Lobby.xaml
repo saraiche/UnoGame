@@ -15,13 +15,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Background="#FFF9F9F9" Margin="0,19,-31,0">
-        <Label
-            Content="{x:Static p:Resources.chat}"
-            Height="25"
-            HorizontalAlignment="Left"
-            Margin="304,97,0,0"
-            VerticalAlignment="Top"
-            Width="136" />
+        
+        <Grid HorizontalAlignment="Left" Height="204" VerticalAlignment="Top" Width="275" Margin="303,92,0,0">
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1"/>
+            <Label
+                Content="{x:Static p:Resources.chat}"
+                Height="25"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="136" />
+            <ListView
+                Height="179"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Width="275"
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                x:Name="LvChat" Margin="0,25,0,0" />
+        </Grid>
         <Label
             Content="{x:Static p:Resources.nowPlaying}"
             Height="26"
@@ -39,14 +49,6 @@
             Width="230"
             d:ItemsSource="{d:SampleData ItemCount=5}"
             x:Name="LvFriendList" />
-        <ListView
-            Height="179"
-            HorizontalAlignment="Left"
-            Margin="304,118,0,0"
-            VerticalAlignment="Top"
-            Width="275"
-            d:ItemsSource="{d:SampleData ItemCount=5}"
-            x:Name="LvChat" />
         <Button
             Click="BtnStart_Click"
             Content="{x:Static p:Resources.start}"
