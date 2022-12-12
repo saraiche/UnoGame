@@ -90,8 +90,16 @@ namespace unoProyect.Logic
 
         public void PutCardInCenter(string invitationCode, Card card)
         {
-            ChatServiceClient.PutCardInCenter(invitationCode, card);
+            try
+            {
+                ChatServiceClient.PutCardInCenter(invitationCode, card);
+            }
+            catch(System.ServiceModel.CommunicationException)
+            {
+                //do something
+            }
         }
+
 
         public void itsMyTurn(bool myturn)
         {
@@ -161,6 +169,12 @@ namespace unoProyect.Logic
             {
                 GameView.PlayerWithoutUno(username);
             }
+        }
+
+        public void DeletePlayerFromGame(string username, string[] playersUpdated)
+        {
+            GameView.Players = playersUpdated;
+            GameView.PlayerLeftGame(username);
         }
     }
 }

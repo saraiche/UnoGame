@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Security;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace unoProyect
 {
@@ -92,10 +93,12 @@ namespace unoProyect
             }
             else
             {
-                if (logic.SearchUser(username))
+                DTOCredentials dTOCredentials = logic.SearchUserByUsername(username);
+                if (dTOCredentials != null)
                 {
-                    MessageBox.Show("El username está okei");
-                    ///TODO: enviar invitación por correo
+                    Utilities.SendMail(dTOCredentials.Email, Properties.Resources.invitationCode, Username + Properties.Resources.instructionSomebodyIsInvitingYou + " " +
+                        Properties.Resources.theGameCodeIs + InvitationCode);
+                    MessageBox.Show(Properties.Resources.invitationSent);
                 }
                 else
                 {
@@ -117,8 +120,9 @@ namespace unoProyect
             {
                 if (Utilities.ValidateEmail(email))
                 {
-                    ///TODO: enviar invitación por correo
-                    MessageBox.Show("Email okei");
+                    Utilities.SendMail(email, Properties.Resources.invitationCode, Username + Properties.Resources.instructionSomebodyIsInvitingYou + " " + 
+                        Properties.Resources.theGameCodeIs + InvitationCode);
+                    MessageBox.Show(Properties.Resources.invitationSent);
                 }
                 else
                 {

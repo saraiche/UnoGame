@@ -28,6 +28,7 @@ namespace unoProyect
     {
         Logic.CallDataService logic = new Logic.CallDataService();
         private readonly Configuration appConfiguration;
+        public string Username { get; set; }
         public Login()
         {
             InitializeComponent();
@@ -48,14 +49,12 @@ namespace unoProyect
             {
                 if (logic.IsUser(username, password))
                 {
-                    MessageBox.Show(Properties.Resources.welcome + " " + username,"");
                     MainMenu mainMenu = new MainMenu(username);
                     this.NavigationService.Navigate(mainMenu);
                 }
                 else
                 {
-                    MessageBox.Show(Properties.Resources.error);
-
+                    MessageBox.Show(Properties.Resources.wrongCredentials);
                 }
 
 
@@ -71,14 +70,15 @@ namespace unoProyect
 
         private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
         {
-           // Console.WriteLine("Se cambió: " + logic.ModifyPassword("saraiche2", Utilities.ComputeSHA256Hash("quetimatipoti")));
             ChangePassword changePassword = new ChangePassword();
             this.NavigationService.Navigate(changePassword);
         }
 
         private void btnAsGuest_Click(object sender, RoutedEventArgs e)
         {
-            GameLogic.GetCards();
+
+            PlayAsGuest playAsGuest = new PlayAsGuest();
+            this.NavigationService.Navigate(playAsGuest);
 
         }
 

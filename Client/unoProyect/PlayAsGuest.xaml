@@ -1,0 +1,51 @@
+﻿<Page x:Class="unoProyect.PlayAsGuest"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:unoProyect"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+      xmlns:p="clr-namespace:unoProyect.Properties"
+      Height="450"
+      Width="800"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="{x:Static p:Resources.playAsGuest}">
+
+    <Grid>
+        <Grid HorizontalAlignment="Center" Height="141" VerticalAlignment="Center">
+            <TextBox
+                Height="36"
+                HorizontalAlignment="Left"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="176"
+                materialDesign:HintAssist.HelperText="{x:Static p:Resources.user}"
+                materialDesign:HintAssist.Hint="{x:Static p:Resources.instructionEnterUsername}"
+                x:Name="TbUsername" />
+            <TextBox
+                Height="36"
+                HorizontalAlignment="Left"
+                Margin="0,105,0,0"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="176"
+                materialDesign:HintAssist.HelperText="{x:Static p:Resources.instructionEnterInvitationCode}"
+                materialDesign:HintAssist.Hint="{x:Static p:Resources.instructionEnterInvitationCode}"
+                x:Name="TbInvitationCode" />
+
+        </Grid>
+        <Button
+
+                HorizontalAlignment="Center"
+                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                x:Name="BtnEnter"
+                Margin="0,358,0,52" Click="BtnEnter_Click">
+            <materialDesign:PackIcon Kind="LocationEnter"/>
+        </Button>
+    </Grid>
+</Page>
