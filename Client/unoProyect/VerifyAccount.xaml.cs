@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -64,21 +65,35 @@ namespace unoProyect
             string code = "";
             code = (new Random().Next(100000, 999999)).ToString();
             ValidationCode = code;
-            bool result = Utilities.SendMail(email, Properties.Resources.welcome, "Bienvenido a UNOGame. \n El código es: " + code + "\nSi no solicitó " +
+            try
+            {
+                bool result = Utilities.SendMail(email, Properties.Resources.welcome, "Bienvenido a UNOGame. \n El código es: " + code + "\nSi no solicitó " +
                 "una cuenta, no es necesario realizar alguna otra acción.\n Saludos, UNOGame");
-            if (!result)
-            {
-                MessageBox.Show(Properties.Resources.tryAgain, Properties.Resources.sorry);
+                if (!result)
+                {
+                    MessageBox.Show(Properties.Resources.tryAgain, Properties.Resources.sorry);
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.instructionSendConfirmCode);
+                }
             }
-            else
+            catch (SmtpException )
             {
-                MessageBox.Show(Properties.Resources.instructionSendConfirmCode);
+                throw new SmtpException();
             }
         }
 
         private void BtnSendCode_Click(object sender, RoutedEventArgs e)
         {
-            SendCode(Email);
+            try
+            {
+                SendCode(Email);
+            }
+            catch (SmtpException)
+            {
+                MessageBox.Show(Properties.Resources.mailServerOutOfService, Properties.Resources.sorry);
+            }
         }
 
         private void BtnAccept_Click(object sender, RoutedEventArgs e)

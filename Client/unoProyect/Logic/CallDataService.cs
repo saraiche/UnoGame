@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,44 +18,75 @@ namespace unoProyect.Logic
         public Login LoginView { get; set; }
 
         Proxy.DataServiceClient dataServiceClient = new Proxy.DataServiceClient();
+        private const int SUCCESFUL = 1;
+        private const int ERROR = 0;
+        private const int EXCEPTION = 2;
         public int AddCredentials(string username, string password, string email)
         {
-            int result = 0;
+            int result = ERROR;
             Proxy.DTOCredentials dTOcredentials = new Proxy.DTOCredentials();
             dTOcredentials.Username = username;
             dTOcredentials.Password = password;
             dTOcredentials.Email = email;
-            result = dataServiceClient.AddCredentials(dTOcredentials);
+            try
+            {
+                result = dataServiceClient.AddCredentials(dTOcredentials);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
             return result;
         }
 
-        public bool IsUser(string username, string password)
+        public int IsUser(string username, string password)
         {
-            bool result = false;
+            int result = ERROR;
             Proxy.DTOCredentials isUser = new Proxy.DTOCredentials();
             isUser.Password = password;
             isUser.Username = username;
             try
             {
-                result = dataServiceClient.IsUser(isUser);
-            }catch(System.ServiceModel.EndpointNotFoundException)
-            {
-                MessageBox.Show(Properties.Resources.error, "");
+                if (dataServiceClient.IsUser(isUser))
+                {
+                    result = SUCCESFUL;
+                }
             }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.informationWrongSignUp);
+                result = EXCEPTION;
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                result = EXCEPTION;
+            }
+            
             return result;
         }
-       public bool SearchUser(string username)
+       public int SearchUser(string username)
         {
-            bool result = false;
+            int result = ERROR;
             Proxy.DTOCredentials searchUser = new Proxy.DTOCredentials();
             searchUser.Username = username;
             try
             {
-                result = dataServiceClient.SearchUser(searchUser);
+                if (dataServiceClient.SearchUser(searchUser))
+                {
+                    result = SUCCESFUL;
+                }
+                
             }
             catch (EntityException)
             {
                 MessageBox.Show(Properties.Resources.invalidPasswordOrEmail, "");
+                result = EXCEPTION;
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                result = EXCEPTION;
             }
             return result;
         }

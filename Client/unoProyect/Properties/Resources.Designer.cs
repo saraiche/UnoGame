@@ -430,6 +430,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The mail sender server is out of service. Please try again later..
+        /// </summary>
+        public static string mailServerOutOfService {
+            get {
+                return ResourceManager.GetString("mailServerOutOfService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Message.
         /// </summary>
         public static string message {
@@ -471,6 +480,15 @@ namespace unoProyect.Properties {
         public static string notEmptyFields {
             get {
                 return ResourceManager.GetString("notEmptyFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t find the game with the code entered. Please verify it..
+        /// </summary>
+        public static string notMachesInvitationCode {
+            get {
+                return ResourceManager.GetString("notMachesInvitationCode", resourceCulture);
             }
         }
         
@@ -637,6 +655,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The game is temporaly out of service. Please, try again later..
+        /// </summary>
+        public static string temporalityInaviable {
+            get {
+                return ResourceManager.GetString("temporalityInaviable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The game code is:.
         /// </summary>
         public static string theGameCodeIs {
@@ -723,6 +750,15 @@ namespace unoProyect.Properties {
         public static string wrongEmail {
             get {
                 return ResourceManager.GetString("wrongEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a wrongInvitationCode.
+        /// </summary>
+        public static string wrongInvitationCode {
+            get {
+                return ResourceManager.GetString("wrongInvitationCode", resourceCulture);
             }
         }
         
