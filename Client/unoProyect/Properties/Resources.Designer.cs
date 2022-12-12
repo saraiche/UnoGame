@@ -70,6 +70,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Add friend.
+        /// </summary>
+        public static string addFriend {
+            get {
+                return ResourceManager.GetString("addFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Blue.
         /// </summary>
         public static string blue {
@@ -79,11 +88,29 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Change email.
+        /// </summary>
+        public static string changeEmail {
+            get {
+                return ResourceManager.GetString("changeEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Change password.
         /// </summary>
         public static string changePassword {
             get {
                 return ResourceManager.GetString("changePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Change username.
+        /// </summary>
+        public static string changeUsername {
+            get {
+                return ResourceManager.GetString("changeUsername", resourceCulture);
             }
         }
         
@@ -102,6 +129,15 @@ namespace unoProyect.Properties {
         public static string chooseColor {
             get {
                 return ResourceManager.GetString("chooseColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete.
+        /// </summary>
+        public static string delete {
+            get {
+                return ResourceManager.GetString("delete", resourceCulture);
             }
         }
         
@@ -394,6 +430,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Message.
+        /// </summary>
+        public static string message {
+            get {
+                return ResourceManager.GetString("message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a My cards.
         /// </summary>
         public static string myCards {
@@ -529,6 +574,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Save.
+        /// </summary>
+        public static string save {
+            get {
+                return ResourceManager.GetString("save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Send.
         /// </summary>
         public static string send {
@@ -583,7 +637,7 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a The game code is: .
+        ///   Busca una cadena traducida similar a The game code is:.
         /// </summary>
         public static string theGameCodeIs {
             get {

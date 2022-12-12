@@ -126,6 +126,9 @@
   <data name="changePassword" xml:space="preserve">
     <value>Change password</value>
   </data>
+  <data name="changeUsername" xml:space="preserve">
+    <value>Change username</value>
+  </data>
   <data name="chat" xml:space="preserve">
     <value>Chat</value>
   </data>
@@ -292,7 +295,7 @@
     <value>Start</value>
   </data>
   <data name="theGameCodeIs" xml:space="preserve">
-    <value>The game code is: </value>
+    <value>The game code is:</value>
   </data>
   <data name="tryAgain" xml:space="preserve">
     <value>An error ocurred, please try again later.</value>
@@ -326,5 +329,20 @@
   </data>
   <data name="yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="changeEmail" xml:space="preserve">
+    <value>Change email</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="addFriend" xml:space="preserve">
+    <value>Add Friend</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="message" xml:space="preserve">
+    <value>Message</value>
   </data>
 </root>

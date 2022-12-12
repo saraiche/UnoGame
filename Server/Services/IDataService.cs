@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -31,6 +32,14 @@ namespace Services
         [OperationContract]
         bool ModifyPassword(string playerName, string password);
 
+        [OperationContract]
+        bool SendMail(string to, string emailSubject, string message);
+        [OperationContract]
+        DTOPlayer GetPlayer(string playerName);
+        [OperationContract]
+        int SetPlayer(DTOPlayer player, string username);
+        [OperationContract]
+        bool DeleteFriend(string playerName, string friendName);
     }
     [DataContract]
     public class DTOCredentials
@@ -47,6 +56,14 @@ namespace Services
 
         [DataMember]
         public string Email { get; set; }
+
+        public DTOCredentials()
+        {
+            Id = 0;
+            Password = "";
+            Username = "";
+            Email = "";
+        }
     }
     [DataContract]
     public class DTOPlayer
@@ -56,5 +73,10 @@ namespace Services
         [DataMember]
         public DTOCredentials Credentials { get; set; }
 
+        public DTOPlayer()
+        {
+            Image = "";
+            Credentials = new DTOCredentials();
+        }
     }
 }
