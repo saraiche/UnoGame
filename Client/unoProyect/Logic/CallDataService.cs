@@ -66,7 +66,7 @@ namespace unoProyect.Logic
                 MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
                 result = EXCEPTION;
             }
-            
+
             return result;
         }
        public int SearchUser(string username)
@@ -80,7 +80,7 @@ namespace unoProyect.Logic
                 {
                     result = SUCCESFUL;
                 }
-                
+
             }
             catch (EntityException)
             {
@@ -162,7 +162,7 @@ namespace unoProyect.Logic
                 {
                     result = SUCCESFUL;
                 }
-            }            
+            }
             catch (EndpointNotFoundException)
             {
                 MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
@@ -217,7 +217,7 @@ namespace unoProyect.Logic
             bool result = false;
             try
             {
-                result = dataServiceClient.DeleteFriend(playerName, friendName); 
+                result = dataServiceClient.DeleteFriend(playerName, friendName);
             }
             catch (EndpointNotFoundException)
             {
