@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using unoProyect.Logic;
 using unoProyect.Proxy;
 using unoProyect.Security;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace unoProyect
 {
@@ -26,6 +28,8 @@ namespace unoProyect
         private string ValidationCode { get; set; }
         private CallDataService callDataService;
         private DTOCredentials credentials;
+        private const int SUCCESFUL = 1;
+        private const int ERROR = 0;
         public NewPassword()
         {
             InitializeComponent();
@@ -42,13 +46,14 @@ namespace unoProyect
             LbWrongPasswords.Visibility = Visibility.Hidden;
             if (!ValidateEmptyFields() && ValidateCode() && ValidatePasswords())
             {
-                if (callDataService.ModifyPassword(credentials.Username, Utilities.ComputeSHA256Hash(PbRepeatPassword.Password)))
+                int result = callDataService.ModifyPassword(credentials.Username, Utilities.ComputeSHA256Hash(PbRepeatPassword.Password));
+                if (result == SUCCESFUL)
                 {
                     MessageBox.Show("Todo correcto, inicia sesión para continuar");
                     Login login = new Login();
                     this.NavigationService.Navigate(login);
                 }
-                else
+                else if (result == ERROR)
                 {
                     MessageBox.Show(Properties.Resources.error);
                 }
@@ -99,7 +104,14 @@ namespace unoProyect
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            SendCode(credentials.Email);
+            try
+            {
+                SendCode(credentials.Email);
+            }
+            catch (SmtpException)
+            {
+                MessageBox.Show(Properties.Resources.mailServerOutOfService, Properties.Resources.sorry);
+            }
         }
 
         public void SendCode(string email)
@@ -107,16 +119,23 @@ namespace unoProyect
             string code = "";
             code = (new Random().Next(100000, 999999)).ToString();
             ValidationCode = code;
-            bool result = Utilities.SendMail(email, Properties.Resources.changePassword, "¡Atención!\n Está recibiendo este correo electrónico " +
+            try
+            {
+                bool result = Utilities.SendMail(email, Properties.Resources.changePassword, "¡Atención!\n Está recibiendo este correo electrónico " +
                 "porque recibimos una solicitud de restablecimiento de contraseña para su cuenta de UNOGame. \n El código es: " + code + "\nSi no solicitó " +
                 "un restablecimiento de contraseña, no es necesario realizar ninguna otra acción.\n Saludos, UNOGame");
-            if (!result)
-            {
-                MessageBox.Show(Properties.Resources.tryAgain, Properties.Resources.sorry);
+                if (!result)
+                {
+                    MessageBox.Show(Properties.Resources.tryAgain, Properties.Resources.sorry);
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.instructionChangePasswordCode);
+                }
             }
-            else
+            catch (SmtpException)
             {
-                MessageBox.Show(Properties.Resources.instructionChangePasswordCode);
+                throw new SmtpException();
             }
         }
     }

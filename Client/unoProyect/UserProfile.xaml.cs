@@ -40,16 +40,22 @@ namespace unoProyect
         {
             this.Username = username;
             List<string> friends = logic.GetFriends(username);
-            foreach(string friend in friends)
+            if (friends != null)
             {
-                LbFriendList.Items.Add(friend);
+                foreach (string friend in friends)
+                {
+                    LbFriendList.Items.Add(friend);
+                }
             }
             PlayerData = logic.GetPlayer(username);
             ImPlayer.Source = new BitmapImage(new Uri(PlayerData.Image, UriKind.Relative));
             BtnSave.IsEnabled = false;
             NumImage = 3;
             MaterialDesignThemes.Wpf.HintAssist.SetHint(TbUsername, username);
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(TbEmail, PlayerData.Credentials.Email);
+            if (PlayerData != null)
+            {
+                MaterialDesignThemes.Wpf.HintAssist.SetHint(TbEmail, PlayerData.Credentials.Email);
+            }
             IsChangeBtnPress = false;
             BtnDeleteFriend.IsEnabled = false;
 
@@ -125,7 +131,10 @@ namespace unoProyect
                     case 1:
                         MessageBox.Show(Properties.Resources.informationSuccesfullSignUp, "");
                         PlayerData = logic.GetPlayer(PlayerData.Credentials.Username);
-                        Username = PlayerData.Credentials.Username;
+                        if(PlayerData != null)
+                        {
+                            Username = PlayerData.Credentials.Username;
+                        }
                         break;
                     case 2:
                         MessageBox.Show(Properties.Resources.informationUsernameDuplicate, "");
@@ -183,12 +192,14 @@ namespace unoProyect
 
         private void BtnDeleteFriend_Click(object sender, RoutedEventArgs e)
         {
-            logic.DeleteFriend(Username, LbFriendList.SelectedItem.ToString());
-            LbFriendList.Items.Clear();
-            List<string> friends = logic.GetFriends(Username);
-            foreach (string friend in friends)
+            if (logic.DeleteFriend(Username, LbFriendList.SelectedItem.ToString()))
             {
-                LbFriendList.Items.Add(friend);
+                LbFriendList.Items.Clear();
+                List<string> friends = logic.GetFriends(Username);
+                foreach (string friend in friends)
+                {
+                    LbFriendList.Items.Add(friend);
+                }
             }
         }
     }
