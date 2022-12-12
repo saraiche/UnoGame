@@ -143,7 +143,7 @@ namespace Services
             IChatClient con;
             if (Rooms.Keys.Contains(invitationCode))
             {
-                bool playerLeftTheGame = true;
+                bool playerLeftTheGame = false;
                 List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
                 foreach (var other in Rooms[invitationCode])
                 {
@@ -188,7 +188,7 @@ namespace Services
             if (Rooms.Keys.Contains(invitationCode))
             {
                 List<string> users = GetUserListFromDtoList(Rooms[invitationCode]);
-                bool playerLeftTheGame = true;
+                bool playerLeftTheGame = false;
                 List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
                 foreach (var other in Rooms[invitationCode])
                 {
@@ -223,21 +223,25 @@ namespace Services
         public void DealCard(string username, Card card, string invitationCode)
         {
             IChatClient con;
-            bool playerLeftTheGame = true;
+            bool playerLeftTheGame = false;
             List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
                 foreach (var other in Rooms[invitationCode])
                 {
-                    con = other.Connection;
-                    try
+                    if (username == other.UserName)
                     {
-                        con.ReceiveCard(card);
-                    }
-                    catch (CommunicationObjectAbortedException)
-                    {
-                        playerLeftTheGame = true;
-                        playersToDelete.Add(other);
+                        con = other.Connection;
+                        try
+                        {
+                            con.ReceiveCard(card);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            playerLeftTheGame = true;
+                            playersToDelete.Add(other);
+                        }
+
                     }
                 }
                 if (playerLeftTheGame)
@@ -249,7 +253,7 @@ namespace Services
         public void NextTurn(string invitationCode, string username)
         {
             List<DTOUserChat> users = Rooms[invitationCode];
-            bool playerLeftTheGame = true;
+            bool playerLeftTheGame = false;
             List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             for (int i = 0; i < users.Count; i++)
             {
@@ -288,7 +292,7 @@ namespace Services
         public void RequestChangeDirection(string invitationCode)
         {
             IChatClient con;
-            bool playerLeftTheGame = true;
+            bool playerLeftTheGame = false;
             List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
@@ -315,7 +319,7 @@ namespace Services
         public void SendTurnInformation(string invitationCode, string color, string actualTurn)
         {
             IChatClient con;
-            bool playerLeftTheGame = true;
+            bool playerLeftTheGame = false;
             List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
@@ -342,7 +346,7 @@ namespace Services
         public void SendWinner(string invitationCode, string username)
         {
             IChatClient con;
-            bool playerLeftTheGame = true;
+            bool playerLeftTheGame = false;
             List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
@@ -369,7 +373,7 @@ namespace Services
         public void SendPlayerUno(string invitationCode, string username, bool hasUno)
         {
             IChatClient con;
-            bool playerLeftTheGame = true;
+            bool playerLeftTheGame = false;
             List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {

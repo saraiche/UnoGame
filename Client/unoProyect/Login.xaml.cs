@@ -48,14 +48,12 @@ namespace unoProyect
             {
                 if (logic.IsUser(username, password))
                 {
-                    MessageBox.Show(Properties.Resources.welcome + " " + username,"");
                     MainMenu mainMenu = new MainMenu(username);
                     this.NavigationService.Navigate(mainMenu);
                 }
                 else
                 {
-                    MessageBox.Show(Properties.Resources.error);
-
+                    MessageBox.Show(Properties.Resources.wrongCredentials);
                 }
 
 
@@ -71,7 +69,6 @@ namespace unoProyect
 
         private void btnForgotMyPassword_Click(object sender, RoutedEventArgs e)
         {
-           // Console.WriteLine("Se cambió: " + logic.ModifyPassword("saraiche2", Utilities.ComputeSHA256Hash("quetimatipoti")));
             ChangePassword changePassword = new ChangePassword();
             this.NavigationService.Navigate(changePassword);
         }
