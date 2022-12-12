@@ -30,7 +30,7 @@ namespace Services
             DTOUserChat newUser = new DTOUserChat();
             List<DTOUserChat> users = new List<DTOUserChat>();
 
-            if (Rooms.Keys.Contains(code))
+            if (Rooms.Keys.Contains(code) && Rooms[code].Where(x => x.UserName == username).FirstOrDefault() == null)
             {
                 //recuperar la lista de los juagadores conectados
                 if (Rooms.TryGetValue(code, out List<DTOUserChat> usersConnect))
@@ -113,15 +113,7 @@ namespace Services
             return flag;
         }
 
-        public void GetUsersChat(string code)
-        {
-            IChatClient con;
-            foreach (var user in Rooms[code])
-            {
-                con = user.Connection;
-                con.GetUsers(user.UserName);
-            }
-        }
+
 
         public List<string> GetPlayersByInvitationCode(string invitationCode)
         {

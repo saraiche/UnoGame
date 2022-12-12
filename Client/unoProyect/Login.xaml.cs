@@ -28,6 +28,7 @@ namespace unoProyect
     {
         Logic.CallDataService logic = new Logic.CallDataService();
         private readonly Configuration appConfiguration;
+        public string Username { get; set; }
         public Login()
         {
             InitializeComponent();
@@ -75,7 +76,9 @@ namespace unoProyect
 
         private void btnAsGuest_Click(object sender, RoutedEventArgs e)
         {
-            GameLogic.GetCards();
+
+            PlayAsGuest playAsGuest = new PlayAsGuest();
+            this.NavigationService.Navigate(playAsGuest);
 
         }
 
