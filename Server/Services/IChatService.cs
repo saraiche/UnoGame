@@ -33,6 +33,8 @@ namespace Services
         void ReceiveWinner(string username);
         [OperationContract(IsOneWay = true)]
         void ReceivePlayerUno(string username, bool hasUno);
+        [OperationContract(IsOneWay = true)]
+        void DeletePlayerFromGame(string username, List<string> playersUpdated);
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
@@ -70,7 +72,7 @@ namespace Services
         [OperationContract]
         bool DeletePlayer(string invitationCode, string username);
         [OperationContract]
-        void SendPlayerUno(string invitationCode, string username, bool hasUno); 
+        void SendPlayerUno(string invitationCode, string username, bool hasUno);
     }
     [DataContract]
     public class DTOUserChat
@@ -79,6 +81,7 @@ namespace Services
         public string UserName { get; set; }
         [DataMember]
         public IChatClient Connection { get; set; }
+
     }
     [DataContract]
     public class Card

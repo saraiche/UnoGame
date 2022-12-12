@@ -13,5 +13,11 @@ namespace unoProyect
     /// </summary>
     public partial class App : Application
     {
+        
+        private void AppExit(object sender, ExitEventArgs e)
+        {
+            //desconectar al jugador
+        }
+        
     }
 }

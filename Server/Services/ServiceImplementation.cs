@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Mail;
 using System.Runtime.Remoting.Contexts;
@@ -107,6 +108,7 @@ namespace Services
             {
                 Rooms[invitationCode].RemoveAt(index);
                 flag = true;
+                Console.WriteLine(username + "dejó la partida " + invitationCode);
             }
             return flag;
         }
@@ -141,11 +143,42 @@ namespace Services
             IChatClient con;
             if (Rooms.Keys.Contains(invitationCode))
             {
+                bool playerLeftTheGame = true;
+                List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.ReceiveCenter(card);
+                    try
+                    {
+                        con.ReceiveCenter(card);
+                    }
+                    catch(CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
+                    }
                 }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
+                }
+            }
+        }
+        
+        private void UpdatePlayers(string invitationCode, List<DTOUserChat> pastList)
+        {
+            foreach(var player in pastList)
+            {
+                DeletePlayer(invitationCode, player.UserName);
+                SendDeletePlayerFromGame(invitationCode, player.UserName);
+            }
+        }
+
+        private void SendDeletePlayerFromGame(string invitationCode, string username)
+        {
+            foreach(var player in Rooms[invitationCode])
+            {
+                player.Connection.DeletePlayerFromGame(username, GetUserListFromDtoList(Rooms[invitationCode]));
             }
         }
 
@@ -155,10 +188,24 @@ namespace Services
             if (Rooms.Keys.Contains(invitationCode))
             {
                 List<string> users = GetUserListFromDtoList(Rooms[invitationCode]);
+                bool playerLeftTheGame = true;
+                List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.OpenGame(other.UserName, users);
+                    try
+                    {
+                        con.OpenGame(other.UserName, users);
+                    }
+                    catch(CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
+                    }
+                }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
                 }
             }
         }
@@ -176,40 +223,91 @@ namespace Services
         public void DealCard(string username, Card card, string invitationCode)
         {
             IChatClient con;
-            foreach (var user in Rooms[invitationCode])
+            bool playerLeftTheGame = true;
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
+            if (Rooms.Keys.Contains(invitationCode))
             {
-                if (user.UserName == username)
+                foreach (var other in Rooms[invitationCode])
                 {
-                    con = user.Connection;
-                    con.ReceiveCard(card);
+                    con = other.Connection;
+                    try
+                    {
+                        con.ReceiveCard(card);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
+                    }
+                }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
                 }
             }
         }
         public void NextTurn(string invitationCode, string username)
         {
             List<DTOUserChat> users = Rooms[invitationCode];
-            foreach (var user in users)
+            bool playerLeftTheGame = true;
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
+            for (int i = 0; i < users.Count; i++)
             {
+                var user = users[i];
                 if (user.UserName != username)
                 {
                     user.Connection.itsMyTurn(false);
                 }
                 else
                 {
-                    user.Connection.itsMyTurn(true);
+                    try
+                    {
+                        user.Connection.itsMyTurn(true);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(user);
+                        if (i == users.Count - 1)
+                        {
+                            users[0].Connection.itsMyTurn(true);
+                        }
+                        else
+                        {
+                            users[i + 1].Connection.itsMyTurn(true);
+                        }
+                    }
                 }
+            }
+            if (playerLeftTheGame)
+            {
+                UpdatePlayers(invitationCode, playersToDelete);
             }
         }
 
         public void RequestChangeDirection(string invitationCode)
         {
             IChatClient con;
+            bool playerLeftTheGame = true;
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.ChangeDirection();
+                    try
+                    {
+                        con.ChangeDirection();
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
+                    }
+                }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
                 }
             }
         }
@@ -217,12 +315,26 @@ namespace Services
         public void SendTurnInformation(string invitationCode, string color, string actualTurn)
         {
             IChatClient con;
+            bool playerLeftTheGame = true;
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.ReceiveTurnInformation(color, actualTurn);
+                    try
+                    {
+                        con.ReceiveTurnInformation(color, actualTurn);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
+                    }
+                }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
                 }
             }
         }
@@ -230,12 +342,26 @@ namespace Services
         public void SendWinner(string invitationCode, string username)
         {
             IChatClient con;
+            bool playerLeftTheGame = true;
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.ReceiveWinner(username);
+                    try
+                    {
+                        con.ReceiveWinner(username);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
+                    }
+                }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
                 }
             }
         }
@@ -243,12 +369,26 @@ namespace Services
         public void SendPlayerUno(string invitationCode, string username, bool hasUno)
         {
             IChatClient con;
+            bool playerLeftTheGame = true;
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
                 foreach (var other in Rooms[invitationCode])
                 {
                     con = other.Connection;
-                    con.ReceivePlayerUno(username, hasUno);
+                    try
+                    {
+                        con.ReceivePlayerUno(username, hasUno);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
+                    }
+                }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
                 }
             }
         }
