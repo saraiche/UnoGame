@@ -9,6 +9,8 @@
     xmlns:local="clr-namespace:unoProyect"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:unoProyect.Properties"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
@@ -26,74 +28,60 @@
             Content="{x:Static p:Resources.signUp}"
             FontSize="30"
             FontWeight="Bold"
-            HorizontalAlignment="Center"
-            Margin="0,84,0,0"
+            HorizontalAlignment="Left"
+            Margin="282,20,0,0"
             RenderTransformOrigin="5.132,-5.086"
             VerticalAlignment="Top"
             x:Name="lblSignUp" />
-        <Label
-            Content="{x:Static p:Resources.user}"
-            Grid.Row="0"
-            Height="41"
-            HorizontalAlignment="Left"
-            Margin="251,170,0,0"
-            VerticalAlignment="Top"
-            Width="85"
-            x:Name="lblUser" />
         <TextBox
-            Grid.Row="0"
-            Height="20"
+            Height="36"
+            MaxLength="15"
             HorizontalAlignment="Left"
-            Margin="349,180,0,0"
+            Margin="323,124,0,0"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
-            Width="100"
-            x:Name="tbUser" />
-        <Label
-            Content="{x:Static p:Resources.email}"
-            Grid.RowSpan="2"
-            Height="32"
-            HorizontalAlignment="Left"
-            Margin="196,216,0,0"
-            VerticalAlignment="Top"
-            Width="140"
-            x:Name="lblEmail" />
+            Width="206"
+            materialDesign:HintAssist.Hint="{x:Static p:Resources.user}"
+            x:Name="tbUser"/>
+
         <TextBox
-            Height="20"
+            Height="36"
+            MaxLength="255"
             HorizontalAlignment="Left"
-            Margin="348,220,0,0"
+            Margin="323,11,0,0"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
-            Width="100"
-            x:Name="tbEmail" Grid.RowSpan="2" />
+            Width="201"
+            materialDesign:HintAssist.Hint="{x:Static p:Resources.email}"
+            x:Name="tbEmail" Grid.Row="2"/>
+
+        <PasswordBox
+            HorizontalAlignment="Left"
+            materialDesign:TextFieldAssist.CharacterCounterVisibility ="Visible"
+            IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
+            Margin="323,90,0,0"
+            Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
+            VerticalAlignment="Top"
+            Width="211"
+            materialDesign:HintAssist.Hint="{x:Static p:Resources.password}"
+            materialDesign:TextFieldAssist.HasClearButton="True"
+            x:Name="pbPassword" Grid.Row="2" Height="57" />
+
         <Label
             Content="{x:Static p:Resources.instructionSendConfirmCode}"
-            Grid.Row="2"
             HorizontalAlignment="Left"
-            Margin="187,47,0,0"
+            Margin="162,82,0,0"
             VerticalAlignment="Top" Grid.ColumnSpan="2" />
         <Button
             Content="{x:Static p:Resources.signUp}"
             Grid.Row="2"
             HorizontalAlignment="Left"
-            Margin="296,105,0,0"
+            Margin="369,202,0,-56"
             x:Name="BtnSignUp" Click="BtnSignUp_Click" />
-        <Label
-            Content="{x:Static p:Resources.password}"
-            Height="41"
-            HorizontalAlignment="Left"
-            Margin="244,11,0,0"
-            VerticalAlignment="Top"
-            Width="85"
-            x:Name="lblEmail_Copy" 
-            RenderTransformOrigin="0.415,1.995" 
-            Grid.Row="2" />
-        <PasswordBox 
-            x:Name="pbPassword" 
-            HorizontalAlignment="Left"
-            Margin="349,17,0,0" 
-            Grid.Row="2"
-            VerticalAlignment="Top"
-            Width="99"/>
+
+
+
     </Grid>
 </Page>
