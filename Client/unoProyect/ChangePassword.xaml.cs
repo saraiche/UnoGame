@@ -69,8 +69,7 @@ namespace unoProyect
         }
         public void SendCode(string email)
         {
-            string code = "";
-            code = (new Random().Next(100000, 999999)).ToString();
+            string code = new Random().Next(100000, 999999).ToString();
             bool result = Utilities.SendMail(email, Properties.Resources.changePassword, "¡Atención!\n Está recibiendo este correo electrónico " +
                 "porque recibimos una solicitud de restablecimiento de contraseña para su cuenta de UNOGame. \n El código es: " + code + "\nSi no solicitó " +
                 "un restablecimiento de contraseña, no es necesario realizar ninguna otra acción.\n Saludos, UNOGame");

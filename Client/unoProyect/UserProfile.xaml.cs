@@ -30,7 +30,7 @@ namespace unoProyect
         private Logic.CallDataService logic = new Logic.CallDataService();
         public int NumImage { get; set; }
         public bool IsChangeBtnPress { get; set; }
-
+        private const int SUCCESFUL = 1;
 
         public UserProfile()
         {
@@ -63,7 +63,7 @@ namespace unoProyect
             }
             else
             {
-                if (logic.SearchUser(TbAddFriend.Text.Trim()))
+                if (logic.SearchUser(TbAddFriend.Text.Trim()) == SUCCESFUL)
                 {
                     if(logic.AddFriend(Username, TbAddFriend.Text.Trim()))
                     {

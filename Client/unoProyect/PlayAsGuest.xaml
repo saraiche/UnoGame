@@ -22,13 +22,15 @@
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 TextWrapping="Wrap"
                 VerticalAlignment="Top"
+                MaxLength="15"
                 Width="176"
                 materialDesign:HintAssist.HelperText="{x:Static p:Resources.user}"
                 materialDesign:HintAssist.Hint="{x:Static p:Resources.instructionEnterUsername}"
-                x:Name="TbUsername" />
+                x:Name="TbUsername" IsEnabled="False" />
             <TextBox
                 Height="36"
                 HorizontalAlignment="Left"
+                MaxLength="6"
                 Margin="0,105,0,0"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 TextWrapping="Wrap"

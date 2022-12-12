@@ -84,6 +84,7 @@
                 <materialDesign:PackIcon Kind="Send" />
             </Button>
             <TextBox
+                MaxLength="80"
                 Height="45"
                 HorizontalAlignment="Center"
                 RenderTransformOrigin="0.572,0.51"

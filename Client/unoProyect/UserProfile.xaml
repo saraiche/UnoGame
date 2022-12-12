@@ -49,12 +49,14 @@
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 TextWrapping="Wrap"
                 VerticalAlignment="Top"
+                MaxLength="15"
                 Width="120"
                 materialDesign:HintAssist.Hint="{x:Static p:Resources.addFriend}"
                 x:Name="TbAddFriend" />
         </WrapPanel>
         <TextBox
             Height="36"
+            MaxLength="15"
             HorizontalAlignment="Left"
             Margin="98,100,0,0"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -68,6 +70,7 @@
         <TextBox
             Height="36"
             HorizontalAlignment="Left"
+            MaxLength="255"
             Margin="98,179,0,0"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             TextChanged="TbPassword_TextChanged"
@@ -79,6 +82,7 @@
             x:Name="TbPassword" />
         <TextBox
             Height="36"
+            MaxLength="255"
             HorizontalAlignment="Left"
             Margin="98,258,0,0"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"

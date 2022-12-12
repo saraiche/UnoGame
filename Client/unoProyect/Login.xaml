@@ -33,6 +33,7 @@
             x:Name="lblUno" />
         <TextBox
             Margin="303,94,285,0"
+            MaxLength="15"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             VerticalAlignment="Top"
             materialDesign:HintAssist.Hint="{x:Static p:Resources.user}"
