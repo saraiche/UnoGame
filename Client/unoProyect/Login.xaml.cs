@@ -40,19 +40,20 @@ namespace unoProyect
         {
             var username = tbUser.Text;
             var password = pbPassword.Password.ToString();
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username) || (string.IsNullOrWhiteSpace(username)) || string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show(Properties.Resources.notEmptyFields,
                             Properties.Resources.error);
             }
             else
             {
-                if (logic.IsUser(username, password))
+                int result = logic.IsUser(username, password);
+                if (result == 1)
                 {
                     MainMenu mainMenu = new MainMenu(username);
                     this.NavigationService.Navigate(mainMenu);
                 }
-                else
+                else if (result == 0)
                 {
                     MessageBox.Show(Properties.Resources.wrongCredentials);
                 }

@@ -21,6 +21,10 @@ namespace unoProyect.Logic
         public Game GameView { get; set; }
         public ObservableCollection<string> Users { get; set; }
         public string[] players = new string[10];
+
+        private const int SUCCESFUL = 1;
+        private const int ERROR = 0;
+        private const int EXCEPTION = 2;
         public CallChatService()
         {
             InstanceContext = new InstanceContext(this);
@@ -34,9 +38,22 @@ namespace unoProyect.Logic
             ChatServiceClient.SendMessage(username, message, invitationCode);
 
         }
-        public bool Join(string username, string code)
+        public int Join(string username, string code)
         {
-            return ChatServiceClient.Join(username, code);
+            int result = ERROR;
+            try
+            {
+                if (ChatServiceClient.Join(username, code))
+                {
+                    result = SUCCESFUL;
+                }
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                result = EXCEPTION;
+            }
+            return result;
         }
 
         public void GetUsersChat(string code, string username)

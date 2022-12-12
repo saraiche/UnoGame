@@ -27,7 +27,7 @@
                 Width="176"
                 materialDesign:HintAssist.HelperText="{x:Static p:Resources.user}"
                 materialDesign:HintAssist.Hint="{x:Static p:Resources.instructionEnterUsername}"
-                x:Name="TbUsername" />
+                x:Name="TbUsername" IsEnabled="False" />
             <TextBox
                 Height="36"
                 HorizontalAlignment="Left"

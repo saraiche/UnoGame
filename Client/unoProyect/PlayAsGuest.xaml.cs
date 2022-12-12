@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Logic;
+using unoProyect.Security;
 
 namespace unoProyect
 {
@@ -23,6 +24,9 @@ namespace unoProyect
     {
         public Logic.CallChatService CallChatService { get; set; }
         private static string RandomUsername { get; set; }
+        private const int SUCCESFUL = 1;
+        private const int ERROR = 0;
+        private const bool GUEST = false;
         public PlayAsGuest()
         {
             InitializeComponent();
@@ -43,17 +47,26 @@ namespace unoProyect
         }
         private void BtnEnter_Click(object sender, RoutedEventArgs e)
         {
-            if (CallChatService.Join(RandomUsername, TbInvitationCode.Text))
+            string invitationCode = TbInvitationCode.Text;
+            if (Utilities.ValidateInvitationCode(invitationCode))
             {
-                Lobby lobby = new Lobby(RandomUsername, TbInvitationCode.Text, false);
-                CallChatService.GetUsersChat(TbInvitationCode.Text, RandomUsername);
-                CallChatService.LobbyView = lobby;
-                this.NavigationService.Navigate(lobby);
+                int result = CallChatService.Join(RandomUsername, invitationCode);
+                if (result == SUCCESFUL)
+                {
+                    Lobby lobby = new Lobby(RandomUsername, invitationCode, GUEST);
+                    CallChatService.GetUsersChat(invitationCode, RandomUsername);
+                    CallChatService.LobbyView = lobby;
+                    this.NavigationService.Navigate(lobby);
 
+                }
+                else if (result == ERROR)
+                {
+                    MessageBox.Show(Properties.Resources.notMachesInvitationCode);
+                }
             }
             else
             {
-                MessageBox.Show(Properties.Resources.error);
+                MessageBox.Show(Properties.Resources.wrongInvitationCode);
             }
         }
     }

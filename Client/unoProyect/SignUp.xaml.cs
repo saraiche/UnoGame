@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace unoProyect
     public partial class SignUp : Page
     {
         CallDataService callDataService = new CallDataService();
+        private const int SUCCESFUL = 1;
+        private const int NOT_MATCHES = 0;
         public SignUp()
         {
             InitializeComponent();
@@ -37,27 +40,33 @@ namespace unoProyect
             var username = tbUser.Text;
             var password = pbPassword.Password.ToString();
             var email = tbEmail.Text;
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) ||
-                string.IsNullOrEmpty(email))
+            if (Utilities.ValidateField(username) || Utilities.ValidateField(password) || Utilities.ValidateField(email))
             {
                 MessageBox.Show(Properties.Resources.notEmptyFields,
                             Properties.Resources.error);
             }
             else
             {
-                if(!ExistUsername(username) && ValidateEmailAndPassword(password, email))
+                if(ExistUsername(username) ==  NOT_MATCHES && ValidateEmailAndPassword(password, email))
                 {
                     password = Utilities.ComputeSHA256Hash(password);
-                    VerifyAccount verifyAccount = new VerifyAccount(username, password, email);
-                    this.NavigationService.Navigate(verifyAccount);
+                    try
+                    {
+                        VerifyAccount verifyAccount = new VerifyAccount(username, password, email);
+                        this.NavigationService.Navigate(verifyAccount);
+                    }
+                    catch (SmtpException)
+                    {
+                        MessageBox.Show(Properties.Resources.mailServerOutOfService, Properties.Resources.sorry);
+                    }
                 }
             }
         }
 
-        private bool ExistUsername(string username)
+        private int ExistUsername(string username)
         {
-            bool existUsername = callDataService.SearchUser(username);
-            if (existUsername)
+            int existUsername = callDataService.SearchUser(username);
+            if (existUsername == SUCCESFUL)
             {
                 MessageBox.Show(Properties.Resources.informationUsernameDuplicate, "");
             }
