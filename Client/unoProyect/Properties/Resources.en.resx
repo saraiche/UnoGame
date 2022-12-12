@@ -354,4 +354,7 @@
   <data name="wrongInvitationCode" xml:space="preserve">
     <value>wrongInvitationCode</value>
   </data>
+  <data name="mailServerOutOfService" xml:space="preserve">
+    <value>The mail sender server is out of service. Please try again later.</value>
+  </data>
 </root>

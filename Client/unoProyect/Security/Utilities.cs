@@ -57,6 +57,10 @@ namespace unoProyect.Security
             return result;
         }
 
+        public static bool ValidateField(string content)
+        {
+            return string.IsNullOrWhiteSpace(content) || string.IsNullOrEmpty(content);
+        }
         public static bool SendMail(string to, string emailSubject, string message)
         {
             bool status = false;

@@ -430,6 +430,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The mail sender server is out of service. Please try again later..
+        /// </summary>
+        public static string mailServerOutOfService {
+            get {
+                return ResourceManager.GetString("mailServerOutOfService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Message.
         /// </summary>
         public static string message {

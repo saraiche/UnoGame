@@ -354,4 +354,7 @@
   <data name="wrongInvitationCode" xml:space="preserve">
     <value>Codígo de invitación incorrecto</value>
   </data>
+  <data name="mailServerOutOfService" xml:space="preserve">
+    <value>El servidor de correo electrónico está fuera de servicio. Favor de intentar más tarde.</value>
+  </data>
 </root>
