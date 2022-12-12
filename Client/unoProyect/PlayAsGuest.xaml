@@ -19,7 +19,6 @@
             <TextBox
                 Height="36"
                 HorizontalAlignment="Left"
-                IsEnabled="False"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 TextWrapping="Wrap"
                 VerticalAlignment="Top"
