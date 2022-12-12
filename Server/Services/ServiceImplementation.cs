@@ -111,15 +111,7 @@ namespace Services
             return flag;
         }
 
-        public void GetUsersChat(string code)
-        {
-            IChatClient con;
-            foreach (var user in Rooms[code])
-            {
-                con = user.Connection;
-                con.GetUsers(user.UserName);
-            }
-        }
+
 
         public List<string> GetPlayersByInvitationCode(string invitationCode)
         {
