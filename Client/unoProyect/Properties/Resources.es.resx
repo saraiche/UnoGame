@@ -244,7 +244,7 @@
     <value>No se pueden dejar campos vacíos</value>
   </data>
   <data name="notMatches" xml:space="preserve">
-    <value>Sorry, no pudimos encontrar coincidencias con los datos ingresados. Revísalos y prueba de nuevo.</value>
+    <value>Lo sentimos, no pudimos encontrar coincidencias con los datos ingresados. Revísalos y prueba de nuevo.</value>
   </data>
   <data name="nowPlaying" xml:space="preserve">
     <value>Ahora jugando</value>
@@ -344,5 +344,14 @@
   </data>
   <data name="message" xml:space="preserve">
     <value>Mensaje</value>
+  </data>
+  <data name="temporalityInaviable" xml:space="preserve">
+    <value>El juego se encuentra temporalmente fuera de servicio. Favor de intentar más tarde.</value>
+  </data>
+  <data name="notMachesInvitationCode" xml:space="preserve">
+    <value>No pudimos encontrar una partida con el código ingresado. Favor de verificarlo.</value>
+  </data>
+  <data name="wrongInvitationCode" xml:space="preserve">
+    <value>Codígo de invitación incorrecto</value>
   </data>
 </root>

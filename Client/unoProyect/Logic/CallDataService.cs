@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,19 +29,30 @@ namespace unoProyect.Logic
             return result;
         }
 
-        public bool IsUser(string username, string password)
+        public int IsUser(string username, string password)
         {
-            bool result = false;
+            int result = 0;
             Proxy.DTOCredentials isUser = new Proxy.DTOCredentials();
             isUser.Password = password;
             isUser.Username = username;
             try
             {
-                result = dataServiceClient.IsUser(isUser);
-            }catch(System.ServiceModel.EndpointNotFoundException)
-            {
-                MessageBox.Show(Properties.Resources.error, "");
+                if (dataServiceClient.IsUser(isUser))
+                {
+                    result = 1;
+                }
             }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.informationWrongSignUp);
+                result = 2;
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                result = 2;
+            }
+            
             return result;
         }
        public bool SearchUser(string username)

@@ -475,6 +475,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t find the game with the code entered. Please verify it..
+        /// </summary>
+        public static string notMachesInvitationCode {
+            get {
+                return ResourceManager.GetString("notMachesInvitationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ups!, we couldn&apos;t find matches with the data entered. Check it and try again..
         /// </summary>
         public static string notMatches {
@@ -637,6 +646,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The game is temporaly out of service. Please, try again later..
+        /// </summary>
+        public static string temporalityInaviable {
+            get {
+                return ResourceManager.GetString("temporalityInaviable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The game code is:.
         /// </summary>
         public static string theGameCodeIs {
@@ -723,6 +741,15 @@ namespace unoProyect.Properties {
         public static string wrongEmail {
             get {
                 return ResourceManager.GetString("wrongEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a wrongInvitationCode.
+        /// </summary>
+        public static string wrongInvitationCode {
+            get {
+                return ResourceManager.GetString("wrongInvitationCode", resourceCulture);
             }
         }
         

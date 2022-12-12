@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using unoProyect.Security;
 
 namespace unoProyect
 {
@@ -23,6 +24,10 @@ namespace unoProyect
         public Logic.CallChatService CallChatService { get; set; }
 
         public string Username { get; set; }
+        private const int SUCCESFUL = 1;
+        private const int ERROR = 0;
+        private const bool GUEST = false;
+        private const bool HOST = true;
         public MainMenu()
         {
             InitializeComponent();
@@ -40,7 +45,7 @@ namespace unoProyect
         {
 
             string invitationCode = CallChatService.NewRoom(this.Username);
-            Lobby lobby = new Lobby(this.Username, invitationCode, true);
+            Lobby lobby = new Lobby(this.Username, invitationCode, HOST);
             CallChatService.LobbyView = lobby;
             CallChatService.GetUsersChat(invitationCode,Username);
             this.NavigationService.Navigate(lobby);
@@ -55,17 +60,26 @@ namespace unoProyect
 
         private void BtnEnterWithCode_Click(object sender, RoutedEventArgs e)
         {
-            if(CallChatService.Join(Username, TbInvitationCode.Text))
+            string invitationCode = TbInvitationCode.Text;
+            if (Utilities.ValidateInvitationCode(invitationCode))
             {
-                Lobby lobby = new Lobby(this.Username, TbInvitationCode.Text, false);
-                CallChatService.GetUsersChat(TbInvitationCode.Text, Username);
-                CallChatService.LobbyView = lobby;
-                this.NavigationService.Navigate(lobby);
+                int result = CallChatService.Join(Username, invitationCode);
+                if (result == SUCCESFUL)
+                {
+                    Lobby lobby = new Lobby(this.Username, invitationCode, GUEST);
+                    CallChatService.GetUsersChat(invitationCode, Username);
+                    CallChatService.LobbyView = lobby;
+                    this.NavigationService.Navigate(lobby);
 
+                }
+                else if (result == ERROR)
+                {
+                    MessageBox.Show(Properties.Resources.notMachesInvitationCode);
+                }
             }
             else
             {
-                MessageBox.Show(Properties.Resources.error);
+                MessageBox.Show(Properties.Resources.wrongInvitationCode);
             }
         }
     }

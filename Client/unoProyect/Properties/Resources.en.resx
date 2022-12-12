@@ -345,4 +345,13 @@
   <data name="message" xml:space="preserve">
     <value>Message</value>
   </data>
+  <data name="notMachesInvitationCode" xml:space="preserve">
+    <value>We couldn't find the game with the code entered. Please verify it.</value>
+  </data>
+  <data name="temporalityInaviable" xml:space="preserve">
+    <value>The game is temporaly out of service. Please, try again later.</value>
+  </data>
+  <data name="wrongInvitationCode" xml:space="preserve">
+    <value>wrongInvitationCode</value>
+  </data>
 </root>

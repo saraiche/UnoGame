@@ -13,9 +13,6 @@ namespace unoProyect.Security
 {
     public class Utilities
     {
-
-        
-
         public static string ComputeSHA256Hash(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -46,6 +43,18 @@ namespace unoProyect.Security
         public static bool ValidatePassword(string password)
         {
             return (password.Length > 8);
+        }
+
+        public static bool ValidateInvitationCode(string invitationCode)
+        {
+            int code = 0;
+            bool isNumber = int.TryParse(invitationCode, out code);
+            bool result = false;
+            if (isNumber && code >= 100000 && code <= 999999)
+            {
+                result = true;
+            }
+            return result;
         }
 
         public static bool SendMail(string to, string emailSubject, string message)
