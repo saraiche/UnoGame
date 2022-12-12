@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -42,10 +43,22 @@ namespace unoProyect.Security
                 return false;
             }
         }
-
+        /// <summary>
+        /// Politicas de seguridad
+        /// Contiene aunque sea un numero
+        /// Una letra upper camel case
+        /// Una letra lower camel case
+        /// Un digito
+        /// Un caracter especial
+        /// Longitud de al menos 8 caracteres
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static bool ValidatePassword(string password)
         {
-            return (password.Length > 8);
+            Regex regex = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+            Match match = regex.Match(password);
+            return match.Success;
         }
 
         public static bool SendMail(string to, string emailSubject, string message)
