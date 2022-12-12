@@ -29,7 +29,7 @@ namespace Services
             DTOUserChat newUser = new DTOUserChat();
             List<DTOUserChat> users = new List<DTOUserChat>();
 
-            if (Rooms.Keys.Contains(code))
+            if (Rooms.Keys.Contains(code) && Rooms[code].Where(x => x.UserName == username).FirstOrDefault() == null)
             {
                 //recuperar la lista de los juagadores conectados
                 if (Rooms.TryGetValue(code, out List<DTOUserChat> usersConnect))
