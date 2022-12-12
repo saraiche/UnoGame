@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using unoProyect.Logic;
 using unoProyect.Proxy;
 using unoProyect.Security;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace unoProyect
 {
@@ -43,7 +45,14 @@ namespace unoProyect
                     User = callDataService.SearchUserByUsername(username);
                     if (User != null && User.Email == email)
                     {
-                        SendCode(email);
+                        try
+                        {
+                            SendCode(email);
+                        }
+                        catch (SmtpException)
+                        {
+                            MessageBox.Show(Properties.Resources.mailServerOutOfService, Properties.Resources.sorry);
+                        }
                     }
                     else
                     {
@@ -71,18 +80,26 @@ namespace unoProyect
         {
             string code = "";
             code = (new Random().Next(100000, 999999)).ToString();
-            bool result = Utilities.SendMail(email, Properties.Resources.changePassword, "¡Atención!\n Está recibiendo este correo electrónico " +
+            try
+            {
+                bool result = Utilities.SendMail(email, Properties.Resources.changePassword, "¡Atención!\n Está recibiendo este correo electrónico " +
                 "porque recibimos una solicitud de restablecimiento de contraseña para su cuenta de UNOGame. \n El código es: " + code + "\nSi no solicitó " +
                 "un restablecimiento de contraseña, no es necesario realizar ninguna otra acción.\n Saludos, UNOGame");
-            if (result)
-            {
-                NewPassword newPassword = new NewPassword(code, User);
-                this.NavigationService.Navigate(newPassword);
+                if (result)
+                {
+                    NewPassword newPassword = new NewPassword(code, User);
+                    this.NavigationService.Navigate(newPassword);
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.tryAgain, Properties.Resources.sorry);
+                }
             }
-            else
+            catch (SmtpException)
             {
-                MessageBox.Show(Properties.Resources.tryAgain, Properties.Resources.sorry);
+                throw new SmtpException();
             }
+
         }
     }
 }

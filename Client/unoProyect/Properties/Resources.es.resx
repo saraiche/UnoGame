@@ -357,4 +357,10 @@
   <data name="mailServerOutOfService" xml:space="preserve">
     <value>El servidor de correo electrónico está fuera de servicio. Favor de intentar más tarde.</value>
   </data>
+  <data name="restartTheGame" xml:space="preserve">
+    <value>Se necesita reiniciar el juego.</value>
+  </data>
+  <data name="somethingWrong" xml:space="preserve">
+    <value>Algo salío mal, por favor intenta más tarde.</value>
+  </data>
 </root>

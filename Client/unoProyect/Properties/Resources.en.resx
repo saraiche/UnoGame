@@ -172,7 +172,7 @@
     <value>Username already registered, try with another</value>
   </data>
   <data name="informationWrongSignUp" xml:space="preserve">
-    <value>Something went wrong, try again later</value>
+    <value>Something went wrong with your register, try again later</value>
   </data>
   <data name="instructionChangePasswordCode" xml:space="preserve">
     <value>We'll send you a code by email to change your password</value>
@@ -356,5 +356,11 @@
   </data>
   <data name="mailServerOutOfService" xml:space="preserve">
     <value>The mail sender server is out of service. Please try again later.</value>
+  </data>
+  <data name="restartTheGame" xml:space="preserve">
+    <value>The game needs a restart.</value>
+  </data>
+  <data name="somethingWrong" xml:space="preserve">
+    <value>Something went wrong, please try again later.</value>
   </data>
 </root>

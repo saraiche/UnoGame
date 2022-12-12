@@ -20,7 +20,7 @@ namespace unoProyect.Logic
         Proxy.DataServiceClient dataServiceClient = new Proxy.DataServiceClient();
         private const int SUCCESFUL = 1;
         private const int ERROR = 0;
-        private const int EXCEPTION = 2;
+        private const int EXCEPTION = 3;
         public int AddCredentials(string username, string password, string email)
         {
             int result = ERROR;
@@ -35,6 +35,10 @@ namespace unoProyect.Logic
             catch (EndpointNotFoundException)
             {
                 MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.informationWrongSignUp, Properties.Resources.sorry);
             }
             return result;
         }
@@ -54,7 +58,7 @@ namespace unoProyect.Logic
             }
             catch (CommunicationObjectFaultedException)
             {
-                MessageBox.Show(Properties.Resources.informationWrongSignUp);
+                MessageBox.Show(Properties.Resources.somethingWrong);
                 result = EXCEPTION;
             }
             catch (EndpointNotFoundException)
@@ -88,36 +92,142 @@ namespace unoProyect.Logic
                 MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
                 result = EXCEPTION;
             }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong, Properties.Resources.sorry);
+            }
             return result;
         }
         public bool AddFriend(string playerName, string friendName)
         {
-            return dataServiceClient.AddFriend(playerName, friendName);
+            bool result = false;
+            try
+            {
+                result = dataServiceClient.AddFriend(playerName, friendName);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong, Properties.Resources.sorry);
+            }
+            return result;
         }
         public List<string> GetFriends(string playerName)
         {
-            return dataServiceClient.GetFriends(playerName).ToList();
+            List<string> friends = null;
+            try
+            {
+                friends = dataServiceClient.GetFriends(playerName).ToList();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong, Properties.Resources.sorry);
+            }
+            return friends;
         }
         public DTOCredentials SearchUserByUsername(string username)
         {
-            DTOCredentials result = dataServiceClient.SearchUserByUsername(username);
+            DTOCredentials result = null;
+            try
+            {
+                result = dataServiceClient.SearchUserByUsername(username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong, Properties.Resources.sorry);
+            }
+            catch (CommunicationException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong, Properties.Resources.sorry);
+            }
             return result;
         }
-        public bool ModifyPassword(string username, string password)
+        public int ModifyPassword(string username, string password)
         {
-            return dataServiceClient.ModifyPassword(username, password);
+            int result = ERROR;
+            try
+            {
+                if (dataServiceClient.ModifyPassword(username, password))
+                {
+                    result = SUCCESFUL;
+                }
+            }            
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                result = EXCEPTION;
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+                result = EXCEPTION;
+            }
+
+            return result;
         }
         public DTOPlayer GetPlayer(string username)
         {
-            return dataServiceClient.GetPlayer(username);
+            DTOPlayer result = null;
+            try
+            {
+                result = dataServiceClient.GetPlayer(username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
+            return result;
         }
         public int SetPlayer(DTOPlayer player, string username)
         {
-            return dataServiceClient.SetPlayer(player, username);
+            int result = ERROR;
+            try
+            {
+                result = dataServiceClient.SetPlayer(player, username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                result = EXCEPTION;
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+                result = EXCEPTION;
+            }
+            return result;
         }
         public bool DeleteFriend(string playerName, string friendName)
         {
-            return dataServiceClient.DeleteFriend(playerName, friendName);
+            bool result = false;
+            try
+            {
+                result = dataServiceClient.DeleteFriend(playerName, friendName); 
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
+            return result;
         }
     }
 }
