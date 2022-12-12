@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Height="450"

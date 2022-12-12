@@ -471,6 +471,7 @@ namespace unoProyect
             }
         }
 
+
         public void PlayerWithoutUno(string username)
         {
             if (username == Username)
@@ -489,6 +490,38 @@ namespace unoProyect
             else if (lblPlayer4.Content.ToString() == username)
             {
                 lblUnoPlayer4.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public void PlayerLeftGame(string username)
+        {
+            if (Players.Length == 1)
+            {
+                CallChatService.SendWinner(InvitationCode, Username);
+            }
+            if (username == Username)
+            {
+                lblUnoPlayer1.Content = username + " left the game";
+                lblUnoPlayer1.Visibility = Visibility.Visible;
+                lblPlayer1.Visibility = Visibility.Hidden;
+            }
+            else if (lblPlayer2.Content.ToString() == username)
+            {
+                lblUnoPlayer2.Content = username + " left the game";
+                lblUnoPlayer2.Visibility = Visibility.Visible;
+                lblPlayer2.Visibility = Visibility.Hidden;
+            }
+            else if (lblPlayer3.Content.ToString() == username)
+            {
+                lblUnoPlayer3.Content = username + " left the game";
+                lblUnoPlayer3.Visibility = Visibility.Visible;
+                lblPlayer3.Visibility = Visibility.Hidden;
+            }
+            else if (lblPlayer4.Content.ToString() == username)
+            {
+                lblUnoPlayer4.Content = username + " left the game";
+                lblUnoPlayer4.Visibility = Visibility.Visible;
+                lblPlayer4.Visibility = Visibility.Hidden;
             }
         }
 

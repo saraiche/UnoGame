@@ -207,11 +207,20 @@
   <data name="instructionSendConfirmCode" xml:space="preserve">
     <value>We'll send you a code by email to confirm your account</value>
   </data>
+  <data name="instructionSomebodyIsInvitingYou" xml:space="preserve">
+    <value>is inviting you to join a game in UNOGame. </value>
+  </data>
   <data name="invalidCard" xml:space="preserve">
     <value>Invalid card</value>
   </data>
   <data name="invalidPasswordOrEmail" xml:space="preserve">
     <value>Email or password invalids</value>
+  </data>
+  <data name="invitationCode" xml:space="preserve">
+    <value>Invitation code</value>
+  </data>
+  <data name="invitationSent" xml:space="preserve">
+    <value>Invitation sent</value>
   </data>
   <data name="Kickfromthegame" xml:space="preserve">
     <value>Kick from the game</value>

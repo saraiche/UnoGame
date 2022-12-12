@@ -231,7 +231,7 @@
     <None Include="Connected Services\Proxy\unoProyect.Proxy.DTOCredentials.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Proxy\unoProyect.Proxy.DTOPlayer1.datasource">
+    <None Include="Connected Services\Proxy\unoProyect.Proxy.DTOPlayer.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -346,21 +346,6 @@
     <Resource Include="GraphicResources\color_yellow_skip.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Proxy\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Proxy\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Proxy\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Proxy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="GraphicResources\direction.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +391,24 @@
     <Resource Include="GraphicResources\playerImages\Recurso 7.png" />
     <Resource Include="GraphicResources\playerImages\Recurso 8.png" />
     <Resource Include="GraphicResources\playerImages\Recurso 9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\Proxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Proxy\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Proxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Proxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Proxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.6.1\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.6.1\build\MaterialDesignThemes.targets')" />
