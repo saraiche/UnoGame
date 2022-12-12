@@ -399,3 +399,6 @@ FodyWeavers.xsd
 .idea/
 App.config
 Client/unoProyect/Connected Services/
+.sonarqube/
+Client/.sonarqube/
+Server/.sonarqube/

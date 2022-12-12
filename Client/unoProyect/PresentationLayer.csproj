@@ -122,6 +122,9 @@
     <Compile Include="NewPassword.xaml.cs">
       <DependentUpon>NewPassword.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlayAsGuest.xaml.cs">
+      <DependentUpon>PlayAsGuest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Security\Utilities.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -183,6 +186,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NewPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlayAsGuest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
