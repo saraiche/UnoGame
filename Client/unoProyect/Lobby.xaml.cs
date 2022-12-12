@@ -70,6 +70,7 @@ namespace unoProyect
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             string[] players = CallChatService.GetPlayersByInvitationCode(InvitationCode);
+            Console.WriteLine(players.Length);
             if (players != null && players.Length < 2)
             {
                 MessageBox.Show(Properties.Resources.errorStartGamePlayers, Properties.Resources.error);
