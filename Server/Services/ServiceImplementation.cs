@@ -464,8 +464,7 @@ namespace Services
             {
                 using (unoDbModelContainer context = new unoDbModelContainer())
                 {
-                    Player findPlayer = context.PlayerSet1.Where(x => x.Credentials.username == credentials.Username)
-                        .FirstOrDefault();
+                    Player findPlayer = context.PlayerSet1.FirstOrDefault(x => x.Credentials.username == credentials.Username);
                     if (findPlayer == null)
                     {
                         Images images = new Images { Id = 1 };
@@ -491,10 +490,7 @@ namespace Services
             return result;
         }
 
-        public bool AddImages()
-        {
-            throw new NotImplementedException();
-        }
+        
 
 
         public bool IsUser(DTOCredentials credentials)
@@ -566,35 +562,7 @@ namespace Services
             }
         }
 
-        public bool SendMail(string to, string emailSubject, string message)
-        {
-            bool status = false;
-            string from = "uno.game@hotmail.com";
-            string displayName = "Uno Game";
-            try
-            {
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(from, displayName);
-                mailMessage.To.Add(to);
-
-                mailMessage.Subject = emailSubject;
-                mailMessage.Body = message;
-                mailMessage.IsBodyHtml = true;
-
-                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
-                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
-                client.EnableSsl = true;
-
-                client.Send(mailMessage);
-                status = true;
-            }
-            catch (SmtpException ex)
-            {
-                throw new SmtpException(ex.Message);
-            }
-
-            return status;
-        }
+ 
         public bool AddFriend(string playerName, string friendName)
         {
             bool flag = false;
