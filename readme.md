@@ -166,6 +166,20 @@ public interface IUserManagment
 public interface userManagment {
 }
 ```
+### Data transfer objects
+Los data transfer objects comienzan con el prefijo DTO en mayúsculas, seguido al objeto que corresponde en notación UpperCammelCase.
+### Bien
+```csharp
+public class DTOPlayer 
+{
+}
+```
+### Mal
+```csharp
+public class dtoPlayer 
+{
+}
+```
 ## Estilo
 ### Identación
 * Todo el código desarrollado tendrá identación de un tab.
