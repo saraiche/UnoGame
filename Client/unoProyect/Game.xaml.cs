@@ -544,7 +544,7 @@ namespace unoProyect
 
         private void LvCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            CallChatService.ValidateConnection(InvitationCode);
         }
     }
 }
