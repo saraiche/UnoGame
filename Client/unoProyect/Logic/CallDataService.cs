@@ -66,6 +66,11 @@ namespace unoProyect.Logic
                 MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
                 result = EXCEPTION;
             }
+            catch (TimeoutException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                result = EXCEPTION;
+            }
 
             return result;
         }
