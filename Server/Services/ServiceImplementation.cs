@@ -942,7 +942,7 @@ namespace Services
         /// </summary>
         /// <param name="dTOCredentials"></param>
         /// <returns></returns>
-        private Credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
+        public Credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
         {
             Credentials result = new Credentials();
             result.Id = 0;
