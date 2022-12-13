@@ -21,7 +21,6 @@ namespace unoProyect.Logic
         public Login LoginView { get; set; }
         public Game GameView { get; set; }
         public ObservableCollection<string> Users { get; set; }
-        public string[] players = new string[10];
 
         private const int SUCCESFUL = 1;
         private const int ERROR = 0;
@@ -152,10 +151,10 @@ namespace unoProyect.Logic
 
         public string[] GetPlayersByInvitationCode(string invitationCode)
         {
-            string[] players = null;
+            string[] activePlayers = null;
             try
             {
-                players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
+                activePlayers = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
             }
             catch (EndpointNotFoundException)
             {
@@ -165,7 +164,7 @@ namespace unoProyect.Logic
             {
                 MessageBox.Show(Properties.Resources.somethingWrong);
             }
-            return players;
+            return activePlayers;
         }
 
         public void PutCardInCenter(string invitationCode, Card card)
@@ -324,7 +323,7 @@ namespace unoProyect.Logic
 
         public void ReceivePlayerUno(string username, bool hasUno)
         {
-            if (hasUno == true)
+            if (hasUno)
             {
                 GameView.PlayerSaidUno(username);
             }

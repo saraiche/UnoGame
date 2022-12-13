@@ -40,7 +40,7 @@ namespace unoProyect
         {
             var username = tbUser.Text;
             var password = pbPassword.Password.ToString();
-            if (string.IsNullOrEmpty(username) || (string.IsNullOrWhiteSpace(username)) || string.IsNullOrEmpty(password) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show(Properties.Resources.notEmptyFields,
                             Properties.Resources.error);
