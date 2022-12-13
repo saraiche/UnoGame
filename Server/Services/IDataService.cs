@@ -12,9 +12,6 @@ namespace Services
     public interface IDataService
     {
         [OperationContract]
-        bool AddImages();
-
-        [OperationContract]
         int AddCredentials(DTOCredentials credentials);
 
         [OperationContract]
@@ -31,9 +28,6 @@ namespace Services
         DTOCredentials SearchUserByUsername(string username);
         [OperationContract]
         bool ModifyPassword(string playerName, string password);
-
-        [OperationContract]
-        bool SendMail(string to, string emailSubject, string message);
         [OperationContract]
         DTOPlayer GetPlayer(string playerName);
         [OperationContract]
