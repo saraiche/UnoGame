@@ -46,7 +46,7 @@
         <ListView
             Margin="624,70,17,59"
             d:ItemsSource="{d:SampleData ItemCount=1}"
-            x:Name="LvCards" Width="153.8" Height="280">
+            x:Name="LvCards" Width="153.8" Height="280" SelectionChanged="LvCards_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn />

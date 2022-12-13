@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Windows.Markup;
 using System.Windows;
+using System.CodeDom;
 
 namespace unoProyect.Logic
 {
@@ -35,8 +36,18 @@ namespace unoProyect.Logic
 
         public void SendMessage(string username, string message, string invitationCode)
         {
-            ChatServiceClient.SendMessage(username, message, invitationCode);
-
+            try
+            {
+                ChatServiceClient.SendMessage(username, message, invitationCode);
+            }
+            catch(EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
         public int Join(string username, string code)
         {
@@ -53,16 +64,45 @@ namespace unoProyect.Logic
                 MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
                 result = EXCEPTION;
             }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+                result = EXCEPTION;
+            }
             return result;
         }
 
         public void GetUsersChat(string code, string username)
         {
-            ChatServiceClient.GetUsersChat(code, username);
+            try
+            {
+                ChatServiceClient.GetUsersChat(code, username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
         public string NewRoom(string username)
         {
-            return ChatServiceClient.NewRoom(username);
+            string codeRoom = null;
+            try
+            {
+                codeRoom = ChatServiceClient.NewRoom(username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
+            return codeRoom;
         }
 
         public void RecieveMessage(string user, string message)
@@ -96,12 +136,35 @@ namespace unoProyect.Logic
 
         public void RequestOpenGame(string invitationCode)
         {
-            ChatServiceClient.RequestOpenGame(invitationCode);
+            try
+            {
+                ChatServiceClient.RequestOpenGame(invitationCode);
+            }
+            catch(EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
 
         public string[] GetPlayersByInvitationCode(string invitationCode)
         {
-            string[] players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
+            string[] players = null;
+            try
+            {
+                players = ChatServiceClient.GetPlayersByInvitationCode(invitationCode);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
             return players;
         }
 
@@ -111,9 +174,13 @@ namespace unoProyect.Logic
             {
                 ChatServiceClient.PutCardInCenter(invitationCode, card);
             }
-            catch(System.ServiceModel.CommunicationException)
+            catch (EndpointNotFoundException)
             {
-                //do something
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
             }
         }
 
@@ -126,7 +193,18 @@ namespace unoProyect.Logic
         }
         public void NextTurn(string invitationCode, string username)
         {
-            ChatServiceClient.NextTurn(invitationCode, username);
+            try
+            {
+                ChatServiceClient.NextTurn(invitationCode, username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
         public void ReceiveCard(Card card)
         {
@@ -135,12 +213,34 @@ namespace unoProyect.Logic
 
         public void DealCard(string username, Card card, string invitationCode)
         {
-            ChatServiceClient.DealCard(username, card, invitationCode);
+            try
+            {
+                ChatServiceClient.DealCard(username, card, invitationCode);
+            }
+            catch (EndpointNotFoundException)
+            {
+                throw new EndpointNotFoundException();
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                throw new EndpointNotFoundException();
+            }
         }
 
         public void RequestChangeDirection(string invitationCode)
         {
-            ChatServiceClient.RequestChangeDirection(invitationCode);
+            try
+            {
+                ChatServiceClient.RequestChangeDirection(invitationCode);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
         public void ChangeDirection()
         {
@@ -149,7 +249,18 @@ namespace unoProyect.Logic
 
         public void SendTurnInformation(string invitationCode, string color, string actualTurn)
         {
-            ChatServiceClient.SendTurnInformation(invitationCode, color, actualTurn);
+            try
+            {
+                ChatServiceClient.SendTurnInformation(invitationCode, color, actualTurn);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
 
         public void ReceiveTurnInformation(string color, string actualTurn)
@@ -165,15 +276,50 @@ namespace unoProyect.Logic
 
         public void SendWinner(string invitationCode, string username)
         {
-            ChatServiceClient.SendWinner(invitationCode, username);
+            try
+            {
+                ChatServiceClient.SendWinner(invitationCode, username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
         public bool DeletePlayer(string code, string username)
         {
-            return ChatServiceClient.DeletePlayer(code, username);
+            bool result = false;
+            try
+            {
+                result = ChatServiceClient.DeletePlayer(code, username);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
+            return result;
         }
         public void SendPlayerUno(string invitationCode, string username, bool hasUno)
         {
-            ChatServiceClient.SendPlayerUno(invitationCode, username, hasUno);
+            try
+            {
+                ChatServiceClient.SendPlayerUno(invitationCode, username, hasUno);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
 
         public void ReceivePlayerUno(string username, bool hasUno)
@@ -192,6 +338,23 @@ namespace unoProyect.Logic
         {
             GameView.Players = playersUpdated;
             GameView.PlayerLeftGame(username);
+        }
+
+        public void ValidateConnection(string invitationCode)
+        {
+            try
+            {
+                ChatServiceClient.ValidateConnection(invitationCode);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
         }
     }
 }

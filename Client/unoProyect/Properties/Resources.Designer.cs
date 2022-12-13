@@ -250,7 +250,7 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Something went wrong, try again later.
+        ///   Busca una cadena traducida similar a Something went wrong with your register, try again later.
         /// </summary>
         public static string informationWrongSignUp {
             get {
@@ -592,6 +592,15 @@ namespace unoProyect.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The game needs a restart..
+        /// </summary>
+        public static string restartTheGame {
+            get {
+                return ResourceManager.GetString("restartTheGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Save.
         /// </summary>
         public static string save {
@@ -633,6 +642,15 @@ namespace unoProyect.Properties {
         public static string signUp {
             get {
                 return ResourceManager.GetString("signUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Something went wrong, please try again later..
+        /// </summary>
+        public static string somethingWrong {
+            get {
+                return ResourceManager.GetString("somethingWrong", resourceCulture);
             }
         }
         

@@ -35,6 +35,7 @@ namespace Services
         void ReceivePlayerUno(string username, bool hasUno);
         [OperationContract(IsOneWay = true)]
         void DeletePlayerFromGame(string username, List<string> playersUpdated);
+       
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
@@ -73,6 +74,8 @@ namespace Services
         bool DeletePlayer(string invitationCode, string username);
         [OperationContract]
         void SendPlayerUno(string invitationCode, string username, bool hasUno);
+        [OperationContract]
+        void ValidateConnection(string invitationCode);
     }
     [DataContract]
     public class DTOUserChat

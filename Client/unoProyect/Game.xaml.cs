@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -76,18 +77,26 @@ namespace unoProyect
             int index = 0;
             int cardsSize = cards.Count;
             Random random = new Random();
-            for (int i = 0; i < Players.Length; i++)
+            try
             {
-                for (int j = 0; j < 7; j++)
+                for (int i = 0; i < Players.Length; i++)
                 {
-                    Card card = new Card();
-                    index = random.Next(cardsSize);
-                    card = cards.ElementAt(index);
-                    CallChatService.DealCard(Players[i], card, InvitationCode);
-                    cards.RemoveAt(index);
-                    cardsSize--;
+                    for (int j = 0; j < 7; j++)
+                    {
+                        Card card = new Card();
+                        index = random.Next(cardsSize);
+                        card = cards.ElementAt(index);
+                        CallChatService.DealCard(Players[i], card, InvitationCode);
+                        cards.RemoveAt(index);
+                        cardsSize--;
+                    }
                 }
             }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+            }
+            
         }
 
         /// <summary>
@@ -237,21 +246,20 @@ namespace unoProyect
                 newColor = Center.Color;
                 if (Center.Type == "draw2")
                 {
-                    Card card1 = new Card();
-                    card1 = GameLogic.GetRandomCard();
-                    CallChatService.DealCard(nextPlayer, card1, InvitationCode);
-                    Card card = new Card();
-                    card = GameLogic.GetRandomCard();
-                    CallChatService.DealCard(nextPlayer, card, InvitationCode);
-                    RemoveUno(nextPlayer);
-                    /*
-                    for (int i = 0; i < 2; i++)
+                    try
                     {
+                        Card card1 = new Card();
+                        card1 = GameLogic.GetRandomCard();
+                        CallChatService.DealCard(nextPlayer, card1, InvitationCode);
                         Card card = new Card();
                         card = GameLogic.GetRandomCard();
                         CallChatService.DealCard(nextPlayer, card, InvitationCode);
+                        RemoveUno(nextPlayer);
                     }
-                    */
+                    catch (EndpointNotFoundException)
+                    {
+                        MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                    }
                     nextPlayer = SkipPlayer();
                 }
                 else if (Center.Type == "reverse")
@@ -267,20 +275,22 @@ namespace unoProyect
             else
             {
                 GrdColors.Visibility = Visibility.Hidden;
-                if (Center.Type == "wildcard")
+                if (Center.Type == "draw4")
                 {
-                    //avisarles nuevo color
-                }
-                else if (Center.Type == "draw4")
-                {
-                    //avisarles nuevo color
-                    for (int i = 0; i < 4; i++)
+                    try
                     {
-                        Card card = new Card();
-                        card = GameLogic.GetRandomCard();
-                        CallChatService.DealCard(nextPlayer, card, InvitationCode);
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Card card = new Card();
+                            card = GameLogic.GetRandomCard();
+                            CallChatService.DealCard(nextPlayer, card, InvitationCode);
+                        }
+                        RemoveUno(nextPlayer);
                     }
-                    RemoveUno(nextPlayer);
+                    catch (EndpointNotFoundException)
+                    {
+                        MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                    }
                     nextPlayer = SkipPlayer();
                 }
                 newColor = color;
@@ -530,6 +540,11 @@ namespace unoProyect
             lblUnoPlayer1.Visibility = Visibility.Hidden;
             BtnUno.IsEnabled = true;
             CallChatService.SendPlayerUno(InvitationCode, username, false);
+        }
+
+        private void LvCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CallChatService.ValidateConnection(InvitationCode);
         }
     }
 }

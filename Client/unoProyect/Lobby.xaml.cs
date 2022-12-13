@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using unoProyect.Security;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Net.Mail;
 
 namespace unoProyect
 {
@@ -69,7 +70,8 @@ namespace unoProyect
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             string[] players = CallChatService.GetPlayersByInvitationCode(InvitationCode);
-            if (players.Length < 2)
+            Console.WriteLine(players.Length);
+            if (players != null && players.Length < 2)
             {
                 MessageBox.Show(Properties.Resources.errorStartGamePlayers, Properties.Resources.error);
             }
@@ -96,9 +98,16 @@ namespace unoProyect
                 DTOCredentials dTOCredentials = logic.SearchUserByUsername(username);
                 if (dTOCredentials != null)
                 {
-                    Utilities.SendMail(dTOCredentials.Email, Properties.Resources.invitationCode, Username + Properties.Resources.instructionSomebodyIsInvitingYou + " " +
+                    try
+                    {
+                        Utilities.SendMail(dTOCredentials.Email, Properties.Resources.invitationCode, Username + Properties.Resources.instructionSomebodyIsInvitingYou + " " +
                         Properties.Resources.theGameCodeIs + InvitationCode);
-                    MessageBox.Show(Properties.Resources.invitationSent);
+                        MessageBox.Show(Properties.Resources.invitationSent);
+                    }
+                    catch (SmtpException)
+                    {
+                        MessageBox.Show(Properties.Resources.mailServerOutOfService);
+                    }
                 }
                 else
                 {
@@ -120,9 +129,16 @@ namespace unoProyect
             {
                 if (Utilities.ValidateEmail(email))
                 {
-                    Utilities.SendMail(email, Properties.Resources.invitationCode, Username + Properties.Resources.instructionSomebodyIsInvitingYou + " " + 
+                    try
+                    {
+                        Utilities.SendMail(email, Properties.Resources.invitationCode, Username + Properties.Resources.instructionSomebodyIsInvitingYou + " " +
                         Properties.Resources.theGameCodeIs + InvitationCode);
-                    MessageBox.Show(Properties.Resources.invitationSent);
+                        MessageBox.Show(Properties.Resources.invitationSent);
+                    }
+                    catch (SmtpException)
+                    {
+                        MessageBox.Show(Properties.Resources.mailServerOutOfService);
+                    }
                 }
                 else
                 {
@@ -143,8 +159,10 @@ namespace unoProyect
 
         private void BtnKickFromTheGame_Click(object sender, RoutedEventArgs e)
         {
-            CallChatService.DeletePlayer(InvitationCode, LvFriendList.SelectedItem.ToString());
-            LvFriendList.Items.Remove(LvFriendList.SelectedItem.ToString());
+            if (CallChatService.DeletePlayer(InvitationCode, LvFriendList.SelectedItem.ToString()))
+            {
+                LvFriendList.Items.Remove(LvFriendList.SelectedItem.ToString());
+            }
         }
 
         private void LvFriendList_SelectionChanged(object sender, SelectionChangedEventArgs e)
