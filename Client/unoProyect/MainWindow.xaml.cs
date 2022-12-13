@@ -24,5 +24,17 @@ namespace unoProyect
         {
             InitializeComponent();
         }
+
+        private void Close_Event(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            /*
+            MessageBox.Show(this.);
+            var result = MessageBox.Show("Salir?", "", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                e.Cancel = false;
+            }
+            */
+        }
     }
 }

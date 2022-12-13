@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using unoProyect.Logic;
 
 namespace unoProyect
 {
@@ -13,11 +15,6 @@ namespace unoProyect
     /// </summary>
     public partial class App : Application
     {
-        
-        private void AppExit(object sender, ExitEventArgs e)
-        {
-            //desconectar al jugador
-        }
         
     }
 }

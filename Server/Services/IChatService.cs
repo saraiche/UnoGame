@@ -81,6 +81,8 @@ namespace Services
         public string UserName { get; set; }
         [DataMember]
         public IChatClient Connection { get; set; }
+        [DataMember]
+        public bool ActiveTurn { get; set; }
 
     }
     [DataContract]
