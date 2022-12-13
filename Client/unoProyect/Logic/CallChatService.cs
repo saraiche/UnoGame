@@ -339,5 +339,22 @@ namespace unoProyect.Logic
             GameView.Players = playersUpdated;
             GameView.PlayerLeftGame(username);
         }
+
+        public void ValidateConnection(string invitationCode)
+        {
+            try
+            {
+                ChatServiceClient.ValidateConnection(invitationCode);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                MessageBox.Show(Properties.Resources.somethingWrong);
+            }
+        }
     }
 }

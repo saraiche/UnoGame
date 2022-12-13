@@ -57,21 +57,68 @@ namespace Services
         }
         public void GetUsersChat(string code, string username)
         {
-
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             foreach (var user in Rooms[code])
             {
-                user.Connection.GetUsers(username);
+                try
+                {
+                    user.Connection.GetUsers(username);
+
+                }
+                catch (System.ServiceModel.CommunicationException)
+                {
+                    playersToDelete.Add(user);
+                }
+                foreach (var player in playersToDelete)
+                {
+                    DeletePlayer(code, player.UserName);
+                }
             }
         }
 
         public void SendMessage(string username, string message, string invitationCode)
         {
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
+
             if (Rooms.Keys.Contains(invitationCode) && Rooms[invitationCode].Where(x => x.UserName == username).FirstOrDefault() != null)
             {
+
                 foreach (var other in Rooms[invitationCode])
                 {
-                    other.Connection.RecieveMessage(username, message);
+                    try
+                    {
+                        other.Connection.RecieveMessage(username, message);
+
+                    }
+                    catch (System.ServiceModel.CommunicationException )
+                    {
+                        playersToDelete.Add(other);
+                    }
                 }
+            }
+            foreach(var player in playersToDelete)
+            {
+                DeletePlayer(invitationCode, player.UserName);
+            }
+        }
+        public void ValidateConnection(string invitationCode)
+        {
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
+            foreach (var other in Rooms[invitationCode])
+            {
+                try
+                {
+                    other.Connection.RecieveMessage("Dios", "Memento mori");
+
+                }
+                catch (System.ServiceModel.CommunicationException)
+                {
+                    playersToDelete.Add(other);
+                }
+            }
+            foreach (var player in playersToDelete)
+            {
+                DeletePlayer(invitationCode, player.UserName);
             }
         }
 
@@ -120,6 +167,7 @@ namespace Services
 
         public List<string> GetPlayersByInvitationCode(string invitationCode)
         {
+            ValidateConnection(invitationCode);
             List<string> users = new List<string>();
             foreach (var user in Rooms[invitationCode])
             {
@@ -176,7 +224,6 @@ namespace Services
 
         public void RequestOpenGame(string invitationCode)
         {
-            IChatClient con;
             if (Rooms.Keys.Contains(invitationCode))
             {
                 List<string> users = GetUserListFromDtoList(Rooms[invitationCode]);
@@ -184,10 +231,9 @@ namespace Services
                 List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
                 foreach (var other in Rooms[invitationCode])
                 {
-                    con = other.Connection;
                     try
                     {
-                        con.OpenGame(other.UserName, users);
+                        other.Connection.OpenGame(other.UserName, users);
                     }
                     catch(CommunicationObjectAbortedException)
                     {
@@ -197,7 +243,10 @@ namespace Services
                 }
                 if (playerLeftTheGame)
                 {
-                    UpdatePlayers(invitationCode, playersToDelete);
+                    foreach (var player in playersToDelete)
+                    {
+                        DeletePlayer(invitationCode, player.UserName);
+                    }
                 }
             }
         }

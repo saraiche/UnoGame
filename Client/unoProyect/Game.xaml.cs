@@ -541,5 +541,10 @@ namespace unoProyect
             BtnUno.IsEnabled = true;
             CallChatService.SendPlayerUno(InvitationCode, username, false);
         }
+
+        private void LvCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CallChatService.ValidateConnection(InvitationCode);
+        }
     }
 }
