@@ -35,6 +35,8 @@ namespace Services
         void ReceivePlayerUno(string username, bool hasUno);
         [OperationContract(IsOneWay = true)]
         void DeletePlayerFromGame(string username, List<string> playersUpdated);
+        [OperationContract(IsOneWay = true)]
+        void ValidateConnection(string invitationCode);
     }
     [ServiceContract(CallbackContract = typeof(IChatClient))]
     public interface IChatService
