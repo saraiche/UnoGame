@@ -4,11 +4,12 @@ using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Utilities
 {
-    public class Security
+    public static class Security
     {
         public static string ComputeSHA256Hash(string password)
         {
@@ -28,10 +29,11 @@ namespace Utilities
         {
             try
             {
-                var emailValidated = new MailAddress(email);
-                return true;
+                return Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
             }
-            catch (FormatException)
+            catch (RegexMatchTimeoutException)
             {
                 return false;
             }
