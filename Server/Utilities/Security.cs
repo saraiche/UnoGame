@@ -11,6 +11,13 @@ namespace Utilities
 {
     public static class Security
     {
+        /// <summary>
+        /// Hashea una contraseña usando el método SHA256
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>
+        /// El hash de la contraseña
+        /// </returns>
         public static string ComputeSHA256Hash(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -23,25 +30,6 @@ namespace Utilities
                 }
                 return hashedPassword.ToString();
             }
-        }
-
-        public static bool ValidateEmail(string email)
-        {
-            try
-            {
-                return Regex.IsMatch(email,
-                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
-        }
-
-        public static bool ValidatePassword(string password)
-        {
-            return (password.Length > 8);
         }
     }
 }

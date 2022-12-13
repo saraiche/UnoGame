@@ -28,6 +28,15 @@ namespace Services
             Rooms = new Dictionary<string, List<DTOUserChat>>();
         }
 
+        /// <summary>
+        /// Une a un usuario a una partida que ya ha sido creada
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="code"></param>
+        /// <returns>
+        /// True si se unió correctamente el usuario a la partida
+        /// Falso si no existe la partida o no se pudo crear
+        /// </returns>
         public bool Join(string username, string code)
         {
             bool flag = false;
@@ -55,6 +64,45 @@ namespace Services
             return flag;
 
         }
+
+        /// <summary>
+        /// Envía un mensaje a todos los usuarios de una partida,
+        /// incluyendo al emisor del mensaje. Verifica que todos los jugadores
+        /// mantengan una conexión activa y si no, los elimina de la partida.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="message"></param>
+        /// <param name="invitationCode"></param>
+        public void SendMessage(string username, string message, string invitationCode)
+        {
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
+
+            if (Rooms.Keys.Contains(invitationCode) && Rooms[invitationCode].FirstOrDefault(x => x.UserName == username) != null)
+            {
+
+                foreach (var other in Rooms[invitationCode])
+                {
+                    try
+                    {
+                        other.Connection.RecieveMessage(username, message);
+
+                    }
+                    catch (System.ServiceModel.CommunicationException)
+                    {
+                        playersToDelete.Add(other);
+                    }
+                }
+            }
+            foreach (var player in playersToDelete)
+            {
+                DeletePlayer(invitationCode, player.UserName);
+            }
+        }
+        /// <summary>
+        /// Envía el usuario recibido a cada usuario de la partida seleccionada
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="username"></param>
         public void GetUsersChat(string code, string username)
         {
             List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
@@ -75,53 +123,15 @@ namespace Services
                 }
             }
         }
-
-        public void SendMessage(string username, string message, string invitationCode)
-        {
-            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
-
-            if (Rooms.Keys.Contains(invitationCode) && Rooms[invitationCode].FirstOrDefault(x => x.UserName == username) != null)
-            {
-
-                foreach (var other in Rooms[invitationCode])
-                {
-                    try
-                    {
-                        other.Connection.RecieveMessage(username, message);
-
-                    }
-                    catch (System.ServiceModel.CommunicationException )
-                    {
-                        playersToDelete.Add(other);
-                    }
-                }
-            }
-            foreach(var player in playersToDelete)
-            {
-                DeletePlayer(invitationCode, player.UserName);
-            }
-        }
-        public void ValidateConnection(string invitationCode)
-        {
-            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
-            foreach (var other in Rooms[invitationCode])
-            {
-                try
-                {
-                    other.Connection.RecieveMessage("Dios", "Memento mori");
-
-                }
-                catch (System.ServiceModel.CommunicationException)
-                {
-                    playersToDelete.Add(other);
-                }
-            }
-            foreach (var player in playersToDelete)
-            {
-                DeletePlayer(invitationCode, player.UserName);
-            }
-        }
-
+        /// <summary>
+        /// Crea una nueva partida, genera su código y verifica que no exista una
+        /// partida con ese código y une al jugador que la creó a la partida
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>
+        /// Una cadena con el código de invitación de 6 dígitos si fue correcto
+        /// Null en caso contrario
+        /// </returns>
         public string NewRoom(string username)
         {
             string invitationCode = new Random().Next(100000, 999999).ToString();
@@ -143,28 +153,12 @@ namespace Services
             Console.WriteLine(username + " creó la sala " + invitationCode);
             return invitationCode;
         }
-        public bool DeletePlayer(string invitationCode, string username)
-        {
-            bool flag = false;
-            int index = -1;
-            foreach (var user in Rooms[invitationCode])
-            {
-                if (user.UserName == username)
-                {
-                    index = Rooms[invitationCode].IndexOf(user);
-                }
-            }
-            if (index != -1)
-            {
-                Rooms[invitationCode].RemoveAt(index);
-                flag = true;
-                Console.WriteLine(username + "dejó la partida " + invitationCode);
-            }
-            return flag;
-        }
-
-
-
+        /// <summary>
+        /// Regresa una lista con los nombres de usuario de los jugadores de una
+        /// partida en específico
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <returns>Lista de strings con los nombres de usuario</returns>
         public List<string> GetPlayersByInvitationCode(string invitationCode)
         {
             ValidateConnection(invitationCode);
@@ -175,53 +169,10 @@ namespace Services
             }
             return users;
         }
-
-        
-
-        public void PutCardInCenter(string invitationCode, Card card)
-        {
-            IChatClient con;
-            if (Rooms.Keys.Contains(invitationCode))
-            {
-                bool playerLeftTheGame = false;
-                List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
-                foreach (var other in Rooms[invitationCode])
-                {
-                    con = other.Connection;
-                    try
-                    {
-                        con.ReceiveCenter(card);
-                    }
-                    catch(CommunicationObjectAbortedException)
-                    {
-                        playerLeftTheGame = true;
-                        playersToDelete.Add(other);
-                    }
-                }
-                if (playerLeftTheGame)
-                {
-                    UpdatePlayers(invitationCode, playersToDelete);
-                }
-            }
-        }
-        
-        private void UpdatePlayers(string invitationCode, List<DTOUserChat> pastList)
-        {
-            foreach(var player in pastList.Select(player => player.UserName))
-            {
-                DeletePlayer(invitationCode, player);
-                SendDeletePlayerFromGame(invitationCode, player);
-            }
-        }
-
-        private void SendDeletePlayerFromGame(string invitationCode, string username)
-        {
-            foreach(var player in Rooms[invitationCode])
-            {
-                player.Connection.DeletePlayerFromGame(username, GetUserListFromDtoList(Rooms[invitationCode]));
-            }
-        }
-
+        /// <summary>
+        /// Solicita a los clientes abrir el juego una vez que ha iniciado la partida
+        /// </summary>
+        /// <param name="invitationCode"></param>
         public void RequestOpenGame(string invitationCode)
         {
             if (Rooms.Keys.Contains(invitationCode))
@@ -235,7 +186,7 @@ namespace Services
                     {
                         other.Connection.OpenGame(other.UserName, users);
                     }
-                    catch(CommunicationObjectAbortedException)
+                    catch (CommunicationObjectAbortedException)
                     {
                         playerLeftTheGame = true;
                         playersToDelete.Add(other);
@@ -250,39 +201,29 @@ namespace Services
                 }
             }
         }
-
-        private List<string> GetUserListFromDtoList(List<DTOUserChat> dtoUserChats)
-        {
-            List<string> users = new List<string>();
-            foreach (var user in dtoUserChats)
-            {
-                users.Add(user.UserName);
-            }
-            return users;
-        }
-
-        public void DealCard(string username, Card card, string invitationCode)
+        /// <summary>
+        /// Coloca una carta en el centro de una partida
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="card"></param>
+        public void PutCardInCenter(string invitationCode, Card card)
         {
             IChatClient con;
-            bool playerLeftTheGame = false;
-            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
             if (Rooms.Keys.Contains(invitationCode))
             {
+                bool playerLeftTheGame = false;
+                List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
                 foreach (var other in Rooms[invitationCode])
                 {
-                    if (username == other.UserName)
+                    con = other.Connection;
+                    try
                     {
-                        con = other.Connection;
-                        try
-                        {
-                            con.ReceiveCard(card);
-                        }
-                        catch (CommunicationObjectAbortedException)
-                        {
-                            playerLeftTheGame = true;
-                            playersToDelete.Add(other);
-                        }
-
+                        con.ReceiveCenter(card);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        playerLeftTheGame = true;
+                        playersToDelete.Add(other);
                     }
                 }
                 if (playerLeftTheGame)
@@ -291,6 +232,11 @@ namespace Services
                 }
             }
         }
+        /// <summary>
+        /// Pasa el turno actual de una partida al jugador recibido
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="username"></param>
         public void NextTurn(string invitationCode, string username)
         {
             List<DTOUserChat> users = Rooms[invitationCode];
@@ -333,7 +279,47 @@ namespace Services
                 UpdatePlayers(invitationCode, playersToDelete);
             }
         }
+        /// <summary>
+        /// Reparte una carta al jugador de una partida, agregandola a su mazo.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="card"></param>
+        /// <param name="invitationCode"></param>
+        public void DealCard(string username, Card card, string invitationCode)
+        {
+            IChatClient con;
+            bool playerLeftTheGame = false;
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
+            if (Rooms.Keys.Contains(invitationCode))
+            {
+                foreach (var other in Rooms[invitationCode])
+                {
+                    if (username == other.UserName)
+                    {
+                        con = other.Connection;
+                        try
+                        {
+                            con.ReceiveCard(card);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            playerLeftTheGame = true;
+                            playersToDelete.Add(other);
+                        }
 
+                    }
+                }
+                if (playerLeftTheGame)
+                {
+                    UpdatePlayers(invitationCode, playersToDelete);
+                }
+            }
+        }
+        /// <summary>
+        /// Cambia el sentido de la partida a todos los jugadores cuando se ha puesto
+        /// una carta de reversa
+        /// </summary>
+        /// <param name="invitationCode"></param>
         public void RequestChangeDirection(string invitationCode)
         {
             IChatClient con;
@@ -360,7 +346,12 @@ namespace Services
                 }
             }
         }
-
+        /// <summary>
+        /// Envía el color y turno actual de una partida a todos los jugadores
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="color"></param>
+        /// <param name="actualTurn"></param>
         public void SendTurnInformation(string invitationCode, string color, string actualTurn)
         {
             IChatClient con;
@@ -387,7 +378,11 @@ namespace Services
                 }
             }
         }
-
+        /// <summary>
+        /// Avisa quién ha ganado la partida a todos los jugadores de la partida
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="username"></param>
         public void SendWinner(string invitationCode, string username)
         {
             IChatClient con;
@@ -414,7 +409,38 @@ namespace Services
                 }
             }
         }
-
+        /// <summary>
+        /// Elimina a un jugador de la lista de jugadores de la partida.
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public bool DeletePlayer(string invitationCode, string username)
+        {
+            bool flag = false;
+            int index = -1;
+            foreach (var user in Rooms[invitationCode])
+            {
+                if (user.UserName == username)
+                {
+                    index = Rooms[invitationCode].IndexOf(user);
+                }
+            }
+            if (index != -1)
+            {
+                Rooms[invitationCode].RemoveAt(index);
+                flag = true;
+                Console.WriteLine(username + "dejó la partida " + invitationCode);
+            }
+            return flag;
+        }
+        /// <summary>
+        /// Avisa a todos los jugadores que un jugador ha presionado el botón Uno y que
+        /// solo le queda una carta
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="username"></param>
+        /// <param name="hasUno"></param>
         public void SendPlayerUno(string invitationCode, string username, bool hasUno)
         {
             IChatClient con;
@@ -441,6 +467,72 @@ namespace Services
                 }
             }
         }
+        /// <summary>
+        /// Valida que los usuarios de una partida sigan conectados
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        public void ValidateConnection(string invitationCode)
+        {
+            List<DTOUserChat> playersToDelete = new List<DTOUserChat>();
+            foreach (var other in Rooms[invitationCode])
+            {
+                try
+                {
+                    other.Connection.RecieveMessage("", "");
+
+                }
+                catch (System.ServiceModel.CommunicationException)
+                {
+                    playersToDelete.Add(other);
+                }
+            }
+            foreach (var player in playersToDelete)
+            {
+                DeletePlayer(invitationCode, player.UserName);
+            }
+        }
+        /// <summary>
+        /// Actualiza la lista de jugadores de una partida cuando algún jugador se ha salido del juego
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="pastList"></param>
+        private void UpdatePlayers(string invitationCode, List<DTOUserChat> pastList)
+        {
+            foreach(var player in pastList.Select(player => player.UserName))
+            {
+                DeletePlayer(invitationCode, player);
+                SendDeletePlayerFromGame(invitationCode, player);
+            }
+        }
+        /// <summary>
+        /// Avisa a los jugadores que el jugador recibido ha dejado la partida
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <param name="username"></param>
+        private void SendDeletePlayerFromGame(string invitationCode, string username)
+        {
+            foreach(var player in Rooms[invitationCode])
+            {
+                player.Connection.DeletePlayerFromGame(username, GetUserListFromDtoList(Rooms[invitationCode]));
+            }
+        }
+        /// <summary>
+        /// Extrae los nombres de usuario de una lista de DTOUserChat para agregarlos a una lista
+        /// de strings
+        /// </summary>
+        /// <param name="dtoUserChats"></param>
+        /// <returns>
+        /// Lista de strings con los nombres de usuario de los jugadores de una partida
+        /// </returns>
+        private List<string> GetUserListFromDtoList(List<DTOUserChat> dtoUserChats)
+        {
+            List<string> users = new List<string>();
+            foreach (var user in dtoUserChats)
+            {
+                users.Add(user.UserName);
+            }
+            return users;
+        }
     }
 
 
@@ -450,7 +542,8 @@ namespace Services
         /// Agrega las credenciales de un jugador a la base de datos
         /// </summary>
         /// <param name="credentials"></param>
-        /// <returns> 1 si se guardaron correctamente los cambios,
+        /// <returns>
+        /// 1 si se guardaron correctamente los cambios,
         /// 2 si ya existía el username registrado,
         /// 0 si ocurrió un error al guardar en la base de datos
         /// </returns>
@@ -490,13 +583,15 @@ namespace Services
 
             return result;
         }
-
-        public bool AddImages()
-        {
-            throw new NotImplementedException();
-        }
-
-
+        /// <summary>
+        /// Busca una coincidencia según un nombre de usuario y contraseña en la
+        /// base de datos
+        /// </summary>
+        /// <param name="credentials"></param>
+        /// <returns>
+        /// True si se encontró una coincidencia
+        /// False en otro caso
+        /// </returns>
         public bool IsUser(DTOCredentials credentials)
         {
             bool flag = false;
@@ -521,22 +616,15 @@ namespace Services
             }
             return flag;
         }
-
         /// <summary>
-        /// Convierte un data transfer object a entity para conectarse con la capa de DataAccess
+        /// Busca un usuario en la base de datos según su nombre de usuario
         /// </summary>
-        /// <param name="dTOCredentials"></param>
-        /// <returns></returns>
-        public Credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
-        {
-            Credentials result = new Credentials();
-            result.Id = 0;
-            result.username = dTOCredentials.Username;
-            result.email = dTOCredentials.Email;
-            result.password = dTOCredentials.Password;
-            return result;
-        }
-
+        /// <param name="credentials"></param>
+        /// <returns>
+        /// True si existe
+        /// False en caso contrario
+        /// </returns>
+        /// <exception cref="EntityException"></exception>
         public bool SearchUser(DTOCredentials credentials)
         {
             bool flag = false;
@@ -559,36 +647,15 @@ namespace Services
                 throw new EntityException(ex.Message);
             }
         }
-
-        public bool SendMail(string to, string emailSubject, string message)
-        {
-            bool status = false;
-            string from = "uno.game@hotmail.com";
-            string displayName = "Uno Game";
-            try
-            {
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(from, displayName);
-                mailMessage.To.Add(to);
-
-                mailMessage.Subject = emailSubject;
-                mailMessage.Body = message;
-                mailMessage.IsBodyHtml = true;
-
-                SmtpClient client = new SmtpClient("smtp.office365.com", 587);
-                client.Credentials = new NetworkCredential(from, ConfigurationManager.AppSettings["password"]);
-                client.EnableSsl = true;
-
-                client.Send(mailMessage);
-                status = true;
-            }
-            catch (SmtpException ex)
-            {
-                throw new SmtpException(ex.Message);
-            }
-
-            return status;
-        }
+        /// <summary>
+        /// Agrega un jugador a la lista de amigos del jugador indicado
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="friendName"></param>
+        /// <returns>
+        /// True si el amigo existe, el jugador existe y se pudo agregar correctamente
+        /// False en otro caso
+        /// </returns>
         public bool AddFriend(string playerName, string friendName)
         {
             bool flag = false;
@@ -616,6 +683,15 @@ namespace Services
             }
             return flag;
         }
+        /// <summary>
+        /// Retorna los nombres de usuario de los jugadores de la lista de amigos del
+        /// jugador recibido
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <returns>
+        /// Lista de nombres de usuario
+        /// </returns>
+        /// <exception cref="EntityException"></exception>
         public List<string> GetFriends(string playerName)
         {
             List<string> friends = new List<string>();
@@ -641,6 +717,14 @@ namespace Services
             }
             return friends;
         }
+        /// <summary>
+        /// Busca un jugador por su nombre de usuario y regresa sus credenciales, sin incluir su contraseña
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>
+        /// DTOCredentials con el nombre de usuario y correo electrónico del jugador encontrado
+        /// </returns>
+        /// <exception cref="EntityException"></exception>
         public DTOCredentials SearchUserByUsername(string username)
         {
             DTOCredentials userFound = new DTOCredentials();
@@ -663,8 +747,48 @@ namespace Services
             }
             return userFound;
         }
-
-
+        /// <summary>
+        /// Cambia la contraseña de un usuario registrado
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="password"></param>
+        /// <returns>
+        /// True si se pudo actualizar la contraseña con éxito
+        /// False en caso contrario
+        /// </returns>
+        /// <exception cref="DbUpdateException"></exception>
+        public bool ModifyPassword(string playerName, string password)
+        {
+            bool result = false;
+            try
+            {
+                using (unoDbModelContainer dataBase = new unoDbModelContainer())
+                {
+                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
+                    if (findCredentialsPlayer != null)
+                    {
+                        Player playerDb = findCredentialsPlayer.Player;
+                        playerDb.Credentials.password = password;
+                        dataBase.PlayerSet1.Attach(playerDb);
+                        dataBase.SaveChanges();
+                        result = true;
+                    }
+                }
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new DbUpdateException(exception.Message);
+            }
+            return result;
+        }
+        /// <summary>
+        /// Obtiene el perfil de un jugador según su nombre de usuario
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <returns>
+        /// DTOPlayer con el email, nombre de usuario, contraseña e imagen del jugador recibido
+        /// </returns>
+        /// <exception cref="EntityException"></exception>
         public DTOPlayer GetPlayer(string playerName)
         {
             try
@@ -700,11 +824,14 @@ namespace Services
         }
 
         /// <summary>
-        /// Esta funcion sirve para modificar los datos de un jugador
+        /// Modifica los datos de un jugador
         /// </summary>
         /// <param name="player"></param>
         /// <param name="username"></param>
-        /// <returns>1 si la modificacion es exitosa 2 si el username ya esta ocupado</returns>
+        /// <returns>
+        /// 1 si la modificacion es exitosa
+        /// 2 si el username ya esta ocupado
+        /// </returns>
         /// <exception cref="EntityException"></exception>
         public int SetPlayer(DTOPlayer player, string username)
         {
@@ -773,30 +900,16 @@ namespace Services
                 throw new EntityException(ex.Message);
             }
         }
-        public bool ModifyPassword(string playerName, string password)
-        {
-            bool result = false;
-            try
-            {
-                using (unoDbModelContainer dataBase = new unoDbModelContainer())
-                {
-                    Credentials findCredentialsPlayer = dataBase.CredentialsSet1.Where(x => x.username == playerName).FirstOrDefault();
-                    if (findCredentialsPlayer != null)
-                    {
-                        Player playerDb = findCredentialsPlayer.Player;
-                        playerDb.Credentials.password = password;
-                        dataBase.PlayerSet1.Attach(playerDb);
-                        dataBase.SaveChanges();
-                        result = true;
-                    }
-                }
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new DbUpdateException(exception.Message);
-            }
-            return result;
-        }
+        /// <summary>
+        /// Elimina a un jugador de la lista de amigos del jugador recibido
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="friendName"></param>
+        /// <returns>
+        /// True si se realizó de manera exitosa la eliminación
+        /// False en caso contrario
+        /// </returns>
+        /// <exception cref="EntityException"></exception>
         public bool DeleteFriend(string playerName, string friendName)
         {
             bool flag = false;
@@ -823,6 +936,20 @@ namespace Services
             {
                 throw new EntityException(ex.Message);
             }
+        }
+        /// <summary>
+        /// Convierte un data transfer object a entity para conectarse con la capa de DataAccess
+        /// </summary>
+        /// <param name="dTOCredentials"></param>
+        /// <returns></returns>
+        private Credentials DtoCredentialsToEntity(DTOCredentials dTOCredentials)
+        {
+            Credentials result = new Credentials();
+            result.Id = 0;
+            result.username = dTOCredentials.Username;
+            result.email = dTOCredentials.Email;
+            result.password = dTOCredentials.Password;
+            return result;
         }
     }
 }
