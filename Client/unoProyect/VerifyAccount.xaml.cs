@@ -98,20 +98,17 @@ namespace unoProyect
 
         private void BtnAccept_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValidateEmptyField() && ValidateCode())
-            {
-                if (AddCredentials() == 1)
-                {
-                    MessageBox.Show("Todo correcto, inicia sesión para continuar");
-                    Login login = new Login();
-                    this.NavigationService.Navigate(login);
-                }
+            if (!ValidateEmptyField() && ValidateCode() && AddCredentials() == 1)
+            {   
+                MessageBox.Show("Todo correcto, inicia sesión para continuar");
+                Login login = new Login();
+                this.NavigationService.Navigate(login);   
             }
         }
 
         private bool ValidateEmptyField()
         {
-            bool emptyCode = string.IsNullOrEmpty(TbValidationCode.Text);
+            bool emptyCode = string.IsNullOrWhiteSpace(TbValidationCode.Text);
             if (emptyCode)
             {
                 MessageBox.Show(Properties.Resources.notEmptyFields);

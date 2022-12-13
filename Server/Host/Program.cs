@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Host
 {
-    internal class Program
+    static class Program
     {
         static void Main(string[] args)
         {
