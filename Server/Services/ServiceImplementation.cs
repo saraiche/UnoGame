@@ -21,8 +21,11 @@ namespace Services
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
     public partial class ServiceImplementation : IChatService
     {
-        Dictionary<string, List<DTOUserChat>> Rooms { get; set; }
-
+        public Dictionary<string, List<DTOUserChat>> Rooms { get; set; }
+        public ServiceImplementation()
+        {
+            Rooms = new Dictionary<string, List<DTOUserChat>>();
+        }
 
         public bool Join(string username, string code)
         {
@@ -173,10 +176,7 @@ namespace Services
             return users;
         }
 
-        public ServiceImplementation()
-        {
-            Rooms = new Dictionary<string, List<DTOUserChat>>();
-        }
+        
 
         public void PutCardInCenter(string invitationCode, Card card)
         {
@@ -301,6 +301,7 @@ namespace Services
                 var user = users[i];
                 if (user.UserName != username)
                 {
+                    users[i].ActiveTurn = false;
                     user.Connection.itsMyTurn(false);
                 }
                 else
@@ -308,6 +309,7 @@ namespace Services
                     try
                     {
                         user.Connection.itsMyTurn(true);
+                        users[i].ActiveTurn = true;
                     }
                     catch (CommunicationObjectAbortedException)
                     {
@@ -316,10 +318,12 @@ namespace Services
                         if (i == users.Count - 1)
                         {
                             users[0].Connection.itsMyTurn(true);
+                            users[0].ActiveTurn = true;
                         }
                         else
                         {
                             users[i + 1].Connection.itsMyTurn(true);
+                            users[i + 1].ActiveTurn = true;
                         }
                     }
                 }
