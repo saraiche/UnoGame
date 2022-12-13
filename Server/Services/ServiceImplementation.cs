@@ -66,8 +66,8 @@ namespace Services
         }
 
         /// <summary>
-        /// Envía un mensaje a todos los usuarios de una partida, 
-        /// incluyendo al emisor del mensaje. Verifica que todos los jugadores 
+        /// Envía un mensaje a todos los usuarios de una partida,
+        /// incluyendo al emisor del mensaje. Verifica que todos los jugadores
         /// mantengan una conexión activa y si no, los elimina de la partida.
         /// </summary>
         /// <param name="username"></param>
@@ -124,7 +124,7 @@ namespace Services
             }
         }
         /// <summary>
-        /// Crea una nueva partida, genera su código y verifica que no exista una 
+        /// Crea una nueva partida, genera su código y verifica que no exista una
         /// partida con ese código y une al jugador que la creó a la partida
         /// </summary>
         /// <param name="username"></param>
@@ -154,7 +154,7 @@ namespace Services
             return invitationCode;
         }
         /// <summary>
-        /// Regresa una lista con los nombres de usuario de los jugadores de una 
+        /// Regresa una lista con los nombres de usuario de los jugadores de una
         /// partida en específico
         /// </summary>
         /// <param name="invitationCode"></param>
@@ -435,7 +435,7 @@ namespace Services
             return flag;
         }
         /// <summary>
-        /// Avisa a todos los jugadores que un jugador ha presionado el botón Uno y que 
+        /// Avisa a todos los jugadores que un jugador ha presionado el botón Uno y que
         /// solo le queda una carta
         /// </summary>
         /// <param name="invitationCode"></param>
@@ -542,7 +542,7 @@ namespace Services
         /// Agrega las credenciales de un jugador a la base de datos
         /// </summary>
         /// <param name="credentials"></param>
-        /// <returns> 
+        /// <returns>
         /// 1 si se guardaron correctamente los cambios,
         /// 2 si ya existía el username registrado,
         /// 0 si ocurrió un error al guardar en la base de datos
@@ -584,7 +584,7 @@ namespace Services
             return result;
         }
         /// <summary>
-        /// Busca una coincidencia según un nombre de usuario y contraseña en la 
+        /// Busca una coincidencia según un nombre de usuario y contraseña en la
         /// base de datos
         /// </summary>
         /// <param name="credentials"></param>
@@ -829,7 +829,7 @@ namespace Services
         /// <param name="player"></param>
         /// <param name="username"></param>
         /// <returns>
-        /// 1 si la modificacion es exitosa 
+        /// 1 si la modificacion es exitosa
         /// 2 si el username ya esta ocupado
         /// </returns>
         /// <exception cref="EntityException"></exception>
