@@ -44,7 +44,6 @@ namespace unoProyect
             this.InvitationCode = invitationCode;
             CallChatService = new Logic.CallChatService();
             TbCodeGame.Text = this.InvitationCode.ToString();
-            //LvFriendList.Items.Add(CallChatService.Users);
             IsHost = isHost;
             BtnKickFromTheGame.IsEnabled = false;
             IsPlayer();
@@ -88,7 +87,7 @@ namespace unoProyect
         private void BtnSendByUsername_Click(object sender, RoutedEventArgs e)
         {
             var username = TbUsername.Text;
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(username)){
+            if (string.IsNullOrWhiteSpace(username)){
                 MessageBox.Show(Properties.Resources.notEmptyFields,
                             Properties.Resources.error);
             }
@@ -119,7 +118,7 @@ namespace unoProyect
         private void BtnSendByEmail_Click(object sender, RoutedEventArgs e)
         {
             var email = TbEmail.Text;
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(email))
             {
                 MessageBox.Show(Properties.Resources.notEmptyFields,
                             Properties.Resources.error);

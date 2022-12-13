@@ -68,8 +68,8 @@ namespace unoProyect
 
         private bool ValidateEmptyFields()
         {
-            bool emptyUsername = string.IsNullOrEmpty(TbUsername.Text);
-            bool emptyEmail = string.IsNullOrEmpty(TbEmail.Text);
+            bool emptyUsername = string.IsNullOrWhiteSpace(TbUsername.Text);
+            bool emptyEmail = string.IsNullOrWhiteSpace(TbEmail.Text);
             if (emptyUsername || emptyEmail)
             {
                 LblEmptyFields.Visibility = Visibility.Visible;

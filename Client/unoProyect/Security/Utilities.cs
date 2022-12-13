@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -12,7 +13,7 @@ using System.Windows.Controls;
 
 namespace unoProyect.Security
 {
-    public class Utilities
+    public static class Utilities
     {
         public static string ComputeSHA256Hash(string password)
         {
@@ -32,10 +33,11 @@ namespace unoProyect.Security
         {
             try
             {
-                var emailValidated = new MailAddress(email);
-                return true;
+                return Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
             }
-            catch (FormatException)
+            catch (RegexMatchTimeoutException)
             {
                 return false;
             }
@@ -72,7 +74,7 @@ namespace unoProyect.Security
 
         public static bool ValidateField(string content)
         {
-            return string.IsNullOrWhiteSpace(content) || string.IsNullOrEmpty(content);
+            return string.IsNullOrWhiteSpace(content);
         }
         public static bool SendMail(string to, string emailSubject, string message)
         {
@@ -90,7 +92,7 @@ namespace unoProyect.Security
                 mailMessage.IsBodyHtml = true;
 
                 SmtpClient client = new SmtpClient("smtp.office365.com", 587);
-                client.Credentials = new NetworkCredential(from, "tecnologiasConstruccion1234");
+                client.Credentials = new NetworkCredential(from, ConfigurationManager.AppSettings["Password"]);
                 client.EnableSsl = true;
 
                 client.Send(mailMessage);
@@ -103,16 +105,5 @@ namespace unoProyect.Security
             return status;
         }
     }
-    public class NotEmptyValidationRule : ValidationRule
-    {
-        public string Message { get; set; }
 
-        
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            return string.IsNullOrWhiteSpace((value ?? "").ToString())
-                ? new ValidationResult(false, "Field is required.")
-                : ValidationResult.ValidResult;
-        }
-    }
 }
