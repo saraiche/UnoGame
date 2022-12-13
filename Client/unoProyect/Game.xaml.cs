@@ -34,6 +34,7 @@ namespace unoProyect
         public string ActualColor { get; set; }
         public bool Reverse { get; set; }
 
+        private const string NUMERIC_SKIP_REVERSE = ""; 
         /// <summary>
         /// Inicia la pantalla del juego, inicializando los parámetros de username y code. 
         /// Coloca el nombre de usuario del jugador en un label e inicia el sentido del juego en "Sentido del reloj"
@@ -83,7 +84,7 @@ namespace unoProyect
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        Card card = new Card();
+                        Card card;
                         index = random.Next(cardsSize);
                         card = cards.ElementAt(index);
                         CallChatService.DealCard(Players[i], card, InvitationCode);
@@ -232,6 +233,62 @@ namespace unoProyect
         }
 
         /// <summary>
+        /// Lógica de jugar una carta +2, reversa o skip
+        /// </summary>
+        /// <param name="nextPlayer"></param>
+        /// <returns>nextPlayer el jugador siguiente según la carta recibida</returns>
+        private string PlayNumericSkipReverseCard(string nextPlayer)
+        {
+            if (Center.Type == "draw2")
+            {
+                try
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                    }
+                    RemoveUno(nextPlayer);
+                }
+                catch (EndpointNotFoundException)
+                {
+                    MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                }
+                nextPlayer = SkipPlayer();
+            }
+            else if (Center.Type == "reverse")
+            {
+                nextPlayer = GameLogic.NextPlayer(Username, Players, !(Reverse));
+                CallChatService.RequestChangeDirection(InvitationCode);
+            }
+            else if (Center.Type == "skip")
+            {
+                nextPlayer = SkipPlayer();
+            }
+            return nextPlayer;
+        }
+
+        private string PlayWildcard(string nextPlayer)
+        {
+            if (Center.Type == "draw4")
+            {
+                try
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        CallChatService.DealCard(nextPlayer, GameLogic.GetRandomCard(), InvitationCode);
+                    }
+                    RemoveUno(nextPlayer);
+                }
+                catch (EndpointNotFoundException)
+                {
+                    MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
+                }
+                nextPlayer = SkipPlayer();
+            }
+            return nextPlayer;
+        }
+
+        /// <summary>
         /// Dependiendo del tipo de carta, realiza la acción que esta indica.
         /// Recibe una cadena vacía si es una carta de color y una cadena diferente de vacía si es una carta comodín
         /// </summary>
@@ -241,58 +298,16 @@ namespace unoProyect
         {
             string nextPlayer = GameLogic.NextPlayer(Username, Players, Reverse);
             string newColor = "";
-            if (color == "")
+            //Carta que no es comodín
+            if (color == NUMERIC_SKIP_REVERSE)
             {
                 newColor = Center.Color;
-                if (Center.Type == "draw2")
-                {
-                    try
-                    {
-                        Card card1 = new Card();
-                        card1 = GameLogic.GetRandomCard();
-                        CallChatService.DealCard(nextPlayer, card1, InvitationCode);
-                        Card card = new Card();
-                        card = GameLogic.GetRandomCard();
-                        CallChatService.DealCard(nextPlayer, card, InvitationCode);
-                        RemoveUno(nextPlayer);
-                    }
-                    catch (EndpointNotFoundException)
-                    {
-                        MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
-                    }
-                    nextPlayer = SkipPlayer();
-                }
-                else if (Center.Type == "reverse")
-                {
-                    nextPlayer = GameLogic.NextPlayer(Username, Players, !(Reverse));
-                    CallChatService.RequestChangeDirection(InvitationCode);
-                }
-                else if (Center.Type == "skip")
-                {
-                    nextPlayer = SkipPlayer();
-                }
+                nextPlayer = PlayNumericSkipReverseCard(nextPlayer);
             }
             else
             {
                 GrdColors.Visibility = Visibility.Hidden;
-                if (Center.Type == "draw4")
-                {
-                    try
-                    {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            Card card = new Card();
-                            card = GameLogic.GetRandomCard();
-                            CallChatService.DealCard(nextPlayer, card, InvitationCode);
-                        }
-                        RemoveUno(nextPlayer);
-                    }
-                    catch (EndpointNotFoundException)
-                    {
-                        MessageBox.Show(Properties.Resources.temporalityInaviable, Properties.Resources.sorry);
-                    }
-                    nextPlayer = SkipPlayer();
-                }
+                nextPlayer = PlayWildcard(nextPlayer);
                 newColor = color;
             }
             LvCards.Items.Remove(imageCard);
@@ -329,14 +344,12 @@ namespace unoProyect
         /// <returns> false en caso contrario </returns>
         private void HasUno()
         {
-            if (LvCards.Items.Count == 1 && BtnUno.IsEnabled == true)
+            if (LvCards.Items.Count == 1 && BtnUno.IsEnabled)
             {
                 MessageBox.Show("No dijiste UNO, debes comer 2 cartas");
                 for (int i = 0; i < 2; i++)
                 {
-                    Card card = new Card();
-                    card = GameLogic.GetRandomCard();
-                    AddCard(card);
+                    AddCard(GameLogic.GetRandomCard());
                 }
             }
         }

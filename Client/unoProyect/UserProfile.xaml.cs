@@ -88,20 +88,18 @@ namespace unoProyect
                 }
             }
         }
-
-        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Valida los campos de entrada de datos y modifica el player según lo indicado por el usuario
+        /// </summary>
+        /// <param name="resultInputUserValid"></param>
+        /// <returns> true si todos los campos fueron válidos, false si algo no fue válido</returns>
+        private bool ChangeCredentials(bool resultInputUserValid)
         {
-            int result = 0;
-            bool resultInputUserValid = true;
-            if (IsChangeBtnPress)
-            {
-                PlayerData.Image = "GraphicResources/playerImages/Recurso " + NumImage + ".png";
-            }
-            if(!(TbUsername.Text.Trim() == String.Empty))
+            if (!(string.IsNullOrWhiteSpace(TbUsername.Text.Trim())))
             {
                 PlayerData.Credentials.Username = TbUsername.Text;
             }
-            if (!(TbEmail.Text.Trim() == String.Empty))
+            if (!(string.IsNullOrWhiteSpace(TbEmail.Text.Trim())))
             {
                 if (Utilities.ValidateEmail(TbEmail.Text))
                 {
@@ -112,7 +110,7 @@ namespace unoProyect
                     resultInputUserValid = false;
                 }
             }
-            if(!(TbPassword.Text.Trim() == String.Empty))
+            if (!(string.IsNullOrWhiteSpace(TbPassword.Text.Trim())))
             {
                 if (Utilities.ValidatePassword(TbPassword.Text))
                 {
@@ -123,7 +121,18 @@ namespace unoProyect
                     resultInputUserValid = false;
                 }
             }
-            if (resultInputUserValid)
+            return resultInputUserValid;
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            int result = 0;
+            bool resultInputUserValid = true;
+            if (IsChangeBtnPress)
+            {
+                PlayerData.Image = "GraphicResources/playerImages/Recurso " + NumImage + ".png";
+            }
+            if (ChangeCredentials(resultInputUserValid))
             {
                 result = logic.SetPlayer(PlayerData, Username);
                 switch (result)

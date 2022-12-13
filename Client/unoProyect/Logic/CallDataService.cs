@@ -17,7 +17,7 @@ namespace unoProyect.Logic
         public Lobby LobbyView { get; set; }
         public Login LoginView { get; set; }
 
-        Proxy.DataServiceClient dataServiceClient = new Proxy.DataServiceClient();
+        readonly Proxy.DataServiceClient dataServiceClient = new Proxy.DataServiceClient();
         private const int SUCCESFUL = 1;
         private const int ERROR = 0;
         private const int EXCEPTION = 3;

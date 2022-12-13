@@ -62,9 +62,9 @@ namespace unoProyect
 
         private bool ValidateEmptyFields()
         {
-            bool emptyCode = string.IsNullOrEmpty(TbValidationCode.Text);
-            bool emptyNewPassword = string.IsNullOrEmpty(PbNewPassword.Password.ToString());
-            bool emptyRepeatPassword = string.IsNullOrEmpty(PbRepeatPassword.Password.ToString());
+            bool emptyCode = string.IsNullOrWhiteSpace(TbValidationCode.Text);
+            bool emptyNewPassword = string.IsNullOrWhiteSpace(PbNewPassword.Password.ToString());
+            bool emptyRepeatPassword = string.IsNullOrWhiteSpace(PbRepeatPassword.Password.ToString());
 
             if (emptyCode || emptyNewPassword || emptyRepeatPassword)
             {

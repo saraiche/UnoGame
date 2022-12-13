@@ -8,8 +8,9 @@ using unoProyect.Proxy;
 
 namespace unoProyect.Logic
 {
-    class GameLogic
+    static class GameLogic
     {
+        private static List<Card> Cards = GetCards();
         public static List<Card> GetCards()
         {
             List<Card> cards = new List<Card>();
@@ -84,15 +85,12 @@ namespace unoProyect.Logic
         public static Card GetRandomCard()
         {
             Random random = new Random();
-            Card card = new Card();
-            List<Card> cards = GetCards();
-            card = cards.ElementAt(random.Next(cards.Count));
-            return card;
+            return Cards.ElementAt(random.Next(Cards.Count));
         }
 
         public static Card GetRandomCenter()
         {
-            Card card = new Card();
+            Card card;
             do
             {
                 card = GetRandomCard();
